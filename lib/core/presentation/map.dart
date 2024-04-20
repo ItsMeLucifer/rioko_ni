@@ -151,16 +151,16 @@ class MapBuilder {
 
     if (regions.isNotEmpty) {
       polygons.addAll(
-        regions.first.polygons.map(
-          (points) => Polygon(
+        regions.map((r) {
+          return Polygon(
             strokeCap: StrokeCap.butt,
             strokeJoin: StrokeJoin.bevel,
-            points: points,
+            points: r.polygon,
             borderColor: Colors.white,
-            color: Colors.white24,
-            borderStrokeWidth: 1.0,
-          ),
-        ),
+            color: Colors.white,
+            borderStrokeWidth: 1,
+          );
+        }).toList(),
       );
     }
 

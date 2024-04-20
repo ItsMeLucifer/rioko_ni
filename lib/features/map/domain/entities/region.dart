@@ -9,7 +9,7 @@ class Region with _$Region {
   const Region._();
   factory Region({
     /// GeoJson data
-    required List<List<LatLng>> polygons,
+    required List<LatLng> polygon,
     required String code,
     required String name,
     required String type,
@@ -19,9 +19,7 @@ class Region with _$Region {
 
   RegionModel toModel() => RegionModel(
         code: code,
-        polygons: polygons
-            .map((p) => p.map((p2) => [p2.latitude, p2.longitude]).toList())
-            .toList(),
+        polygons: polygon.map((p2) => [p2.latitude, p2.longitude]).toList(),
         name: name,
         type: type,
         countryCode: countryCode,

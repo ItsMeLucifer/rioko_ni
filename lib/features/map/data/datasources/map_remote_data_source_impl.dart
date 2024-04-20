@@ -31,7 +31,9 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
         final code = feature.properties["CC_1"];
 
         final List<List<List<double>>> polygons =
-            GeoUtils.extractPolygonsFromFeatureCollection(featureCollection);
+            GeoUtils.extractPolygonsFromFeature(feature);
+
+        polygons.sort((a, b) => b.length.compareTo(a.length));
 
         return RegionModel(
           countryCode: countryCode,
@@ -39,7 +41,7 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
           name: name,
           type: type,
           engType: engType,
-          polygons: polygons,
+          polygons: polygons.first,
         );
       }).toList();
     } on ServerException {

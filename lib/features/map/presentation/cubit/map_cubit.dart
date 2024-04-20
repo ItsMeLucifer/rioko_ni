@@ -100,6 +100,10 @@ class MapCubit extends Cubit<MapState> {
             (data) {
               debugPrint('fetched');
               fetchedRegions = data;
+              debugPrint(data
+                  .map((r) => r.polygon.length)
+                  .reduce((value, element) => value + element)
+                  .toString());
               emit(MapState.fetchedRegions(data));
             },
           ),

@@ -8,7 +8,7 @@ part 'region_model.freezed.dart';
 class RegionModel with _$RegionModel {
   const RegionModel._();
   factory RegionModel({
-    required List<List<List<double>>> polygons,
+    required List<List<double>> polygons,
     // ISO 3166-2 region code
     required String code,
     required String name,
@@ -18,12 +18,9 @@ class RegionModel with _$RegionModel {
   }) = _RegionModel;
 
   Region toEntity() {
-    final poly = polygons
-        .map((p) => p.map((p2) => LatLng(p2.first, p2.last)).toList())
-        .toList();
     return Region(
       code: code,
-      polygons: poly,
+      polygon: polygons.map((p2) => LatLng(p2.first, p2.last)).toList(),
       name: name,
       type: type,
       countryCode: countryCode,

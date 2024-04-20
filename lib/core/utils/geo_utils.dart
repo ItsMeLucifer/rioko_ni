@@ -35,140 +35,135 @@ class GeoUtils {
     return distance;
   }
 
-  /// Simplifies the polygon's points by reducing the number of points based on a reduction percentage.
-  ///
-  /// This function simplifies the polygon by reducing the number of points while aiming to
-  /// retain the overall shape of the polygon. The reduction percentage determines how aggressively
-  /// the simplification is applied. The higher the reduction percentage, the more points are
-  /// removed, resulting in a more simplified shape.
-  ///
-  /// Parameters:
-  ///   - reductionPercentage: The percentage by which to reduce the number of points in the polygon.
-  ///     Must be an integer value between 5 and 75, inclusive. A higher percentage leads to more
-  ///     aggressive simplification.
-  ///
-  /// Returns:
-  ///   A simplified version of the original polygon's points with a reduced number of points.
-  ///
-  /// Throws:
-  ///   - AssertionError: If the `reductionPercentage` is not within the valid range of 5 to 75.
-  ///
-  /// Note:
-  ///   - If the `reductionPercentage` exceeds 50, the function applies a secondary reduction to
-  ///     further simplify the polygon.
-  ///   - The algorithm skips points based on the calculated skip value, which is determined by the
-  ///     reduction percentage.
-  static List<LatLng> simplify(
-    List<LatLng> points, {
-    required int reductionPercentage,
-  }) {
-    assert(reductionPercentage >= 5 && reductionPercentage <= 90,
-        'Reduction percentage must be between 5 and 75.');
-
-    int secondReduction = 0;
-    if (reductionPercentage > 50) {
-      // Apply secondary reduction if reduction percentage exceeds 50
-      secondReduction = (reductionPercentage - 50) * 2;
-      reductionPercentage = 50;
-    }
-    // Calculate skip value based on reduction percentage
-    int skipValue = 100 ~/ reductionPercentage;
-
-    List<LatLng> basePoints = [...points];
-    List<LatLng> resultPoints = [];
-
-    int i = 0;
-    do {
-      List<LatLng> points = [];
-      for (int i = 0; i < basePoints.length; i++) {
-        // Skip points based on skip value. Skips neither first nor last point.
-        if (i != 0 && i != basePoints.length - 1 && i % skipValue == 0) {
-          continue;
-        }
-        points.add(basePoints[i]);
-      }
-
-      // Apply secondary reduction if necessary
-      if (secondReduction != 0) {
-        skipValue = 100 ~/ secondReduction;
-        basePoints = [...points];
-      }
-
-      // Copy result
-      resultPoints = points;
-
-      i++;
-    } while (secondReduction != 0 && i < 2);
-
-    return resultPoints;
-  }
-
   static List<List<List<double>>> extractPolygonsFromFeatureCollection(
     FeatureCollection featureCollection,
   ) {
-    List<List<LatLng>> result = [];
+    List<List<List<double>>> result = [];
 
     // Iterate through each GeoJSON feature in the collection
     for (Feature feature in featureCollection.features) {
-      List<Polygon> polygons = [];
+      result.addAll(extractPolygonsFromFeature(feature));
+    }
 
-      // Extract polygons from the feature's geometry
-      if (feature.geometry is Polygon) {
-        polygons.add(feature.geometry as Polygon);
-      }
-      if (feature.geometry is MultiPolygon) {
-        var multiPolygon = feature.geometry as MultiPolygon;
+    return result;
+  }
 
-        polygons = [...multiPolygon.polygons];
-      }
+  static List<List<List<double>>> extractPolygonsFromFeature(
+    Feature feature,
+  ) {
+    List<List<LatLng>> result = [];
+    List<Polygon> polygons = [];
 
-      // Process each polygon
-      for (Polygon polygon in polygons) {
-        List<LatLng> points = [];
+    // Extract polygons from the feature's geometry
+    if (feature.geometry is Polygon) {
+      polygons.add(feature.geometry as Polygon);
+    }
+    if (feature.geometry is MultiPolygon) {
+      var multiPolygon = feature.geometry as MultiPolygon;
 
-        // Skip polygons without exterior positions
-        if (polygon.exterior == null) continue;
+      polygons = [...multiPolygon.polygons];
+    }
 
-        // Convert GeoJSON positions to LatLng points
-        polygon.exterior?.positions.forEach((position) {
-          double latitude = position.y;
-          double longitude = position.x;
+    // Process each polygon
+    for (Polygon polygon in polygons) {
+      List<LatLng> points = [];
 
-          // Ensure longitude is within the valid range of flutter_map coordination system
-          if (longitude <= -180 || longitude >= 180) {
-            longitude = longitude.clamp(-179.999999, 179.999999);
-          }
+      // Skip polygons without exterior positions
+      if (polygon.exterior == null) continue;
 
-          points.add(LatLng(latitude, longitude));
-        });
+      // Convert GeoJSON positions to LatLng points
+      polygon.exterior?.positions.forEach((position) {
+        double latitude = position.y;
+        double longitude = position.x;
 
-        // Skip invalid polygons
-        if (points.isEmpty ||
-            points.length < 2 ||
-            points.first != points.last) {
-          continue;
+        // Ensure longitude is within the valid range of flutter_map coordination system
+        if (longitude <= -180 || longitude >= 180) {
+          longitude = longitude.clamp(-179.999999, 179.999999);
         }
 
-        final area = GeoUtils.calculatePolygonArea(points);
+        points.add(LatLng(latitude, longitude));
+      });
 
-        // Skip polygons that area is smaller that threshold
-        if (result.isNotEmpty && area < 500) {
-          continue;
-        }
-
-        // Apply simplification if the number of points exceeds the points number threshold
-        if (points.length > 100) {
-          points = simplify(points, reductionPercentage: 75);
-        }
-
-        result = [
-          ...result,
-          points,
-        ];
+      // Skip invalid polygons
+      if (points.isEmpty || points.length < 2 || points.first != points.last) {
+        continue;
       }
+
+      final area = GeoUtils.calculatePolygonArea(points);
+
+      // Skip polygons that area is smaller that threshold
+      if (result.isNotEmpty && area < 500) {
+        continue;
+      }
+
+      // Apply simplification if the number of points exceeds the points number threshold
+      if (points.length > 100) {
+        points = simplifyPolygon(points.sublist(0, points.length - 2),
+            tolerance: 0.02);
+      }
+
+      result = [
+        ...result,
+        points..add(points[0]),
+      ];
     }
     return result
         .map((p) => p.map((p2) => [p2.latitude, p2.longitude]).toList())
         .toList();
+  }
+
+  // Function to calculate perpendicular distance of a point from a line segment
+  static double perpendicularDistance(
+      LatLng point, LatLng lineStart, LatLng lineEnd) {
+    // Calculate the area of the triangle formed by the point and the line segment
+    double area = (0.5 *
+            ((lineEnd.longitude - lineStart.longitude) *
+                    (point.latitude - lineStart.latitude) -
+                (point.longitude - lineStart.longitude) *
+                    (lineEnd.latitude - lineStart.latitude)))
+        .abs();
+    // Calculate the length of the line segment
+    double length = sqrt(pow(lineEnd.longitude - lineStart.longitude, 2) +
+        pow(lineEnd.latitude - lineStart.latitude, 2));
+    // Calculate and return the perpendicular distance
+    return area / length;
+  }
+
+  // Function to simplify a polygon using the Douglas-Peucker algorithm
+  static List<LatLng> simplifyPolygon(
+    List<LatLng> polygon, {
+    required double tolerance,
+  }) {
+    if (polygon.length <= 2) {
+      return polygon; // Can't simplify further
+    }
+
+    double maxDistance = 0;
+    late int farthestPointIndex;
+
+    // Find the point farthest from the line segment connecting the start and end points
+    for (int i = 1; i < polygon.length - 1; i++) {
+      double distance = perpendicularDistance(
+          polygon[i], polygon[0], polygon[polygon.length - 1]);
+      if (distance > maxDistance) {
+        maxDistance = distance;
+        farthestPointIndex = i;
+      }
+    }
+
+    // If the farthest point is within tolerance, simplify the polygon
+    if (maxDistance <= tolerance) {
+      return [polygon[0], polygon[polygon.length - 1]];
+    } else {
+      // Recursively simplify both parts of the polygon
+      List<LatLng> leftPart = simplifyPolygon(
+          polygon.sublist(0, farthestPointIndex + 1),
+          tolerance: tolerance);
+      List<LatLng> rightPart = simplifyPolygon(
+          polygon.sublist(farthestPointIndex),
+          tolerance: tolerance);
+      // Combine the simplified parts and return
+      return [...leftPart.sublist(0, leftPart.length - 1), ...rightPart];
+    }
   }
 }
