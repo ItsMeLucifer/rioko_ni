@@ -57,6 +57,13 @@ class MapCubit extends Cubit<MapState> {
     _getCurrentPosition();
     await _getCountryPolygons().then((_) {
       _getLocalCountryData();
+      int points = 0;
+      countries.forEach((c) {
+        points += c.polygons
+            .map((p) => p.length)
+            .reduce((value, element) => value + element);
+      });
+      debugPrint('world points: $points');
     });
   }
 

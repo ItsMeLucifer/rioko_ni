@@ -1,6 +1,7 @@
 import 'package:country_code/country_code.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:rioko_ni/core/utils/geo_utils.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 
 part 'country_model.freezed.dart';
@@ -21,7 +22,16 @@ class CountryModel with _$CountryModel {
         .toList();
     return Country(
       countryCode: CountryCode.parse(countryCode),
-      polygons: poly,
+      polygons: poly.map((p) {
+        if (GeoUtils.calculatePolygonArea(p) < 2000) {
+          return p;
+        }
+        return [
+          ...GeoUtils.simplifyPolygon(p.sublist(0, p.length - 2),
+              tolerance: 0.007),
+          p.last
+        ];
+      }).toList(),
       region: region,
       moreDataAvailable: moreDataAvailable,
     );
