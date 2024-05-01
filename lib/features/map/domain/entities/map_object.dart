@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 enum MOStatus {
   none,
@@ -26,7 +27,7 @@ extension MOStatusExtension on MOStatus {
   }
 }
 
-abstract class MapObject {
+abstract class MapObject extends HiveObject {
   MOStatus status;
 
   MapObject({required this.status});

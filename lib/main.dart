@@ -6,6 +6,7 @@ import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/revenue_cat_cubit.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
+import 'package:rioko_ni/features/map/domain/entities/region.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 import 'package:rioko_ni/features/map/presentation/pages/map_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +20,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await registerDependencies();
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+  Hive.registerAdapter(RegionAdapter());
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('pl')],
