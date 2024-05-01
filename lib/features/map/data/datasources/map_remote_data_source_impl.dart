@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
 import 'package:geobase/geobase.dart';
 import 'package:rioko_ni/core/data/gadm_client.dart';
 import 'package:rioko_ni/core/errors/exception.dart';
@@ -13,25 +10,19 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
 
   const MapRemoteDataSourceImpl({required this.client});
 
-  static String get mockDataPath => 'assets/data/geo/gadm41_POL_1.json';
-
   @override
   Future<List<RegionModel>> getCountryRegions({
     required String countryCode,
   }) async {
     try {
-      final mockData = await rootBundle.loadString(mockDataPath);
-      final mockJson = jsonDecode(mockData) as Map<String, dynamic>;
-      // final httpResponse =
-      //     await client.getCountryRegions(countryCode: countryCode);
-      // if (httpResponse.response.statusCode != 200) {
-      //   throw ServerException(httpResponse.response.toString(),
-      //       stack: StackTrace.current);
-      // }
+      final httpResponse =
+          await client.getCountryRegions(countryCode: countryCode);
+      if (httpResponse.response.statusCode != 200) {
+        throw ServerException(httpResponse.response.toString(),
+            stack: StackTrace.current);
+      }
 
-      // final featureCollection = FeatureCollection.fromData(httpResponse.data);
-
-      final featureCollection = FeatureCollection.fromData(mockJson);
+      final featureCollection = FeatureCollection.fromData(httpResponse.data);
 
       return featureCollection.features.map((feature) {
         final name = feature.properties["NAME_1"];

@@ -41,6 +41,8 @@ class _CountryManagementPageState extends State<CountryManagementPage>
 
   bool get regionsMode => widget.country.displayRegions;
 
+  bool fetchingRegions = false;
+
   @override
   void initState() {
     _controller = AnimationController(
@@ -80,7 +82,18 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: _buildBody(context),
+        child: Stack(
+          children: [
+            _buildBody(context),
+            if (fetchingRegions)
+              Center(
+                child: CircularProgressIndicator.adaptive(
+                  backgroundColor:
+                      Theme.of(context).progressIndicatorTheme.color,
+                ),
+              ),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
@@ -124,9 +137,11 @@ class _CountryManagementPageState extends State<CountryManagementPage>
                         _buildStatusButtons(context, target: widget.country)),
                 OutlinedButton(
                   onPressed: () {
+                    fetchingRegions = true;
+                    setState(() {});
                     widget
                         .fetchRegions(widget.country)
-                        .then((_) => setState(() {}));
+                        .then((_) => setState(() => fetchingRegions = false));
                   },
                   child: const Text('Fetch regions'),
                 ),
@@ -157,7 +172,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
       const SizedBox(height: AppSizes.padding),
       widget.country.flag(
         scale: 0.3,
-        borderColor: Theme.of(context).iconTheme.color,
+        borderColor: Theme.of(context).colorScheme.outline,
         borderRadius: 3,
       ),
     ]);
@@ -190,6 +205,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
               _buildCountryInfo(context),
               _buildRegionsPreview(context),
               if (_region != null) _buildRegionInfo(context),
+              const SizedBox(height: AppSizes.padding),
               if (_region != null)
                 _buildStatusButtons(context, target: _region!),
             ],
@@ -210,7 +226,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
         const SizedBox(height: AppSizes.paddingHalf),
         Text(
           _region!.engType,
-          style: Theme.of(context).textTheme.headlineSmall,
+          style: Theme.of(context).textTheme.titleSmall,
           textAlign: TextAlign.center,
         ),
       ],
@@ -219,8 +235,11 @@ class _CountryManagementPageState extends State<CountryManagementPage>
 
   Widget _buildRegionsPreview(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: AppSizes.paddingQuadruple),
-      height: context.width(0.8),
+      margin: const EdgeInsets.only(
+        top: AppSizes.paddingQuadruple,
+        bottom: AppSizes.paddingDouble,
+      ),
+      height: context.width(0.7),
       child: MapBuilder().buildRegionsMapPreview(
         context,
         country: widget.country,

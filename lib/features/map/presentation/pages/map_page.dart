@@ -189,7 +189,6 @@ class _MapPageState extends State<MapPage> {
         );
       },
       dir: _mapCubit.dir,
-      regions: _mapCubit.fetchedRegions,
     );
   }
 

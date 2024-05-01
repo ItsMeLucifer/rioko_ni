@@ -92,6 +92,23 @@ class Country extends MapObject with _$Country {
 
   String get name => tr('countries.$alpha3');
 
+  /// Status used when calculating statistics - also takes regions into account
+  MOStatus get calculatedStatus {
+    if (displayRegions) {
+      if (regions.any((r) => r.status == MOStatus.lived)) {
+        return MOStatus.lived;
+      }
+      if (regions.any((r) => r.status == MOStatus.lived)) {
+        return MOStatus.lived;
+      }
+      if (regions.any((r) => r.status == MOStatus.want)) {
+        return MOStatus.want;
+      }
+      return MOStatus.none;
+    }
+    return status;
+  }
+
   bool contains(LatLng position) {
     final bounds = polygons.map((p) => fm.LatLngBounds.fromPoints(p)).toList();
     // First check if the position is in the bounding box

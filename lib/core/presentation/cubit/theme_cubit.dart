@@ -56,6 +56,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       onSecondary: const Color.fromARGB(255, 255, 166, 158),
       tertiary: Colors.grey,
       onTertiary: Colors.grey,
+      outline: Colors.black,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.black,
@@ -137,6 +138,9 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     snackBarTheme: const SnackBarThemeData(
       actionTextColor: Colors.black,
     ),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: Colors.black,
+    ),
   );
 
   final ThemeData _defaultDark = ThemeData.dark(
@@ -151,6 +155,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       onSecondary: Colors.purpleAccent,
       tertiary: Colors.lime,
       onTertiary: Colors.limeAccent,
+      outline: Colors.white,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.black,
@@ -230,6 +235,9 @@ class ThemeCubit extends Cubit<ThemeDataType> {
           Color.fromARGB(255, 9, 143, 129),
         ),
       ),
+    ),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: Colors.white,
     ),
   );
 

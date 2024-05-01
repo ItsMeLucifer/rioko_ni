@@ -67,7 +67,7 @@ class MapBuilder {
             strokeCap: StrokeCap.butt,
             strokeJoin: StrokeJoin.miter,
             points: points,
-            color: Theme.of(context).iconTheme.color!.withOpacity(0.1),
+            color: Theme.of(context).colorScheme.outline.withOpacity(0.1),
             isFilled: true,
           );
         }).toList(),
@@ -112,7 +112,7 @@ class MapBuilder {
               points: points,
               color: const Color(0x00000000),
               isFilled: false,
-              borderColor: Theme.of(context).iconTheme.color!,
+              borderColor: Theme.of(context).colorScheme.outline,
               borderStrokeWidth: 1.0,
             );
           }),
@@ -126,7 +126,7 @@ class MapBuilder {
               strokeJoin: StrokeJoin.miter,
               points: region.polygon,
               color: color.withOpacity(0.3),
-              borderColor: Theme.of(context).iconTheme.color!,
+              borderColor: Theme.of(context).colorScheme.outline,
               borderStrokeWidth: region == selectedRegion ? 2.0 : 0.5,
               isFilled: true,
             );
@@ -155,7 +155,6 @@ class MapBuilder {
     required Key key,
     required LatLng? center,
     required Key polygonsLayerKey,
-    required List<Region> regions,
   }) {
     final mapOptions = getMapOptions(
       interactionOptions: const InteractionOptions(
@@ -188,11 +187,15 @@ class MapBuilder {
       ),
     );
     List<Polygon> polygons = [];
+    List<Region> regions = [];
 
     polygons.addAll(
       Iterable2(
             beenCountries.map((country) {
               final pointsList = country.polygons;
+              if (country.displayRegions) {
+                regions.addAll(country.regions);
+              }
               return pointsList.map((points) {
                 return Polygon(
                   strokeCap: StrokeCap.butt,
@@ -214,6 +217,9 @@ class MapBuilder {
       Iterable2(
             wantCountries.map((country) {
               final pointsList = country.polygons;
+              if (country.displayRegions) {
+                regions.addAll(country.regions);
+              }
               return pointsList.map((points) {
                 return Polygon(
                   strokeCap: StrokeCap.butt,
@@ -235,14 +241,19 @@ class MapBuilder {
       Iterable2(
             livedCountries.map((country) {
               final pointsList = country.polygons;
+              Color color = country.status.color(context);
+              if (country.displayRegions) {
+                regions.addAll(country.regions);
+                color = Theme.of(context).colorScheme.outline;
+              }
               return pointsList.map((points) {
                 return Polygon(
                   strokeCap: StrokeCap.butt,
                   strokeJoin: StrokeJoin.miter,
                   points: points,
-                  borderColor: country.status.color(context),
+                  borderColor: color,
                   borderStrokeWidth: 0.5,
-                  isFilled: true,
+                  isFilled: !country.displayRegions,
                   color:
                       country.status.color(context).withMultipliedOpacity(0.4),
                 );
@@ -259,9 +270,8 @@ class MapBuilder {
             strokeCap: StrokeCap.butt,
             strokeJoin: StrokeJoin.bevel,
             points: r.polygon,
-            borderColor: Colors.white,
-            color: Colors.white,
-            borderStrokeWidth: 1,
+            color: r.status.color(context).withMultipliedOpacity(0.4),
+            isFilled: true,
           );
         }).toList(),
       );

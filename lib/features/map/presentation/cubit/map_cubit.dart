@@ -151,13 +151,13 @@ class MapCubit extends Cubit<MapState> {
   }
 
   List<Country> get beenCountries =>
-      countries.where((c) => c.status == MOStatus.been).toList();
+      countries.where((c) => c.calculatedStatus == MOStatus.been).toList();
 
   List<Country> get wantCountries =>
-      countries.where((c) => c.status == MOStatus.want).toList();
+      countries.where((c) => c.calculatedStatus == MOStatus.want).toList();
 
   List<Country> get livedCountries =>
-      countries.where((c) => c.status == MOStatus.lived).toList();
+      countries.where((c) => c.calculatedStatus == MOStatus.lived).toList();
 
   // Asia
 

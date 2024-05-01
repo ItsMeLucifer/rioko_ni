@@ -8,7 +8,10 @@ enum MOStatus {
 }
 
 extension MOStatusExtension on MOStatus {
-  Color color(BuildContext context) {
+  Color color(
+    BuildContext context, {
+    Color? customDefaultColor,
+  }) {
     final scheme = Theme.of(context).colorScheme;
     switch (this) {
       case MOStatus.been:
@@ -18,7 +21,7 @@ extension MOStatusExtension on MOStatus {
       case MOStatus.lived:
         return scheme.onTertiary;
       default:
-        return Colors.transparent;
+        return customDefaultColor ?? Colors.transparent;
     }
   }
 }
