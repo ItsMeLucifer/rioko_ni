@@ -7,6 +7,7 @@ import 'package:rioko_ni/features/map/data/models/country_model.dart';
 import 'package:flutter_map/flutter_map.dart' as fm;
 import 'package:latlong2/latlong.dart';
 import 'package:point_in_polygon/point_in_polygon.dart' as pip;
+import 'package:rioko_ni/features/map/domain/entities/region.dart';
 
 part 'country.freezed.dart';
 
@@ -95,6 +96,8 @@ class Country with _$Country {
     required Area region,
     required bool moreDataAvailable,
     @Default(CountryStatus.none) CountryStatus status,
+    @Default(false) bool displayRegions,
+    @Default(<Region>[]) List<Region> regions,
   }) = _Country;
 
   CountryModel toModel() => CountryModel(

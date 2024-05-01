@@ -81,6 +81,66 @@ class MapBuilder {
     );
   }
 
+  Widget buildRegionsMapPreview(
+    BuildContext context, {
+    required Country country,
+    required List<Region> regions,
+    required void Function(TapPosition, LatLng) onTap,
+    required MapController controller,
+  }) {
+    final mapOptions = getMapOptions(
+      interactionOptions: const InteractionOptions(
+        flags: InteractiveFlag.none,
+      ),
+      keepAlive: false,
+      initialCameraFit: CameraFit.bounds(
+        bounds: country.bounds,
+      ),
+      onTap: onTap,
+    );
+
+    final layers = [
+      PolygonLayer(
+        polygonCulling: true,
+        polygons: [
+          ...country.polygons.map((points) {
+            return Polygon(
+              strokeCap: StrokeCap.butt,
+              strokeJoin: StrokeJoin.miter,
+              points: points,
+              color: const Color(0x00000000),
+              isFilled: false,
+              borderColor: Theme.of(context).iconTheme.color!,
+              borderStrokeWidth: 1.0,
+            );
+          }),
+          ...regions.map((region) {
+            Color color = const Color(0x00000000);
+            if (region.status != CountryStatus.none) {
+              color = region.status.color(context);
+            }
+            return Polygon(
+              strokeCap: StrokeCap.butt,
+              strokeJoin: StrokeJoin.miter,
+              points: region.polygon,
+              color: color.withOpacity(0.3),
+              borderColor: Theme.of(context).iconTheme.color!,
+              borderStrokeWidth: 0.5,
+              isFilled: true,
+            );
+          }),
+        ],
+        polygonLabels: false,
+      )
+    ];
+
+    return Map.noBorder(
+      mapOptions: mapOptions,
+      layers: layers,
+      controller: controller,
+    );
+  }
+
   Widget build(
     BuildContext context, {
     required String urlTemplate,

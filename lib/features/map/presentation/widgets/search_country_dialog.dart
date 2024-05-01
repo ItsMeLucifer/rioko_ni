@@ -8,11 +8,9 @@ import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 
 class SearchCountryDialog extends StatefulWidget {
   final void Function(Country) onSelectCountry;
-  final void Function(String) fetchRegions;
 
   const SearchCountryDialog({
     required this.onSelectCountry,
-    required this.fetchRegions,
     super.key,
   });
 

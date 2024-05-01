@@ -97,8 +97,8 @@ class MapCubit extends Cubit<MapState> {
 
   List<Region> fetchedRegions = [];
 
-  Future getCountryRegions(String countryCode) async {
-    await getCountryRegionsUsecase.call(countryCode).then(
+  Future getCountryRegions(Country country) async {
+    await getCountryRegionsUsecase.call(country.alpha3).then(
           (result) => result.fold(
             (failure) {
               emit(MapState.error(failure.message));
@@ -111,6 +111,8 @@ class MapCubit extends Cubit<MapState> {
                   .map((r) => r.polygon.length)
                   .reduce((value, element) => value + element)
                   .toString());
+              country.regions = data;
+              country.displayRegions = true;
               emit(MapState.fetchedRegions(data));
             },
           ),

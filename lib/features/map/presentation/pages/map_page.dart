@@ -151,7 +151,6 @@ class _MapPageState extends State<MapPage> {
                 mapController.move(
                     mapController.camera.center, mapController.camera.zoom - 2);
               },
-              fetchRegions: _mapCubit.getCountryRegions,
             ),
           );
         },
