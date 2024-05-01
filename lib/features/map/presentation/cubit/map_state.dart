@@ -17,11 +17,19 @@ class MapState with _$MapState {
     required List<Country> lived,
   }) = _ReadCountriesData;
 
+  const factory MapState.readRegionsData({
+    required Map<String, List<Region>> data,
+  }) = _ReadRegionsData;
+
   const factory MapState.savedCountriesData({
     required List<Country> been,
     required List<Country> want,
     required List<Country> lived,
   }) = _SavedCountriesData;
+
+  const factory MapState.savedRegionsData({
+    required Map<String, List<Region>> data,
+  }) = _SavedRegionsData;
 
   const factory MapState.updatedCountryStatus({
     required Country country,

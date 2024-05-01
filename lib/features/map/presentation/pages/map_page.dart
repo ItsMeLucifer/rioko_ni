@@ -183,7 +183,9 @@ class _MapPageState extends State<MapPage> {
           MaterialPageRoute(
             builder: (context) => CountryManagementPage(
               country: country,
-              fetchRegions: _mapCubit.getCountryRegions,
+              fetchRegions: _mapCubit.fetchCountryRegions,
+              saveRegionsLocally: _mapCubit.saveRegionsLocally,
+              updateCountryStatus: _mapCubit.updateCountryStatus,
             ),
           ),
         );

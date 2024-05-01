@@ -58,13 +58,7 @@ class MapCubit extends Cubit<MapState> {
     _getCurrentPosition();
     await _getCountryPolygons().then((_) {
       _getLocalCountryData();
-      int points = 0;
-      for (Country c in countries) {
-        points += c.polygons
-            .map((p) => p.length)
-            .reduce((value, element) => value + element);
-      }
-      debugPrint('world points: $points');
+      _getLocalRegionsData();
     });
   }
 
@@ -98,7 +92,7 @@ class MapCubit extends Cubit<MapState> {
 
   List<Region> fetchedRegions = [];
 
-  Future getCountryRegions(Country country) async {
+  Future fetchCountryRegions(Country country) async {
     emit(const MapState.fetchingRegions());
     await getCountryRegionsUsecase.call(country.alpha3).then(
           (result) => result.fold(
@@ -150,14 +144,26 @@ class MapCubit extends Cubit<MapState> {
     ));
   }
 
+  Future _getLocalRegionsData() async {
+    var box = Hive.box('regions');
+    final data = box.toMap().cast<String, List<Region>>();
+    for (String alpha3 in data.keys) {
+      countries.firstWhere((c) => c.alpha3 == alpha3)
+        ..regions = data[alpha3]!
+        ..displayRegions = true
+        ..calculateStatus();
+    }
+    emit(MapState.readRegionsData(data: data));
+  }
+
   List<Country> get beenCountries =>
-      countries.where((c) => c.calculatedStatus == MOStatus.been).toList();
+      countries.where((c) => c.status == MOStatus.been).toList();
 
   List<Country> get wantCountries =>
-      countries.where((c) => c.calculatedStatus == MOStatus.want).toList();
+      countries.where((c) => c.status == MOStatus.want).toList();
 
   List<Country> get livedCountries =>
-      countries.where((c) => c.calculatedStatus == MOStatus.lived).toList();
+      countries.where((c) => c.status == MOStatus.lived).toList();
 
   // Asia
 
@@ -307,7 +313,7 @@ class MapCubit extends Cubit<MapState> {
 
   // -----
 
-  Future saveCountriesLocally() async {
+  void saveCountriesLocally() async {
     var box = Hive.box('countries');
     await box.put('been', beenCountries.map((c) => c.alpha3).toList());
     await box.put('want', wantCountries.map((c) => c.alpha3).toList());
@@ -319,7 +325,17 @@ class MapCubit extends Cubit<MapState> {
     ));
   }
 
-  void error(String error) => emit(MapState.error(error));
+  void saveRegionsLocally() async {
+    var box = Hive.box('regions');
+    Map<String, List<Region>> data = {};
+    for (Country country in countries) {
+      if (country.displayRegions) {
+        data[country.alpha3] = country.regions;
+      }
+    }
+    await box.putAll(data);
+    emit(MapState.savedRegionsData(data: data));
+  }
 
   void updateCountryStatus({
     required Country country,
@@ -354,6 +370,8 @@ class MapCubit extends Cubit<MapState> {
     dir = cacheDirectory.path;
     emit(MapState.gotDir(cacheDirectory.path));
   }
+
+  // -----
 
   Country? getCountryFromPosition(LatLng position) {
     final watch = Stopwatch()..start();

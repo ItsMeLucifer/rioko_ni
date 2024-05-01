@@ -191,55 +191,8 @@ class MapBuilder {
 
     polygons.addAll(
       Iterable2(
-            beenCountries.map((country) {
-              final pointsList = country.polygons;
-              if (country.displayRegions) {
-                regions.addAll(country.regions);
-              }
-              return pointsList.map((points) {
-                return Polygon(
-                  strokeCap: StrokeCap.butt,
-                  strokeJoin: StrokeJoin.miter,
-                  points: points,
-                  borderColor: country.status.color(context),
-                  borderStrokeWidth: 0.5,
-                  isFilled: true,
-                  color:
-                      country.status.color(context).withMultipliedOpacity(0.4),
-                );
-              });
-            }),
-          ).reduceOrNull((value, element) => [...value, ...element]) ??
-          [],
-    );
-
-    polygons.addAll(
-      Iterable2(
-            wantCountries.map((country) {
-              final pointsList = country.polygons;
-              if (country.displayRegions) {
-                regions.addAll(country.regions);
-              }
-              return pointsList.map((points) {
-                return Polygon(
-                  strokeCap: StrokeCap.butt,
-                  strokeJoin: StrokeJoin.miter,
-                  points: points,
-                  borderColor: country.status.color(context),
-                  borderStrokeWidth: 0.5,
-                  isFilled: true,
-                  color:
-                      country.status.color(context).withMultipliedOpacity(0.4),
-                );
-              });
-            }),
-          ).reduceOrNull((value, element) => [...value, ...element]) ??
-          [],
-    );
-
-    polygons.addAll(
-      Iterable2(
-            livedCountries.map((country) {
+            [...beenCountries, ...livedCountries, ...wantCountries]
+                .map((country) {
               final pointsList = country.polygons;
               Color color = country.status.color(context);
               if (country.displayRegions) {
@@ -271,6 +224,8 @@ class MapBuilder {
             strokeJoin: StrokeJoin.bevel,
             points: r.polygon,
             color: r.status.color(context).withMultipliedOpacity(0.4),
+            borderColor: Theme.of(context).colorScheme.outline.withOpacity(0.5),
+            borderStrokeWidth: r.status == MOStatus.none ? 0.5 : 0,
             isFilled: true,
           );
         }).toList(),

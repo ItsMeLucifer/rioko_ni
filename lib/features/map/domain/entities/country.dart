@@ -92,21 +92,24 @@ class Country extends MapObject with _$Country {
 
   String get name => tr('countries.$alpha3');
 
-  /// Status used when calculating statistics - also takes regions into account
-  MOStatus get calculatedStatus {
+  /// Updated country status, based on the regions data
+  void calculateStatus() {
     if (displayRegions) {
       if (regions.any((r) => r.status == MOStatus.lived)) {
-        return MOStatus.lived;
+        status = MOStatus.lived;
+        return;
       }
-      if (regions.any((r) => r.status == MOStatus.lived)) {
-        return MOStatus.lived;
+      if (regions.any((r) => r.status == MOStatus.been)) {
+        status = MOStatus.been;
+        return;
       }
       if (regions.any((r) => r.status == MOStatus.want)) {
-        return MOStatus.want;
+        status = MOStatus.want;
+        return;
       }
-      return MOStatus.none;
+      status = MOStatus.none;
+      return;
     }
-    return status;
   }
 
   bool contains(LatLng position) {

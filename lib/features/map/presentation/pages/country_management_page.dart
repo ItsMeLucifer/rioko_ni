@@ -5,20 +5,23 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/build_context2.dart';
-import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
-import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 
 class CountryManagementPage extends StatefulWidget {
   final Country country;
   final Future Function(Country) fetchRegions;
+  final void Function() saveRegionsLocally;
+  final void Function({required Country country, required MOStatus status})
+      updateCountryStatus;
 
   const CountryManagementPage({
     required this.country,
     required this.fetchRegions,
+    required this.updateCountryStatus,
+    required this.saveRegionsLocally,
     super.key,
   });
 
@@ -75,8 +78,6 @@ class _CountryManagementPageState extends State<CountryManagementPage>
     _regionsPreviewMapController.dispose();
     super.dispose();
   }
-
-  final _cubit = locator<MapCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +208,13 @@ class _CountryManagementPageState extends State<CountryManagementPage>
               if (_region != null) _buildRegionInfo(context),
               const SizedBox(height: AppSizes.padding),
               if (_region != null)
-                _buildStatusButtons(context, target: _region!),
+                _buildStatusButtons(
+                  context,
+                  target: _region!,
+                  onPressed: (_) {
+                    widget.country.calculateStatus();
+                  },
+                ),
             ],
           ),
         ),
@@ -264,6 +271,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   Widget _buildStatusButtons(
     BuildContext context, {
     required MapObject target,
+    void Function(MOStatus)? onPressed,
   }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -289,6 +297,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
                 } else {
                   target.status = MOStatus.been;
                 }
+                onPressed?.call(target.status);
                 setState(() {});
               },
               label: tr('$l10n.labels.been'),
@@ -318,6 +327,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
                 } else {
                   target.status = MOStatus.want;
                 }
+                onPressed?.call(target.status);
                 setState(() {});
               },
               label: tr('$l10n.labels.want'),
@@ -347,6 +357,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
                 } else {
                   target.status = MOStatus.lived;
                 }
+                onPressed?.call(target.status);
                 setState(() {});
               },
               label: tr('$l10n.labels.lived'),
@@ -415,8 +426,13 @@ class _CountryManagementPageState extends State<CountryManagementPage>
 
   void pop(BuildContext context, {bool short = false}) {
     if (isPopping) return;
-    _cubit.updateCountryStatus(
-        country: widget.country, status: widget.country.status);
+    widget.updateCountryStatus(
+      country: widget.country,
+      status: widget.country.status,
+    );
+    if (widget.country.displayRegions) {
+      widget.saveRegionsLocally();
+    }
     isPopping = true;
     _controller.reverse();
     Future.delayed(
