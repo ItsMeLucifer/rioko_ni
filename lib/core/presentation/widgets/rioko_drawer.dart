@@ -94,7 +94,7 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                   leading: const Icon(FontAwesomeIcons.gem),
                   title: Text(
                     tr('$l10n.labels.buyPremium'),
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   trailing: loadingPurchase
                       ? const CircularProgressIndicator.adaptive()
@@ -112,7 +112,7 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                 leading: const Icon(FontAwesomeIcons.chartPie),
                 title: Text(
                   tr('$l10n.labels.showStatistics'),
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 onTap: () {
                   Navigator.of(context).pop();
@@ -123,7 +123,7 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                 leading: const Icon(FontAwesomeIcons.shareNodes),
                 title: Text(
                   tr('$l10n.labels.shareStatistics'),
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 onTap: () {
                   Navigator.of(context).pop();
@@ -139,7 +139,7 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                 leading: const Icon(FontAwesomeIcons.paintRoller),
                 title: Text(
                   tr('$l10n.labels.changeTheme'),
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 onTap: () {
                   Navigator.of(context).pop();
@@ -151,7 +151,7 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                 leading: const Icon(FontAwesomeIcons.circleInfo),
                 title: Text(
                   tr('$l10n.labels.aboutApp'),
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 onTap: () {
                   Navigator.of(context).pop();
@@ -162,7 +162,7 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                 leading: const Icon(FontAwesomeIcons.shieldHalved),
                 title: Text(
                   tr('$l10n.labels.privacyPolicy'),
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 onTap: () async {
                   try {

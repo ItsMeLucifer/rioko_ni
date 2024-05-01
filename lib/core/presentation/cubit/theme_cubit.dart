@@ -104,15 +104,20 @@ class ThemeCubit extends Cubit<ThemeDataType> {
         fontFamily: 'Nasalization',
         color: Colors.white,
       ),
+      headlineSmall: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.black,
+        fontSize: 15,
+      ),
       headlineMedium: TextStyle(
         fontFamily: 'Nasalization',
         color: Colors.black,
-        fontSize: 17,
+        fontSize: 22,
       ),
       headlineLarge: TextStyle(
         fontFamily: 'Nasalization',
         color: Colors.black,
-        fontSize: 22,
+        fontSize: 35,
       ),
     ),
     outlinedButtonTheme: const OutlinedButtonThemeData(
@@ -131,6 +136,100 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     ),
     snackBarTheme: const SnackBarThemeData(
       actionTextColor: Colors.black,
+    ),
+  );
+
+  final ThemeData _defaultDark = ThemeData.dark(
+    useMaterial3: true,
+  ).copyWith(
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.tealAccent).copyWith(
+      background: Colors.black,
+      onBackground: const Color.fromARGB(255, 33, 70, 54),
+      primary: Colors.teal,
+      onPrimary: Colors.tealAccent,
+      secondary: Colors.purple,
+      onSecondary: Colors.purpleAccent,
+      tertiary: Colors.lime,
+      onTertiary: Colors.limeAccent,
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: Colors.black,
+      foregroundColor: Colors.white,
+    ),
+    iconTheme: const IconThemeData(
+      color: Colors.white,
+    ),
+    drawerTheme: const DrawerThemeData(
+      backgroundColor: Colors.black,
+      shadowColor: Colors.tealAccent,
+    ),
+    appBarTheme: const AppBarTheme(
+      color: Color.fromARGB(255, 20, 20, 20),
+      foregroundColor: Colors.white,
+    ),
+    listTileTheme: const ListTileThemeData(
+      titleTextStyle: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.white,
+      ),
+    ),
+    primaryColor: Colors.teal,
+    textTheme: const TextTheme(
+      bodySmall: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.white,
+      ),
+      bodyMedium: TextStyle(
+        fontFamily: 'Nasalization',
+      ),
+      bodyLarge: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.white,
+      ),
+      titleSmall: TextStyle(
+        color: Colors.white70,
+        fontFamily: 'Nasalization',
+      ),
+      titleMedium: TextStyle(
+        color: Colors.white,
+        fontFamily: 'Nasalization',
+      ),
+      titleLarge: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.white,
+      ),
+      headlineSmall: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.white,
+        fontSize: 15,
+      ),
+      headlineMedium: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.white,
+        fontSize: 22,
+      ),
+      headlineLarge: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.white,
+        fontSize: 35,
+      ),
+    ),
+    snackBarTheme: const SnackBarThemeData(
+      actionTextColor: Colors.white,
+    ),
+    outlinedButtonTheme: const OutlinedButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: MaterialStatePropertyAll(
+          Color.fromARGB(255, 9, 143, 129),
+        ),
+      ),
+    ),
+    elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: MaterialStatePropertyAll(
+          Color.fromARGB(255, 9, 143, 129),
+        ),
+      ),
     ),
   );
 
@@ -168,99 +267,9 @@ class ThemeCubit extends Cubit<ThemeDataType> {
           ),
         );
       case ThemeDataType.neoDark:
-        return ThemeData.dark(
-          useMaterial3: true,
-        ).copyWith(
-          colorScheme:
-              ColorScheme.fromSeed(seedColor: Colors.tealAccent).copyWith(
-            background: Colors.black,
-            onBackground: const Color.fromARGB(255, 33, 70, 54),
-            primary: Colors.teal,
-            onPrimary: Colors.tealAccent,
-            secondary: Colors.purple,
-            onSecondary: Colors.purpleAccent,
-            tertiary: Colors.lime,
-            onTertiary: Colors.limeAccent,
-          ),
-          floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Colors.black,
-            foregroundColor: Colors.white,
-          ),
-          iconTheme: const IconThemeData(
-            color: Colors.white,
-          ),
-          drawerTheme: const DrawerThemeData(
-            backgroundColor: Colors.black,
-            shadowColor: Colors.tealAccent,
-          ),
-          appBarTheme: const AppBarTheme(
-            color: Color.fromARGB(255, 20, 20, 20),
-            foregroundColor: Colors.white,
-          ),
-          listTileTheme: const ListTileThemeData(
-            titleTextStyle: TextStyle(
-              fontFamily: 'Nasalization',
-              color: Colors.white,
-            ),
-          ),
-          primaryColor: Colors.teal,
-          textTheme: const TextTheme(
-            bodySmall: TextStyle(
-              fontFamily: 'Nasalization',
-              color: Colors.white,
-            ),
-            bodyMedium: TextStyle(
-              fontFamily: 'Nasalization',
-            ),
-            bodyLarge: TextStyle(
-              fontFamily: 'Nasalization',
-              color: Colors.white,
-            ),
-            titleSmall: TextStyle(
-              color: Colors.white70,
-              fontFamily: 'Nasalization',
-            ),
-            titleMedium: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Nasalization',
-            ),
-            titleLarge: TextStyle(
-              fontFamily: 'Nasalization',
-              color: Colors.white,
-            ),
-            headlineMedium: TextStyle(
-              fontFamily: 'Nasalization',
-              color: Colors.white,
-              fontSize: 17,
-            ),
-            headlineLarge: TextStyle(
-              fontFamily: 'Nasalization',
-              color: Colors.white,
-              fontSize: 22,
-            ),
-          ),
-          snackBarTheme: const SnackBarThemeData(
-            actionTextColor: Colors.white,
-          ),
-          outlinedButtonTheme: const OutlinedButtonThemeData(
-            style: ButtonStyle(
-              foregroundColor: MaterialStatePropertyAll(
-                Color.fromARGB(255, 9, 143, 129),
-              ),
-            ),
-          ),
-          elevatedButtonTheme: const ElevatedButtonThemeData(
-            style: ButtonStyle(
-              foregroundColor: MaterialStatePropertyAll(
-                Color.fromARGB(255, 9, 143, 129),
-              ),
-            ),
-          ),
-        );
+        return _defaultDark;
       case ThemeDataType.monochrome:
-        return ThemeData.dark(
-          useMaterial3: true,
-        ).copyWith(
+        return _defaultDark.copyWith(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey).copyWith(
             background: Colors.black,
             onBackground: const Color.fromARGB(255, 27, 27, 27),
@@ -271,65 +280,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
             tertiary: Colors.white,
             onTertiary: Colors.white30,
           ),
-          floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Colors.black,
-            foregroundColor: Colors.white,
-          ),
-          iconTheme: const IconThemeData(
-            color: Colors.white,
-          ),
-          drawerTheme: const DrawerThemeData(
-            backgroundColor: Colors.black,
-            shadowColor: Colors.tealAccent,
-          ),
-          appBarTheme: const AppBarTheme(
-            color: Color.fromARGB(255, 20, 20, 20),
-            foregroundColor: Colors.white,
-          ),
-          listTileTheme: const ListTileThemeData(
-            titleTextStyle: TextStyle(
-              fontFamily: 'Nasalization',
-              color: Colors.white,
-            ),
-          ),
           primaryColor: Colors.grey,
-          textTheme: const TextTheme(
-            bodySmall: TextStyle(
-              fontFamily: 'Nasalization',
-              color: Colors.white,
-            ),
-            bodyMedium: TextStyle(
-              fontFamily: 'Nasalization',
-            ),
-            bodyLarge: TextStyle(
-              fontFamily: 'Nasalization',
-              color: Colors.white,
-            ),
-            titleSmall: TextStyle(
-              color: Colors.white70,
-              fontFamily: 'Nasalization',
-            ),
-            titleMedium: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Nasalization',
-            ),
-            titleLarge: TextStyle(
-              fontFamily: 'Nasalization',
-            ),
-            headlineMedium: TextStyle(
-              fontFamily: 'Nasalization',
-              color: Colors.white,
-              fontSize: 17,
-            ),
-            headlineLarge: TextStyle(
-              fontFamily: 'Nasalization',
-              color: Colors.white,
-              fontSize: 22,
-            ),
-          ),
-          snackBarTheme: const SnackBarThemeData(
-            actionTextColor: Colors.white,
-          ),
           outlinedButtonTheme: const OutlinedButtonThemeData(
             style: ButtonStyle(
               foregroundColor: MaterialStatePropertyAll(

@@ -143,14 +143,25 @@ class Country with _$Country {
   Widget flag({
     double scale = 1,
     double borderRadius = 0,
+    Color? borderColor,
   }) {
     const double height = 48;
     const double width = 62;
-    return CountryFlag.fromCountryCode(
+    final flag = CountryFlag.fromCountryCode(
       alpha2,
       height: height * scale,
       width: width * scale,
       borderRadius: borderRadius,
     );
+    if (borderColor != null) {
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(borderRadius),
+          border: Border.all(color: borderColor, width: 1),
+        ),
+        child: flag,
+      );
+    }
+    return flag;
   }
 }

@@ -5,7 +5,6 @@ import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
-import 'package:rioko_ni/features/map/presentation/widgets/country_management_dialog.dart';
 
 class SearchCountryDialog extends StatefulWidget {
   final void Function(Country) onSelectCountry;
@@ -192,13 +191,7 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
                     );
                   },
                   child: GestureDetector(
-                    onTap: () {
-                      if (isPopping) return;
-                      isPopping = true;
-                      _controller.reverse();
-                      Future.delayed(const Duration(milliseconds: 600),
-                          Navigator.of(context).pop);
-                    },
+                    onTap: pop,
                     child: Icon(
                       FontAwesomeIcons.circleXmark,
                       color: Theme.of(context).primaryColor,
@@ -211,6 +204,16 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
           ),
         ],
       ),
+    );
+  }
+
+  void pop() {
+    if (isPopping) return;
+    isPopping = true;
+    _controller.reverse();
+    Future.delayed(
+      const Duration(milliseconds: 600),
+      Navigator.of(context).pop,
     );
   }
 
@@ -232,15 +235,8 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
       ),
       child: ListTile(
         onTap: () {
-          Navigator.of(context).pop();
+          pop();
           widget.onSelectCountry(country);
-          Future.delayed(
-            const Duration(milliseconds: 200),
-            () => CountryManagementDialog(
-              country: country,
-              fetchRegions: widget.fetchRegions,
-            ).show(context),
-          );
         },
         leading: Container(
           decoration: BoxDecoration(

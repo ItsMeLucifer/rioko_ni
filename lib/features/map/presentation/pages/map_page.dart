@@ -10,7 +10,7 @@ import 'package:rioko_ni/core/presentation/widgets/animated_fab.dart';
 import 'package:rioko_ni/core/presentation/widgets/rioko_drawer.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
-import 'package:rioko_ni/features/map/presentation/widgets/country_management_dialog.dart';
+import 'package:rioko_ni/features/map/presentation/pages/country_management_page.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/search_country_dialog.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/floating_ui.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/world_statistics_map.dart';
@@ -180,10 +180,14 @@ class _MapPageState extends State<MapPage> {
         }
         final country = _mapCubit.getCountryFromPosition(latLng);
         if (country == null) return;
-        CountryManagementDialog(
-          country: country,
-          fetchRegions: _mapCubit.getCountryRegions,
-        ).show(context);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => CountryManagementPage(
+              country: country,
+              fetchRegions: _mapCubit.getCountryRegions,
+            ),
+          ),
+        );
       },
       dir: _mapCubit.dir,
       regions: _mapCubit.fetchedRegions,

@@ -21,6 +21,8 @@ class MapBuilder {
     InteractionOptions? interactionOptions,
     void Function(TapPosition, LatLng)? onTap,
     LatLng? center,
+    bool keepAlive = true,
+    CameraFit? initialCameraFit,
   }) {
     return MapOptions(
       interactionOptions: interactionOptions ?? const InteractionOptions(),
@@ -36,7 +38,46 @@ class MapBuilder {
         bounds: LatLngBounds(const LatLng(85, -180), const LatLng(-85, 180)),
       ),
       initialCenter: center ?? const LatLng(50.5, 30.51),
-      keepAlive: true,
+      keepAlive: keepAlive,
+      initialCameraFit: initialCameraFit,
+    );
+  }
+
+  Widget buildCountryMapPreview(
+    BuildContext context, {
+    required Country country,
+    required MapController controller,
+  }) {
+    final mapOptions = getMapOptions(
+      interactionOptions: const InteractionOptions(
+        flags: InteractiveFlag.none,
+      ),
+      keepAlive: false,
+      initialCameraFit: CameraFit.bounds(
+        bounds: country.bounds,
+      ),
+    );
+
+    final layers = [
+      PolygonLayer(
+        polygonCulling: true,
+        polygons: country.polygons.map((points) {
+          return Polygon(
+            strokeCap: StrokeCap.butt,
+            strokeJoin: StrokeJoin.miter,
+            points: points,
+            color: Theme.of(context).iconTheme.color!.withOpacity(0.1),
+            isFilled: true,
+          );
+        }).toList(),
+        polygonLabels: false,
+      )
+    ];
+
+    return Map.noBorder(
+      mapOptions: mapOptions,
+      layers: layers,
+      controller: controller,
     );
   }
 
@@ -206,15 +247,25 @@ class Map extends StatelessWidget {
   final List<Widget> layers;
   final MapController? controller;
 
+  final bool boxed;
+
   const Map({
     required this.mapOptions,
     required this.layers,
     required this.controller,
     super.key,
-  });
+  }) : boxed = true;
+
+  const Map.noBorder({
+    required this.mapOptions,
+    required this.layers,
+    required this.controller,
+    super.key,
+  }) : boxed = false;
 
   @override
   Widget build(BuildContext context) {
+    if (!boxed) return _buildMap(context);
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
