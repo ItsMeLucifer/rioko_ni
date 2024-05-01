@@ -9,6 +9,7 @@ import 'package:rioko_ni/core/extensions/iterable2.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
+import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
 import 'package:rioko_ni/main.dart';
 
@@ -87,6 +88,7 @@ class MapBuilder {
     required List<Region> regions,
     required void Function(TapPosition, LatLng) onTap,
     required MapController controller,
+    required Region? selectedRegion,
   }) {
     final mapOptions = getMapOptions(
       interactionOptions: const InteractionOptions(
@@ -116,7 +118,7 @@ class MapBuilder {
           }),
           ...regions.map((region) {
             Color color = const Color(0x00000000);
-            if (region.status != CountryStatus.none) {
+            if (region.status != MOStatus.none) {
               color = region.status.color(context);
             }
             return Polygon(
@@ -125,7 +127,7 @@ class MapBuilder {
               points: region.polygon,
               color: color.withOpacity(0.3),
               borderColor: Theme.of(context).iconTheme.color!,
-              borderStrokeWidth: 0.5,
+              borderStrokeWidth: region == selectedRegion ? 2.0 : 0.5,
               isFilled: true,
             );
           }),

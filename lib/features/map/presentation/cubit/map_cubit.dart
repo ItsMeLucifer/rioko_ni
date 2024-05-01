@@ -13,6 +13,7 @@ import 'package:rioko_ni/core/utils/geo_utils.dart';
 import 'package:rioko_ni/core/utils/geolocation_handler.dart';
 
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
+import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
 import 'package:rioko_ni/features/map/domain/usecases/get_countries.dart';
 import 'package:collection/collection.dart';
@@ -58,11 +59,11 @@ class MapCubit extends Cubit<MapState> {
     await _getCountryPolygons().then((_) {
       _getLocalCountryData();
       int points = 0;
-      countries.forEach((c) {
+      for (Country c in countries) {
         points += c.polygons
             .map((p) => p.length)
             .reduce((value, element) => value + element);
-      });
+      }
       debugPrint('world points: $points');
     });
   }
@@ -98,6 +99,7 @@ class MapCubit extends Cubit<MapState> {
   List<Region> fetchedRegions = [];
 
   Future getCountryRegions(Country country) async {
+    emit(const MapState.fetchingRegions());
     await getCountryRegionsUsecase.call(country.alpha3).then(
           (result) => result.fold(
             (failure) {
@@ -128,17 +130,17 @@ class MapCubit extends Cubit<MapState> {
     if (beenCodes.isNotEmpty) {
       countries
           .where((c) => beenCodes.contains(c.alpha3))
-          .forEach((country) => country.status = CountryStatus.been);
+          .forEach((country) => country.status = MOStatus.been);
     }
     if (wantCodes.isNotEmpty) {
       countries
           .where((c) => wantCodes.contains(c.alpha3))
-          .forEach((country) => country.status = CountryStatus.want);
+          .forEach((country) => country.status = MOStatus.want);
     }
     if (livedCodes.isNotEmpty) {
       countries
           .where((c) => livedCodes.contains(c.alpha3))
-          .forEach((country) => country.status = CountryStatus.lived);
+          .forEach((country) => country.status = MOStatus.lived);
     }
 
     emit(MapState.readCountriesData(
@@ -149,13 +151,13 @@ class MapCubit extends Cubit<MapState> {
   }
 
   List<Country> get beenCountries =>
-      countries.where((c) => c.status == CountryStatus.been).toList();
+      countries.where((c) => c.status == MOStatus.been).toList();
 
   List<Country> get wantCountries =>
-      countries.where((c) => c.status == CountryStatus.want).toList();
+      countries.where((c) => c.status == MOStatus.want).toList();
 
   List<Country> get livedCountries =>
-      countries.where((c) => c.status == CountryStatus.lived).toList();
+      countries.where((c) => c.status == MOStatus.lived).toList();
 
   // Asia
 
@@ -321,7 +323,7 @@ class MapCubit extends Cubit<MapState> {
 
   void updateCountryStatus({
     required Country country,
-    required CountryStatus status,
+    required MOStatus status,
   }) {
     countries.firstWhere((c) => c.alpha3 == country.alpha3).status = status;
     saveCountriesLocally();

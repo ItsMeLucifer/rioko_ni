@@ -8,12 +8,13 @@ import 'package:rioko_ni/core/extensions/build_context2.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
+import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 
 class CountryManagementPage extends StatefulWidget {
   final Country country;
-  final void Function(Country) fetchRegions;
+  final Future Function(Country) fetchRegions;
 
   const CountryManagementPage({
     required this.country,
@@ -37,6 +38,8 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   String get l10n => 'map.countryManagement';
 
   Region? _region;
+
+  bool get regionsMode => widget.country.displayRegions;
 
   @override
   void initState() {
@@ -94,33 +97,13 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   }
 
   Widget _buildBody(BuildContext context) {
-    if (widget.country.displayRegions) {
+    if (regionsMode) {
       return _buildRegionsContent(context);
     }
     return _buildCountryContent(context);
   }
 
-  Widget _buildRegionsContent(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSizes.paddingDouble,
-        vertical: AppSizes.paddingQuadruple,
-      ),
-      child: SizedBox(
-        width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildCountryInfo(context),
-              _buildRegionsPreview(context),
-              if (_region != null) _buildRegionInfo(context),
-              if (_region != null) _buildCountryStatusButtons(context),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Country
 
   Widget _buildCountryContent(BuildContext context) {
     return Stack(
@@ -136,10 +119,14 @@ class _CountryManagementPageState extends State<CountryManagementPage>
             child: Column(
               children: [
                 _buildCountryInfo(context),
-                Expanded(child: _buildCountryStatusButtons(context)),
+                Expanded(
+                    child:
+                        _buildStatusButtons(context, target: widget.country)),
                 OutlinedButton(
                   onPressed: () {
-                    widget.fetchRegions(widget.country);
+                    widget
+                        .fetchRegions(widget.country)
+                        .then((_) => setState(() {}));
                   },
                   child: const Text('Fetch regions'),
                 ),
@@ -176,6 +163,42 @@ class _CountryManagementPageState extends State<CountryManagementPage>
     ]);
   }
 
+  Widget _buildCountryMiniature(BuildContext context) {
+    return Align(
+      alignment: Alignment.center,
+      child: MapBuilder().buildCountryMapPreview(
+        context,
+        country: widget.country,
+        controller: _countryPreviewMapController,
+      ),
+    );
+  }
+
+  // Region
+
+  Widget _buildRegionsContent(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSizes.paddingDouble,
+        vertical: AppSizes.paddingQuadruple,
+      ),
+      child: SizedBox(
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildCountryInfo(context),
+              _buildRegionsPreview(context),
+              if (_region != null) _buildRegionInfo(context),
+              if (_region != null)
+                _buildStatusButtons(context, target: _region!),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildRegionInfo(BuildContext context) {
     return Column(
       children: [
@@ -194,7 +217,35 @@ class _CountryManagementPageState extends State<CountryManagementPage>
     );
   }
 
-  Widget _buildCountryStatusButtons(BuildContext context) {
+  Widget _buildRegionsPreview(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: AppSizes.paddingQuadruple),
+      height: context.width(0.8),
+      child: MapBuilder().buildRegionsMapPreview(
+        context,
+        country: widget.country,
+        regions: widget.country.regions,
+        controller: _regionsPreviewMapController,
+        onTap: (tapPosition, latLng) {
+          final region = widget.country.regions
+              .firstWhereOrNull((region) => region.contains(latLng));
+          if (_region == region) {
+            return setState(() => _region = null);
+          }
+          _region = region;
+          setState(() {});
+        },
+        selectedRegion: _region,
+      ),
+    );
+  }
+
+  // Common
+
+  Widget _buildStatusButtons(
+    BuildContext context, {
+    required MapObject target,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -214,16 +265,16 @@ class _CountryManagementPageState extends State<CountryManagementPage>
               context,
               icon: FontAwesomeIcons.trophy,
               onPressed: () {
-                if (widget.country.status == CountryStatus.been) {
-                  widget.country.status = CountryStatus.none;
+                if (target.status == MOStatus.been) {
+                  target.status = MOStatus.none;
                 } else {
-                  widget.country.status = CountryStatus.been;
+                  target.status = MOStatus.been;
                 }
                 setState(() {});
               },
               label: tr('$l10n.labels.been'),
-              color: CountryStatus.been.color(context),
-              selected: widget.country.status == CountryStatus.been,
+              color: MOStatus.been.color(context),
+              selected: target.status == MOStatus.been,
             ),
           ),
         ),
@@ -243,16 +294,16 @@ class _CountryManagementPageState extends State<CountryManagementPage>
               context,
               icon: FontAwesomeIcons.suitcase,
               onPressed: () {
-                if (widget.country.status == CountryStatus.want) {
-                  widget.country.status = CountryStatus.none;
+                if (target.status == MOStatus.want) {
+                  target.status = MOStatus.none;
                 } else {
-                  widget.country.status = CountryStatus.want;
+                  target.status = MOStatus.want;
                 }
                 setState(() {});
               },
               label: tr('$l10n.labels.want'),
-              color: CountryStatus.want.color(context),
-              selected: widget.country.status == CountryStatus.want,
+              color: MOStatus.want.color(context),
+              selected: target.status == MOStatus.want,
             ),
           ),
         ),
@@ -272,61 +323,20 @@ class _CountryManagementPageState extends State<CountryManagementPage>
               context,
               icon: FontAwesomeIcons.houseFlag,
               onPressed: () {
-                if (widget.country.status == CountryStatus.lived) {
-                  widget.country.status = CountryStatus.none;
+                if (target.status == MOStatus.lived) {
+                  target.status = MOStatus.none;
                 } else {
-                  widget.country.status = CountryStatus.lived;
+                  target.status = MOStatus.lived;
                 }
                 setState(() {});
               },
               label: tr('$l10n.labels.lived'),
-              color: CountryStatus.lived.color(context),
-              selected: widget.country.status == CountryStatus.lived,
+              color: MOStatus.lived.color(context),
+              selected: target.status == MOStatus.lived,
             ),
           ),
         ),
       ],
-    );
-  }
-
-  void pop(BuildContext context, {bool short = false}) {
-    if (isPopping) return;
-    _cubit.updateCountryStatus(
-        country: widget.country, status: widget.country.status);
-    isPopping = true;
-    _controller.reverse();
-    Future.delayed(
-      Duration(milliseconds: short ? 100 : 300),
-      Navigator.of(context).pop,
-    );
-  }
-
-  Widget _buildCountryMiniature(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: MapBuilder().buildCountryMapPreview(
-        context,
-        country: widget.country,
-        controller: _countryPreviewMapController,
-      ),
-    );
-  }
-
-  Widget _buildRegionsPreview(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: AppSizes.paddingQuadruple),
-      height: context.width(0.8),
-      child: MapBuilder().buildRegionsMapPreview(
-        context,
-        country: widget.country,
-        regions: widget.country.regions,
-        controller: _regionsPreviewMapController,
-        onTap: (tapPosition, latLng) {
-          _region = widget.country.regions
-              .firstWhereOrNull((region) => region.contains(latLng));
-          setState(() {});
-        },
-      ),
     );
   }
 
@@ -381,6 +391,18 @@ class _CountryManagementPageState extends State<CountryManagementPage>
           ),
         ),
       ),
+    );
+  }
+
+  void pop(BuildContext context, {bool short = false}) {
+    if (isPopping) return;
+    _cubit.updateCountryStatus(
+        country: widget.country, status: widget.country.status);
+    isPopping = true;
+    _controller.reverse();
+    Future.delayed(
+      Duration(milliseconds: short ? 100 : 300),
+      Navigator.of(context).pop,
     );
   }
 }

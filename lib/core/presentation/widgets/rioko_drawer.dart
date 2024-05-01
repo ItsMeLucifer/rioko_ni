@@ -11,7 +11,7 @@ import 'package:rioko_ni/core/presentation/cubit/revenue_cat_cubit.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/widgets/change_theme_dialog.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
-import 'package:rioko_ni/features/map/domain/entities/country.dart';
+import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/share_dialog.dart';
 import 'package:rioko_ni/main.dart';
@@ -78,7 +78,7 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                   defaultColor: Theme.of(context).colorScheme.background,
                   countryBorder: CountryBorder(color: mapBorderColor(context)),
                   colors: _cubit.countries
-                      .where((c) => c.status != CountryStatus.none)
+                      .where((c) => c.status != MOStatus.none)
                       .map(
                         (c) => {
                           c.alpha2.toLowerCase():

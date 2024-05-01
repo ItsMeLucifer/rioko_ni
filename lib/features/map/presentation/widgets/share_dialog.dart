@@ -14,7 +14,7 @@ import 'package:rioko_ni/core/extensions/iterable2.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/revenue_cat_cubit.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
-import 'package:rioko_ni/features/map/domain/entities/country.dart';
+import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
@@ -311,10 +311,9 @@ class _ShareDialogState extends State<ShareDialog> {
                         ]
                             .map(
                               (c) => {
-                                c.alpha2.toLowerCase(): primaryColor
-                                    .withOpacity(c.status == CountryStatus.been
-                                        ? 0.6
-                                        : 1),
+                                c.alpha2.toLowerCase():
+                                    primaryColor.withOpacity(
+                                        c.status == MOStatus.been ? 0.6 : 1),
                               },
                             )
                             .reduceOrNull(

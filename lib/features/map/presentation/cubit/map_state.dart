@@ -25,11 +25,13 @@ class MapState with _$MapState {
 
   const factory MapState.updatedCountryStatus({
     required Country country,
-    required CountryStatus status,
+    required MOStatus status,
   }) = _UpdatedCountryStatus;
 
   const factory MapState.setCurrentPosition(LatLng position) =
       _SetCurrentPosition;
+
+  const factory MapState.fetchingRegions() = _FetchingRegions;
 
   const factory MapState.fetchedRegions(List<Region> regions) = _FetchedRegions;
 

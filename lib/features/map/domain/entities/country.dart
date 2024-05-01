@@ -7,16 +7,10 @@ import 'package:rioko_ni/features/map/data/models/country_model.dart';
 import 'package:flutter_map/flutter_map.dart' as fm;
 import 'package:latlong2/latlong.dart';
 import 'package:point_in_polygon/point_in_polygon.dart' as pip;
+import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
 
 part 'country.freezed.dart';
-
-enum CountryStatus {
-  none,
-  been,
-  want,
-  lived,
-}
 
 enum Area {
   northAmerica,
@@ -70,32 +64,16 @@ extension AreaExtension on Area {
   }
 }
 
-extension CountryStatusExtension on CountryStatus {
-  Color color(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    switch (this) {
-      case CountryStatus.been:
-        return scheme.onPrimary;
-      case CountryStatus.want:
-        return scheme.onSecondary;
-      case CountryStatus.lived:
-        return scheme.onTertiary;
-      default:
-        return Colors.transparent;
-    }
-  }
-}
-
 @unfreezed
-class Country with _$Country {
-  const Country._();
+class Country extends MapObject with _$Country {
+  Country._() : super(status: MOStatus.none);
   factory Country({
     /// GeoJson data
     required List<List<LatLng>> polygons,
     required CountryCode countryCode,
     required Area region,
     required bool moreDataAvailable,
-    @Default(CountryStatus.none) CountryStatus status,
+    @Default(MOStatus.none) MOStatus status,
     @Default(false) bool displayRegions,
     @Default(<Region>[]) List<Region> regions,
   }) = _Country;

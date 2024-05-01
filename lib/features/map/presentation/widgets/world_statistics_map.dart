@@ -8,7 +8,7 @@ import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/iterable2.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
-import 'package:rioko_ni/features/map/domain/entities/country.dart';
+import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/share_dialog.dart';
 
@@ -78,15 +78,14 @@ class WorldStatisticsMap extends StatelessWidget {
             child: SimpleMap(
               instructions: SMapWorld.instructionsMercator,
               defaultColor: Theme.of(context).colorScheme.background,
-              countryBorder:
-                  CountryBorder(color: CountryStatus.been.color(context)),
+              countryBorder: CountryBorder(color: MOStatus.been.color(context)),
               colors: [..._cubit.beenCountries, ..._cubit.livedCountries]
                   .map(
                     (c) => {
                       c.alpha2.toLowerCase(): Theme.of(context)
                           .colorScheme
                           .onPrimary
-                          .withOpacity(c.status == CountryStatus.been
+                          .withOpacity(c.status == MOStatus.been
                               ? countryOpacity
                               : countryOpacity * 2),
                     },
