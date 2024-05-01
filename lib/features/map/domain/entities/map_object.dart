@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+part 'map_object.g.dart';
+
+@HiveType(typeId: 2)
 enum MOStatus {
+  @HiveField(0)
   none,
+  @HiveField(1)
   been,
+  @HiveField(2)
   want,
+  @HiveField(3)
   lived,
 }
 

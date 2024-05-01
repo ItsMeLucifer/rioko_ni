@@ -147,14 +147,14 @@ class MapCubit extends Cubit<MapState> {
 
   Future _getLocalRegionsData() async {
     var box = Hive.box('regions');
-    final data = box.toMap().cast<String, List<Region>>();
+    final data = box.toMap().cast<String, List<dynamic>>();
     for (String alpha3 in data.keys) {
       countries.firstWhere((c) => c.alpha3 == alpha3)
-        ..regions = data[alpha3]!
+        ..regions = (data[alpha3] ?? []).cast<Region>()
         ..displayRegions = true
         ..calculateStatus();
     }
-    emit(MapState.readRegionsData(data: data));
+    emit(MapState.readRegionsData(data: data.cast<String, List<Region>>()));
   }
 
   List<Country> get beenCountries =>
