@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_cache/flutter_map_cache.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/color2.dart';
 import 'package:rioko_ni/core/extensions/iterable2.dart';
 import 'package:rioko_ni/core/extensions/latlng_bounds2.dart';
@@ -100,14 +99,11 @@ class MapBuilder {
         flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
       ),
       keepAlive: false,
-      initialCameraFit: CameraFit.bounds(
-        bounds: country.bounds,
-        padding: const EdgeInsets.all(AppSizes.paddingDouble),
-      ),
       maxZoom: 10,
       cameraConstraint: CameraConstraint.contain(
-        bounds: country.bounds.scale(1.3),
+        bounds: country.bounds.scale(1.3).toSquare(),
       ),
+      minZoom: 2,
       onTap: onTap,
     );
 

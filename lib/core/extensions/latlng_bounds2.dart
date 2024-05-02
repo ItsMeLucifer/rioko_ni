@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -16,6 +18,27 @@ extension LatLngBounds2 on LatLngBounds {
       LatLng(centerLat - latDiff, centerLng - lngDiff),
       LatLng(centerLat + latDiff, centerLng + lngDiff),
     );
+
+    return newBounds;
+  }
+
+  LatLngBounds toSquare({bool shorter = false}) {
+    // Calculate center of the bounds
+    final centerLat = (north + south) / 2;
+    final centerLng = (east + west) / 2;
+
+    // Calculate new distances from center
+    final latDiff = (north - south).abs() / 2;
+    final lngDiff = (east - west).abs() / 2;
+
+    // Determine the shorter or longer side
+    final newDiff = shorter ? min(latDiff, lngDiff) : max(latDiff, lngDiff);
+
+    // Calculate new bounds
+    final newBounds = LatLngBounds.fromPoints([
+      LatLng(centerLat - newDiff, centerLng - newDiff),
+      LatLng(centerLat + newDiff, centerLng + newDiff),
+    ]);
 
     return newBounds;
   }
