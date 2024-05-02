@@ -205,7 +205,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
       ),
       const SizedBox(height: AppSizes.padding),
       widget.country.flag(
-        scale: 0.3,
+        scale: 0.4,
         borderColor: Theme.of(context).colorScheme.outline,
         borderRadius: 3,
       ),
@@ -256,6 +256,10 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   }
 
   Widget _buildRegionInfo(BuildContext context) {
+    String regionName = tr('regions.${_region!.engType.toLowerCase()}');
+    if (!trExists('regions.${_region!.engType.toLowerCase()}')) {
+      regionName = _region!.engType;
+    }
     return Column(
       children: [
         Text(
@@ -265,7 +269,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
         ),
         const SizedBox(height: AppSizes.paddingHalf),
         Text(
-          _region!.engType,
+          regionName,
           style: Theme.of(context).textTheme.titleSmall,
           textAlign: TextAlign.center,
         ),

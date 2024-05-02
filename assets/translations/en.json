@@ -349,5 +349,34 @@
             "author": "Author",
             "licences": "Licences"
         }
+    },
+    "regions": {
+        "county": "County",
+        "district": "District",
+        "province": "Province",
+        "state": "State",
+        "territory": "Territory",
+        "prefecture": "Prefecture",
+        "department": "Department",
+        "municipality": "Municipality",
+        "parish": "Parish",
+        "city": "City",
+        "town": "Town",
+        "village": "Village",
+        "township": "Township",
+        "borough": "Borough",
+        "ward": "Ward",
+        "division": "Division",
+        "region": "Region",
+        "area": "Area",
+        "zone": "Zone",
+        "canton": "Canton",
+        "commune": "Commune",
+        "locality": "Locality",
+        "subregion": "Subregion",
+        "voivodeship": "Voivodeship",
+        "decentralizedadministration": "Decentralized Administration",
+        "freestate": "Free State",
+        "developmentregion": "Development Region"
     }
 }

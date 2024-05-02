@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter_map/flutter_map.dart' as fm;
 import 'package:geobase/geobase.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_toolkit/maps_toolkit.dart' as toolkit;
@@ -164,5 +165,25 @@ class GeoUtils {
       // Combine the simplified parts and return
       return [...leftPart.sublist(0, leftPart.length - 1), ...rightPart];
     }
+  }
+
+  static fm.LatLngBounds calculateOverallBounds(List<fm.Polygon> polygons) {
+    double minLat = double.infinity;
+    double maxLat = -double.infinity;
+    double minLng = double.infinity;
+    double maxLng = -double.infinity;
+
+    for (var polygon in polygons) {
+      fm.LatLngBounds bounds = polygon.boundingBox;
+      minLat = bounds.south < minLat ? bounds.south : minLat;
+      maxLat = bounds.north > maxLat ? bounds.north : maxLat;
+      minLng = bounds.west < minLng ? bounds.west : minLng;
+      maxLng = bounds.east > maxLng ? bounds.east : maxLng;
+    }
+
+    LatLng southWest = LatLng(minLat, minLng);
+    LatLng northEast = LatLng(maxLat, maxLng);
+
+    return fm.LatLngBounds(southWest, northEast);
   }
 }

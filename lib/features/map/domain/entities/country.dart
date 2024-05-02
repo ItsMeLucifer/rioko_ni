@@ -3,6 +3,7 @@ import 'package:country_flags/country_flags.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:rioko_ni/core/utils/geo_utils.dart';
 import 'package:rioko_ni/features/map/data/models/country_model.dart';
 import 'package:flutter_map/flutter_map.dart' as fm;
 import 'package:latlong2/latlong.dart';
@@ -133,8 +134,8 @@ class Country extends MapObject with _$Country {
   }
 
   fm.LatLngBounds get bounds {
-    final polygon = fm.Polygon(points: polygons.first);
-    return polygon.boundingBox;
+    return GeoUtils.calculateOverallBounds(
+        polygons.map((p) => fm.Polygon(points: p)).toList());
   }
 
   LatLng get center {
@@ -159,6 +160,7 @@ class Country extends MapObject with _$Country {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(color: borderColor, width: 1),
+          color: borderColor,
         ),
         child: flag,
       );

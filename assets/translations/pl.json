@@ -349,5 +349,34 @@
             "author": "Autor",
             "licences": "Licencje"
         }
+    },
+    "regions": {
+        "county": "Powiat",
+        "district": "Dystrykt",
+        "province": "Prowincja",
+        "state": "Stan",
+        "territory": "Terytorium",
+        "prefecture": "Prefektura",
+        "department": "Departament",
+        "municipality": "Gmina",
+        "parish": "Parafia",
+        "city": "Miasto",
+        "town": "Miasteczko",
+        "village": "Wioska",
+        "township": "Gmina wiejska",
+        "borough": "Dzielnica",
+        "ward": "Okręg",
+        "division": "Dział",
+        "region": "Region",
+        "area": "Obszar",
+        "zone": "Strefa",
+        "canton": "Kanton",
+        "commune": "Gmina",
+        "locality": "Miejscowość",
+        "subregion": "Podregion",
+        "voivodeship": "Województwo",
+        "decentralizedadministration": "Administracja zdecentralizowana",
+        "freestate": "Wolny kraj",
+        "developmentregion": "Obszar rozwoju"
     }
 }
