@@ -79,6 +79,14 @@ class _CountryManagementPageState extends State<CountryManagementPage>
     super.dispose();
   }
 
+  void fetchRegions() {
+    fetchingRegions = true;
+    setState(() {});
+    widget
+        .fetchRegions(widget.country)
+        .then((_) => setState(() => fetchingRegions = false));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,8 +129,12 @@ class _CountryManagementPageState extends State<CountryManagementPage>
             children: [
               Switch(
                 value: widget.country.displayRegions,
-                onChanged: (value) =>
-                    setState(() => widget.country.displayRegions = value),
+                onChanged: (value) {
+                  if (widget.country.regions.isEmpty) {
+                    fetchRegions();
+                  }
+                  setState(() => widget.country.displayRegions = value);
+                },
               ),
               if (fetchingRegions)
                 const Positioned(
@@ -170,19 +182,6 @@ class _CountryManagementPageState extends State<CountryManagementPage>
                 Expanded(
                     child:
                         _buildStatusButtons(context, target: widget.country)),
-                OutlinedButton(
-                  onPressed: () {
-                    fetchingRegions = true;
-                    setState(() {});
-                    widget
-                        .fetchRegions(widget.country)
-                        .then((_) => setState(() => fetchingRegions = false));
-                  },
-                  child: const Text('Fetch regions'),
-                ),
-                SizedBox(
-                  height: context.height(0.07),
-                ),
               ],
             ),
           ),
