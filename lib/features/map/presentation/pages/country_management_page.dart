@@ -16,12 +16,14 @@ class CountryManagementPage extends StatefulWidget {
   final void Function() saveRegionsLocally;
   final void Function({required Country country, required MOStatus status})
       updateCountryStatus;
+  final void Function(String alpha3) clearRegionData;
 
   const CountryManagementPage({
     required this.country,
     required this.fetchRegions,
     required this.updateCountryStatus,
     required this.saveRegionsLocally,
+    required this.clearRegionData,
     super.key,
   });
 
@@ -130,8 +132,11 @@ class _CountryManagementPageState extends State<CountryManagementPage>
               Switch(
                 value: widget.country.displayRegions,
                 onChanged: (value) {
-                  if (widget.country.regions.isEmpty) {
+                  if (value && widget.country.regions.isEmpty) {
                     fetchRegions();
+                  }
+                  if (!value) {
+                    widget.clearRegionData(widget.country.alpha3);
                   }
                   setState(() => widget.country.displayRegions = value);
                 },

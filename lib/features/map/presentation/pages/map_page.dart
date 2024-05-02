@@ -186,6 +186,7 @@ class _MapPageState extends State<MapPage> {
               fetchRegions: _mapCubit.fetchCountryRegions,
               saveRegionsLocally: _mapCubit.saveRegionsLocally,
               updateCountryStatus: _mapCubit.updateCountryStatus,
+              clearRegionData: _mapCubit.clearRegionData,
             ),
           ),
         );

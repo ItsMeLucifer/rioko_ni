@@ -150,6 +150,14 @@ class MapCubit extends Cubit<MapState> {
     emit(MapState.readRegionsData(data: data.cast<String, List<Region>>()));
   }
 
+  void clearRegionData(String alpha3) {
+    countries.firstWhere((c) => c.alpha3 == alpha3)
+      ..regions = []
+      ..displayRegions = false;
+    var box = Hive.box('regions');
+    box.delete(alpha3);
+  }
+
   List<Country> get beenCountries =>
       countries.where((c) => c.status == MOStatus.been).toList();
 
