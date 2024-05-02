@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_cache/flutter_map_cache.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/color2.dart';
 import 'package:rioko_ni/core/extensions/iterable2.dart';
+import 'package:rioko_ni/core/extensions/latlng_bounds2.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
@@ -24,6 +26,7 @@ class MapBuilder {
     LatLng? center,
     bool keepAlive = true,
     CameraFit? initialCameraFit,
+    CameraConstraint? cameraConstraint,
   }) {
     return MapOptions(
       interactionOptions: interactionOptions ?? const InteractionOptions(),
@@ -35,9 +38,11 @@ class MapBuilder {
       minZoom: minZoom ?? 3.8,
       maxZoom: maxZoom ?? 13,
       onTap: onTap,
-      cameraConstraint: CameraConstraint.contain(
-        bounds: LatLngBounds(const LatLng(85, -180), const LatLng(-85, 180)),
-      ),
+      cameraConstraint: cameraConstraint ??
+          CameraConstraint.contain(
+            bounds:
+                LatLngBounds(const LatLng(85, -180), const LatLng(-85, 180)),
+          ),
       initialCenter: center ?? const LatLng(50.5, 30.51),
       keepAlive: keepAlive,
       initialCameraFit: initialCameraFit,
@@ -92,11 +97,16 @@ class MapBuilder {
   }) {
     final mapOptions = getMapOptions(
       interactionOptions: const InteractionOptions(
-        flags: InteractiveFlag.none,
+        flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
       ),
       keepAlive: false,
       initialCameraFit: CameraFit.bounds(
         bounds: country.bounds,
+        padding: const EdgeInsets.all(AppSizes.paddingDouble),
+      ),
+      maxZoom: 10,
+      cameraConstraint: CameraConstraint.contain(
+        bounds: country.bounds.scale(1.3),
       ),
       onTap: onTap,
     );

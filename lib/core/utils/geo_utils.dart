@@ -168,22 +168,13 @@ class GeoUtils {
   }
 
   static fm.LatLngBounds calculateOverallBounds(List<fm.Polygon> polygons) {
-    double minLat = double.infinity;
-    double maxLat = -double.infinity;
-    double minLng = double.infinity;
-    double maxLng = -double.infinity;
+    final allPoints = polygons
+        .map((p) => [p.boundingBox.southWest, p.boundingBox.northEast])
+        .reduce((value, element) => [
+              ...value,
+              ...element,
+            ]);
 
-    for (var polygon in polygons) {
-      fm.LatLngBounds bounds = polygon.boundingBox;
-      minLat = bounds.south < minLat ? bounds.south : minLat;
-      maxLat = bounds.north > maxLat ? bounds.north : maxLat;
-      minLng = bounds.west < minLng ? bounds.west : minLng;
-      maxLng = bounds.east > maxLng ? bounds.east : maxLng;
-    }
-
-    LatLng southWest = LatLng(minLat, minLng);
-    LatLng northEast = LatLng(maxLat, maxLng);
-
-    return fm.LatLngBounds(southWest, northEast);
+    return fm.LatLngBounds.fromPoints(allPoints);
   }
 }
