@@ -45,7 +45,8 @@
             "labels": {
                 "been": "Zwiedziłem!",
                 "want": "Chcę zwiedzić!",
-                "lived": "Żyłem tam!"
+                "lived": "Żyłem tam!",
+                "showRegions": "Pokaż regiony"
             }
         },
         "searchCountry": {

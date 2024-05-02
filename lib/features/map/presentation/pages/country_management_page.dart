@@ -82,18 +82,16 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            _buildBody(context),
-            if (fetchingRegions)
-              Center(
-                child: CircularProgressIndicator.adaptive(
-                  backgroundColor:
-                      Theme.of(context).progressIndicatorTheme.color,
-                ),
-              ),
-          ],
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: SafeArea(
+          child: Stack(
+            children: [
+              _buildBody(context),
+              _buildCountryModeSwitch(context),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -106,6 +104,42 @@ class _CountryManagementPageState extends State<CountryManagementPage>
             textAlign: TextAlign.center,
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildCountryModeSwitch(BuildContext context) {
+    return Align(
+      alignment: const Alignment(0.95, -0.69),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(tr('$l10n.labels.showRegions')),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Switch(
+                value: widget.country.displayRegions,
+                onChanged: (value) =>
+                    setState(() => widget.country.displayRegions = value),
+              ),
+              if (fetchingRegions)
+                const Positioned(
+                  right: 12.5,
+                  child: SizedBox(
+                    width: 15,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: CircularProgressIndicator.adaptive(
+                        backgroundColor: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ],
       ),
     );
   }
