@@ -30,6 +30,7 @@ enum Countries {
 class MapCubit extends Cubit<MapState> {
   final GetCountries getCountryPolygonUsecase;
   final GetCountryRegions getCountryRegionsUsecase;
+
   MapCubit({
     required this.getCountryPolygonUsecase,
     required this.getCountryRegionsUsecase,
@@ -91,8 +92,6 @@ class MapCubit extends Cubit<MapState> {
     return result;
   }
 
-  List<Region> fetchedRegions = [];
-
   Future fetchCountryRegions(Country country) async {
     emit(const MapState.fetchingRegions());
     await getCountryRegionsUsecase.call(country.alpha3).then(
@@ -102,12 +101,6 @@ class MapCubit extends Cubit<MapState> {
               debugPrint(failure.fullMessage);
             },
             (data) {
-              debugPrint('fetched');
-              fetchedRegions = data;
-              debugPrint(data
-                  .map((r) => r.polygon.length)
-                  .reduce((value, element) => value + element)
-                  .toString());
               country.regions = data;
               country.displayRegions = true;
               emit(MapState.fetchedRegions(data));

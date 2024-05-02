@@ -59,14 +59,14 @@ Future registerDependencies() async {
     MapLocalDataSourceImpl(sharedPreferences: locator<SharedPreferences>()),
   );
   locator.registerSingleton<MapRemoteDataSourceImpl>(
-    MapRemoteDataSourceImpl(client: locator<GADMClient>()),
-  );
+      MapRemoteDataSourceImpl(client: locator<GADMClient>()));
   locator.registerSingleton<MapRepositoryImpl>(MapRepositoryImpl(
     localDataSource: locator<MapLocalDataSourceImpl>(),
     remoteDataSource: locator<MapRemoteDataSourceImpl>(),
   ));
   locator.registerSingleton<GetCountries>(
       GetCountries(locator<MapRepositoryImpl>()));
+
   locator.registerSingleton<GetCountryRegions>(
       GetCountryRegions(locator<MapRepositoryImpl>()));
 
