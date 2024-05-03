@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:rioko_ni/core/errors/exception.dart';
+import 'package:rioko_ni/core/utils/geo_utils.dart';
 import 'package:rioko_ni/features/map/data/datasources/map_local_data_source.dart';
 import 'package:rioko_ni/features/map/data/models/country_model.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
@@ -31,15 +32,16 @@ class MapLocalDataSourceImpl implements MapLocalDataSource {
       for (String key in geoData.keys) {
         final cca3 = key;
         final info = infoData[cca3] as Map<String, dynamic>;
-        final List<List<List<double>>> polygons = (geoData[key]
-                as List<dynamic>)
-            .map<List<List<double>>>((dynamic item) => (item as List<dynamic>)
-                .map<List<double>>((dynamic innerItem) =>
-                    (innerItem as List<dynamic>)
+        final List<List<List<double>>> polygons = GeoUtils.clampPolygons(
+            (geoData[key] as List<dynamic>)
+                .map<List<List<double>>>((dynamic item) => (item
+                        as List<dynamic>)
+                    .map<List<double>>((dynamic innerItem) => (innerItem
+                            as List<dynamic>)
                         .map<double>((dynamic subItem) => subItem.toDouble())
                         .toList())
-                .toList())
-            .toList();
+                    .toList())
+                .toList());
         final area = areas[info['area'].toString()] as String;
         result.add(CountryModel(
           polygons: polygons,

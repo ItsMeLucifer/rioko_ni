@@ -147,7 +147,7 @@ class _MapPageState extends State<MapPage> {
                 SearchCountryDialog(
               onSelectCountry: (country) {
                 mapController
-                    .fitCamera(CameraFit.bounds(bounds: country.bounds));
+                    .fitCamera(CameraFit.bounds(bounds: country.bounds()));
                 mapController.move(
                     mapController.camera.center, mapController.camera.zoom - 2);
               },

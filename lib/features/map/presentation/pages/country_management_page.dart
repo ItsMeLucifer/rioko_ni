@@ -306,10 +306,10 @@ class _CountryManagementPageState extends State<CountryManagementPage>
           setState(() {});
         },
         selectedRegion: _region,
-        minZoom: widget.country.bounds.zoom(Size(
-          context.width(),
-          context.width(0.7),
-        )),
+        minZoom: widget.country.bounds().zoom(Size(
+              context.width(),
+              context.width(0.7),
+            )),
       ),
     );
   }

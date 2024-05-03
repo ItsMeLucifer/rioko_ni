@@ -133,19 +133,21 @@ class Country extends MapObject with _$Country {
     );
   }
 
-  fm.LatLngBounds get bounds {
+  fm.LatLngBounds bounds({bool cutOffFarPolygons = false}) {
     return GeoUtils.calculateOverallBounds(polygons
-        .where((p) =>
-            GeoUtils.calculateDistance(
-                fm.Polygon(points: polygons.first).boundingBox.center,
-                fm.Polygon(points: p).boundingBox.center) <
-            2000)
+        .where((p) {
+          if (!cutOffFarPolygons) return true;
+          return GeoUtils.calculateDistance(
+                  fm.Polygon(points: polygons.first).boundingBox.center,
+                  fm.Polygon(points: p).boundingBox.center) <
+              2000;
+        })
         .map((p) => fm.Polygon(points: p))
         .toList());
   }
 
   LatLng get center {
-    return bounds.center;
+    return bounds().center;
   }
 
   Widget flag({

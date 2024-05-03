@@ -59,7 +59,7 @@ class MapBuilder {
       ),
       keepAlive: false,
       initialCameraFit: CameraFit.bounds(
-        bounds: country.bounds,
+        bounds: country.bounds(),
       ),
     );
 
@@ -102,9 +102,12 @@ class MapBuilder {
       keepAlive: false,
       minZoom: minZoom,
       maxZoom: 6,
-      initialCameraFit: CameraFit.bounds(bounds: country.bounds.scale(1.005)),
+      initialCameraFit: CameraFit.bounds(
+          bounds: country.bounds(cutOffFarPolygons: true)..scale(1.005)),
       cameraConstraint: CameraConstraint.containCenter(
-        bounds: country.bounds.scale(1.01).toSquare(),
+        bounds: country.bounds()
+          ..scale(1.01)
+          ..toSquare(),
       ),
       onTap: onTap,
     );

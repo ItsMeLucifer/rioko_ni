@@ -177,4 +177,17 @@ class GeoUtils {
 
     return fm.LatLngBounds.fromPoints(allPoints);
   }
+
+  static List<List<List<double>>> clampPolygons(
+    List<List<List<double>>> polygons,
+  ) {
+    return polygons
+        .map((polygon) => polygon
+            .map((coordinate) => [
+                  coordinate.first.clamp(-89.99, 89.99),
+                  coordinate.last.clamp(-179.99, 179.99),
+                ])
+            .toList())
+        .toList();
+  }
 }

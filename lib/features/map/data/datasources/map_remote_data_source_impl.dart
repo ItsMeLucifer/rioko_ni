@@ -30,8 +30,8 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
         final engType = feature.properties["ENGTYPE_1"];
         final code = feature.properties["CC_1"];
 
-        final List<List<List<double>>> polygons =
-            GeoUtils.extractPolygonsFromFeature(feature);
+        final List<List<List<double>>> polygons = GeoUtils.clampPolygons(
+            GeoUtils.extractPolygonsFromFeature(feature));
 
         polygons.sort((a, b) => b.length.compareTo(a.length));
 
