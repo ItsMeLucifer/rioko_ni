@@ -14,7 +14,7 @@ class GeoUtils {
         1000000;
   }
 
-  // Function to calculate distance between two LatLng points
+  /// Function to calculate distance between two LatLng points
   static double calculateDistance(LatLng from, LatLng to) {
     const double earthRadius = 6371.0; // Earth's radius in kilometers
 

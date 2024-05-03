@@ -11,10 +11,12 @@ class RegionAdapter extends TypeAdapter<Region> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Region(
-      polygon: (fields[0] as List).map((e) {
-        final list = (e as List).cast<double>();
-        return LatLng(list.first, list.last);
-      }).toList(),
+      polygons: (fields[0] as List)
+          .map((e) => (e as List).map((e2) {
+                final list = (e2 as List).cast<double>();
+                return LatLng(list.first, list.last);
+              }).toList())
+          .toList(),
       code: fields[1] as String,
       name: fields[2] as String,
       type: fields[3] as String,
@@ -29,7 +31,9 @@ class RegionAdapter extends TypeAdapter<Region> {
     writer
       ..writeByte(7)
       ..writeByte(0)
-      ..write(obj.polygon.map((p) => [p.latitude, p.longitude]).toList())
+      ..write(obj.polygons
+          .map((p) => p.map((p2) => [p2.latitude, p2.longitude]).toList())
+          .toList())
       ..writeByte(1)
       ..write(obj.code)
       ..writeByte(2)

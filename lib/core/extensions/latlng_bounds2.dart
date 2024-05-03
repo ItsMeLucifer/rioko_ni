@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -41,5 +42,28 @@ extension LatLngBounds2 on LatLngBounds {
     ]);
 
     return newBounds;
+  }
+
+  double zoom(
+    Size mapSize,
+  ) {
+    final double east = northEast.longitude;
+    final double west = southWest.longitude;
+    final double north = northEast.latitude;
+    final double south = southWest.latitude;
+
+    final double lngFraction = (east - west);
+    final double latFraction = (north - south);
+
+    final double latZoom = _zoom(mapSize.height, latFraction);
+    final double lngZoom = _zoom(mapSize.width, lngFraction);
+
+    final double zoom = (latZoom < lngZoom ? latZoom : lngZoom).floorToDouble();
+
+    return zoom;
+  }
+
+  static double _zoom(double mapSize, double fraction) {
+    return log(mapSize / fraction) / ln2;
   }
 }

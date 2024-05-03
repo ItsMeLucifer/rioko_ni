@@ -41,7 +41,7 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
           name: name,
           type: type,
           engType: engType,
-          polygons: polygons.first,
+          polygons: polygons,
         );
       }).toList();
     } on ServerException {

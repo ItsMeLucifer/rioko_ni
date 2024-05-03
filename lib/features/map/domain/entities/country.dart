@@ -134,8 +134,14 @@ class Country extends MapObject with _$Country {
   }
 
   fm.LatLngBounds get bounds {
-    return GeoUtils.calculateOverallBounds(
-        polygons.map((p) => fm.Polygon(points: p)).toList());
+    return GeoUtils.calculateOverallBounds(polygons
+        .where((p) =>
+            GeoUtils.calculateDistance(
+                fm.Polygon(points: polygons.first).boundingBox.center,
+                fm.Polygon(points: p).boundingBox.center) <
+            2000)
+        .map((p) => fm.Polygon(points: p))
+        .toList());
   }
 
   LatLng get center {

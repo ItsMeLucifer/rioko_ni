@@ -14,7 +14,7 @@ class Region extends MapObject with _$Region {
   @HiveType(typeId: 1)
   factory Region({
     /// GeoJson data
-    @HiveField(0) required List<LatLng> polygon,
+    @HiveField(0) required List<List<LatLng>> polygons,
     @HiveField(1) required String code,
     @HiveField(2) required String name,
     @HiveField(3) required String type,
@@ -23,18 +23,24 @@ class Region extends MapObject with _$Region {
     @HiveField(6) @Default(MOStatus.none) MOStatus status,
   }) = _Region;
 
+  List<LatLng> get polygon => polygons.first;
+
   bool contains(LatLng position) {
-    return pip.Poly.isPointInPolygon(
-      pip.Point(x: position.longitude, y: position.latitude),
-      polygon
-          .map((latLng) => pip.Point(x: latLng.longitude, y: latLng.latitude))
-          .toList(),
-    );
+    return polygons.any((polygon) {
+      return pip.Poly.isPointInPolygon(
+        pip.Point(x: position.longitude, y: position.latitude),
+        polygon
+            .map((latLng) => pip.Point(x: latLng.longitude, y: latLng.latitude))
+            .toList(),
+      );
+    });
   }
 
   RegionModel toModel() => RegionModel(
         code: code,
-        polygons: polygon.map((p2) => [p2.latitude, p2.longitude]).toList(),
+        polygons: polygons
+            .map((p) => p.map((p2) => [p2.latitude, p2.longitude]).toList())
+            .toList(),
         name: name,
         type: type,
         countryCode: countryCode,

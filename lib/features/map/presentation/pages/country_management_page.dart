@@ -5,6 +5,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/build_context2.dart';
+import 'package:rioko_ni/core/extensions/latlng_bounds2.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
@@ -99,7 +100,8 @@ class _CountryManagementPageState extends State<CountryManagementPage>
           child: Stack(
             children: [
               _buildBody(context),
-              _buildCountryModeSwitch(context),
+              if (widget.country.moreDataAvailable)
+                _buildCountryModeSwitch(context),
             ],
           ),
         ),
@@ -275,7 +277,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
         const SizedBox(height: AppSizes.paddingHalf),
         Text(
           regionName,
-          style: Theme.of(context).textTheme.titleSmall,
+          style: Theme.of(context).textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
       ],
@@ -304,6 +306,10 @@ class _CountryManagementPageState extends State<CountryManagementPage>
           setState(() {});
         },
         selectedRegion: _region,
+        minZoom: widget.country.bounds.zoom(Size(
+          context.width(),
+          context.width(0.7),
+        )),
       ),
     );
   }

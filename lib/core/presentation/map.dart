@@ -93,13 +93,14 @@ class MapBuilder {
     required void Function(TapPosition, LatLng) onTap,
     required MapController controller,
     required Region? selectedRegion,
+    required double minZoom,
   }) {
     final mapOptions = getMapOptions(
       interactionOptions: const InteractionOptions(
         flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
       ),
       keepAlive: false,
-      minZoom: 3,
+      minZoom: minZoom,
       maxZoom: 6,
       initialCameraFit: CameraFit.bounds(bounds: country.bounds.scale(1.005)),
       cameraConstraint: CameraConstraint.containCenter(
@@ -108,37 +109,45 @@ class MapBuilder {
       onTap: onTap,
     );
 
+    final List<Polygon> polygons = [];
+
+    for (var points in country.polygons) {
+      polygons.add(Polygon(
+        strokeCap: StrokeCap.butt,
+        strokeJoin: StrokeJoin.miter,
+        points: points,
+        color: const Color(0x00000000),
+        isFilled: false,
+        borderColor: Theme.of(context).colorScheme.outline,
+        borderStrokeWidth: 1.0,
+      ));
+    }
+
+    for (Region region in regions) {
+      Color color = Theme.of(context).colorScheme.outline.withOpacity(0.1);
+      if (region.status != MOStatus.none) {
+        color = region.status.color(context);
+      }
+      double strokeWidth = region == selectedRegion ? 2.0 : 0.5;
+      polygons.addAll(
+        region.polygons.map(
+          (polygon) => Polygon(
+            strokeCap: StrokeCap.butt,
+            strokeJoin: StrokeJoin.miter,
+            points: polygon,
+            color: color.withMultipliedOpacity(0.5),
+            borderColor: Theme.of(context).colorScheme.outline,
+            borderStrokeWidth: strokeWidth,
+            isFilled: true,
+          ),
+        ),
+      );
+    }
+
     final layers = [
       PolygonLayer(
         polygonCulling: true,
-        polygons: [
-          ...country.polygons.map((points) {
-            return Polygon(
-              strokeCap: StrokeCap.butt,
-              strokeJoin: StrokeJoin.miter,
-              points: points,
-              color: const Color(0x00000000),
-              isFilled: false,
-              borderColor: Theme.of(context).colorScheme.outline,
-              borderStrokeWidth: 1.0,
-            );
-          }),
-          ...regions.map((region) {
-            Color color = const Color(0x00000000);
-            if (region.status != MOStatus.none) {
-              color = region.status.color(context);
-            }
-            return Polygon(
-              strokeCap: StrokeCap.butt,
-              strokeJoin: StrokeJoin.miter,
-              points: region.polygon,
-              color: color.withOpacity(0.3),
-              borderColor: Theme.of(context).colorScheme.outline,
-              borderStrokeWidth: region == selectedRegion ? 2.0 : 0.5,
-              isFilled: true,
-            );
-          }),
-        ],
+        polygons: polygons,
         polygonLabels: false,
       )
     ];
