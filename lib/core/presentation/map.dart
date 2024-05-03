@@ -99,11 +99,12 @@ class MapBuilder {
         flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
       ),
       keepAlive: false,
-      maxZoom: 10,
-      cameraConstraint: CameraConstraint.contain(
-        bounds: country.bounds.scale(1.3).toSquare(),
+      minZoom: 3,
+      maxZoom: 6,
+      initialCameraFit: CameraFit.bounds(bounds: country.bounds.scale(1.005)),
+      cameraConstraint: CameraConstraint.containCenter(
+        bounds: country.bounds.scale(1.01).toSquare(),
       ),
-      minZoom: 2,
       onTap: onTap,
     );
 
