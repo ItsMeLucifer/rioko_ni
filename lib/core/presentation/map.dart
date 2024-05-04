@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -234,19 +236,20 @@ class MapBuilder {
     );
 
     if (regions.isNotEmpty) {
-      polygons.addAll(
-        regions.map((r) {
-          return Polygon(
+      for (Region region in regions) {
+        for (List<LatLng> polygon
+            in region.polygons.sublist(0, min(3, region.polygons.length))) {
+          polygons.add(Polygon(
             strokeCap: StrokeCap.butt,
             strokeJoin: StrokeJoin.bevel,
-            points: r.polygon,
-            color: r.status.color(context).withMultipliedOpacity(0.4),
+            points: polygon,
+            color: region.status.color(context).withMultipliedOpacity(0.4),
             borderColor: Theme.of(context).colorScheme.outline.withOpacity(0.5),
-            borderStrokeWidth: r.status == MOStatus.none ? 0.5 : 0,
+            borderStrokeWidth: region.status == MOStatus.none ? 0.5 : 0,
             isFilled: true,
-          );
-        }).toList(),
-      );
+          ));
+        }
+      }
     }
 
     layers.add(PolygonLayer(
