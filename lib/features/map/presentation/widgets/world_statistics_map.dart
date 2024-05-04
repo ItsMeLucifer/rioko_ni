@@ -10,6 +10,8 @@ import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
+import 'package:rioko_ni/features/map/presentation/pages/country_management_page.dart';
+import 'package:rioko_ni/features/map/presentation/pages/info_page.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/share_dialog.dart';
 
 class WorldStatisticsMap extends StatelessWidget {
@@ -19,7 +21,7 @@ class WorldStatisticsMap extends StatelessWidget {
   final double afPercentage;
   final double asPercentage;
   final double ocPercentage;
-  final void Function() onTapShare;
+  final void Function() onTapButton;
 
   WorldStatisticsMap({
     required this.naPercentage,
@@ -28,13 +30,13 @@ class WorldStatisticsMap extends StatelessWidget {
     required this.afPercentage,
     required this.asPercentage,
     required this.ocPercentage,
-    required this.onTapShare,
+    required this.onTapButton,
     super.key,
   });
 
   String get l10n => 'worldStatisticsMap';
 
-  final _cubit = locator<MapCubit>();
+  final _mapCubit = locator<MapCubit>();
 
   final _themeCubit = locator<ThemeCubit>();
 
@@ -60,6 +62,32 @@ class WorldStatisticsMap extends StatelessWidget {
     }
   }
 
+  void displayInfoPage(BuildContext context) {
+    onTapButton();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => InfoPage(
+          been: _mapCubit.beenCountries,
+          want: _mapCubit.wantCountries,
+          lived: _mapCubit.livedCountries,
+          onTapCountry: (country) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => CountryManagementPage(
+                  country: country,
+                  fetchRegions: _mapCubit.fetchCountryRegions,
+                  saveRegionsLocally: _mapCubit.saveRegionsLocally,
+                  updateCountryStatus: _mapCubit.updateCountryStatus,
+                  clearRegionData: _mapCubit.clearRegionData,
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -79,7 +107,8 @@ class WorldStatisticsMap extends StatelessWidget {
               instructions: SMapWorld.instructionsMercator,
               defaultColor: Theme.of(context).colorScheme.background,
               countryBorder: CountryBorder(color: MOStatus.been.color(context)),
-              colors: [..._cubit.beenCountries, ..._cubit.livedCountries]
+              callback: (id, name, tapDetails) => displayInfoPage(context),
+              colors: [..._mapCubit.beenCountries, ..._mapCubit.livedCountries]
                   .map(
                     (c) => {
                       c.alpha2.toLowerCase(): Theme.of(context)
@@ -136,7 +165,7 @@ class WorldStatisticsMap extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             child: GestureDetector(
               onTap: () {
-                onTapShare();
+                onTapButton();
                 showGeneralDialog(
                   barrierColor: Colors.black.withOpacity(0.5),
                   context: context,
@@ -147,6 +176,18 @@ class WorldStatisticsMap extends StatelessWidget {
               child: const Padding(
                 padding: EdgeInsets.all(AppSizes.paddingDouble),
                 child: Icon(FontAwesomeIcons.shareNodes),
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: GestureDetector(
+                onTap: () => displayInfoPage(context),
+                child: const Padding(
+                  padding: EdgeInsets.all(AppSizes.paddingDouble),
+                  child: Icon(FontAwesomeIcons.expand),
+                ),
               ),
             ),
           )

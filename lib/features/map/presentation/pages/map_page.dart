@@ -94,7 +94,7 @@ class _MapPageState extends State<MapPage> {
                     ocPercentage: showWorldStatistics
                         ? _mapCubit.beenOceaniaPercentage
                         : 0,
-                    onTapShare: () => Future.delayed(
+                    onTapButton: () => Future.delayed(
                         const Duration(milliseconds: 200),
                         () => _closeTopDrawer()),
                   ),
