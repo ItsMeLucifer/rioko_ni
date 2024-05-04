@@ -117,18 +117,19 @@ class _InfoPageState extends State<InfoPage> {
               : '${countries.length} countries'),
         ),
         if (countries.isNotEmpty)
-          Container(
-            margin: const EdgeInsets.all(
-              AppSizes.paddingDouble,
-            ),
-            decoration: BoxDecoration(
-              color: borderColor.withOpacity(0.1),
-              border: Border.all(
-                color: borderColor,
+          ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: context.height(0.6)),
+            child: Container(
+              margin: const EdgeInsets.all(
+                AppSizes.paddingDouble,
               ),
-              borderRadius: BorderRadius.circular(AppSizes.radiusHalf),
-            ),
-            child: SingleChildScrollView(
+              decoration: BoxDecoration(
+                color: borderColor.withOpacity(0.1),
+                border: Border.all(
+                  color: borderColor,
+                ),
+                borderRadius: BorderRadius.circular(AppSizes.radiusHalf),
+              ),
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: countries.length,

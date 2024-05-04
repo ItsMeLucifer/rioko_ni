@@ -61,7 +61,7 @@ class MapBuilder {
       ),
       keepAlive: false,
       initialCameraFit: CameraFit.bounds(
-        bounds: country.bounds(),
+        bounds: country.bounds(cutOffFarPolygons: true).scale(1.2),
       ),
     );
 
