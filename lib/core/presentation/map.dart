@@ -105,9 +105,7 @@ class MapBuilder {
       initialCameraFit: CameraFit.bounds(
           bounds: country.bounds(cutOffFarPolygons: true)..scale(1.005)),
       cameraConstraint: CameraConstraint.containCenter(
-        bounds: country.bounds()
-          ..scale(1.01)
-          ..toSquare(),
+        bounds: country.bounds().scale(1.01).toSquare(),
       ),
       onTap: onTap,
     );

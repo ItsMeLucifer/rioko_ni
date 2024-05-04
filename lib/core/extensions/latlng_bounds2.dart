@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:rioko_ni/core/extensions/lat_lng2.dart';
 
 extension LatLngBounds2 on LatLngBounds {
@@ -15,14 +14,11 @@ extension LatLngBounds2 on LatLngBounds {
     final latDiff = (north - south) * factor / 2;
     final lngDiff = (east - west) * factor / 2;
 
-    final c1 = LatLng(centerLat - latDiff, centerLng - lngDiff).clamp();
-    final c2 = LatLng(centerLat + latDiff, centerLng + lngDiff).clamp();
     // Create new extended bounds
-    final newBounds = LatLngBounds(c1, c2);
-
-    if (!newBounds.northEast.isValid || !newBounds.southWest.isValid) {
-      return this;
-    }
+    final newBounds = LatLngBounds(
+      LatLng2.clamped(centerLat - latDiff, centerLng - lngDiff),
+      LatLng2.clamped(centerLat + latDiff, centerLng + lngDiff),
+    );
 
     return newBounds;
   }
@@ -41,13 +37,9 @@ extension LatLngBounds2 on LatLngBounds {
 
     // Calculate new bounds
     final newBounds = LatLngBounds.fromPoints([
-      LatLng(centerLat - newDiff, centerLng - newDiff)..clamp(),
-      LatLng(centerLat + newDiff, centerLng + newDiff)..clamp(),
+      LatLng2.clamped(centerLat - newDiff, centerLng - newDiff),
+      LatLng2.clamped(centerLat + newDiff, centerLng + newDiff),
     ]);
-
-    if (!newBounds.northEast.isValid || !newBounds.southWest.isValid) {
-      return this;
-    }
 
     return newBounds;
   }
