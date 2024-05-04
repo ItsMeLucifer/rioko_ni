@@ -56,7 +56,7 @@ class MapCubit extends Cubit<MapState> {
     emit(const MapState.loading());
     await _getDir();
     await Hive.openBox('countries');
-    await Hive.openBox('regions');
+    await Hive.openBox('regions_v2');
     await Hive.openBox('settings');
     _getCurrentPosition();
     await _getCountryPolygons().then((_) {
@@ -142,31 +142,22 @@ class MapCubit extends Cubit<MapState> {
   }
 
   Future _getLocalRegionsData() async {
-    try {
-      var box = Hive.box('regions');
-      if (settings.get('should_clear_data', defaultValue: true)) {
-        box.clear();
-        settings.put('should_clear_data', false);
-        return emit(const MapState.readRegionsData(data: {}));
-      }
-      final data = box.toMap().cast<String, List<dynamic>>();
-      for (String alpha3 in data.keys) {
-        countries.firstWhere((c) => c.alpha3 == alpha3)
-          ..regions = (data[alpha3] ?? []).cast<Region>()
-          ..displayRegions = true
-          ..calculateStatus();
-      }
-      emit(MapState.readRegionsData(data: data.cast<String, List<Region>>()));
-    } catch (e) {
-      debugPrint(e.toString());
+    var box = Hive.box('regions_v2');
+    final data = box.toMap().cast<String, List<dynamic>>();
+    for (String alpha3 in data.keys) {
+      countries.firstWhere((c) => c.alpha3 == alpha3)
+        ..regions = (data[alpha3] ?? []).cast<Region>()
+        ..displayRegions = true
+        ..calculateStatus();
     }
+    emit(MapState.readRegionsData(data: data.cast<String, List<Region>>()));
   }
 
   void clearRegionData(String alpha3) {
     countries.firstWhere((c) => c.alpha3 == alpha3)
       ..regions = []
       ..displayRegions = false;
-    var box = Hive.box('regions');
+    var box = Hive.box('regions_v2');
     box.delete(alpha3);
   }
 
@@ -340,7 +331,7 @@ class MapCubit extends Cubit<MapState> {
   }
 
   void saveRegionsLocally() async {
-    var box = Hive.box('regions');
+    var box = Hive.box('regions_v2');
     Map<String, List<Region>> data = {};
     for (Country country in countries) {
       if (country.displayRegions) {
