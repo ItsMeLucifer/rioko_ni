@@ -142,20 +142,24 @@ class MapCubit extends Cubit<MapState> {
   }
 
   Future _getLocalRegionsData() async {
-    var box = Hive.box('regions');
-    if (settings.get('should_clear_data', defaultValue: true)) {
-      box.clear();
-      settings.put('should_clear_data', false);
-      return emit(const MapState.readRegionsData(data: {}));
+    try {
+      var box = Hive.box('regions');
+      if (settings.get('should_clear_data', defaultValue: true)) {
+        box.clear();
+        settings.put('should_clear_data', false);
+        return emit(const MapState.readRegionsData(data: {}));
+      }
+      final data = box.toMap().cast<String, List<dynamic>>();
+      for (String alpha3 in data.keys) {
+        countries.firstWhere((c) => c.alpha3 == alpha3)
+          ..regions = (data[alpha3] ?? []).cast<Region>()
+          ..displayRegions = true
+          ..calculateStatus();
+      }
+      emit(MapState.readRegionsData(data: data.cast<String, List<Region>>()));
+    } catch (e) {
+      debugPrint(e.toString());
     }
-    final data = box.toMap().cast<String, List<dynamic>>();
-    for (String alpha3 in data.keys) {
-      countries.firstWhere((c) => c.alpha3 == alpha3)
-        ..regions = (data[alpha3] ?? []).cast<Region>()
-        ..displayRegions = true
-        ..calculateStatus();
-    }
-    emit(MapState.readRegionsData(data: data.cast<String, List<Region>>()));
   }
 
   void clearRegionData(String alpha3) {
