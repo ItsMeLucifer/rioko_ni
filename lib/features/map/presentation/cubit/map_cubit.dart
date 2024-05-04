@@ -57,15 +57,12 @@ class MapCubit extends Cubit<MapState> {
     await _getDir();
     await Hive.openBox('countries');
     await Hive.openBox('regions_v2');
-    await Hive.openBox('settings');
     _getCurrentPosition();
     await _getCountryPolygons().then((_) {
       _getLocalCountryData();
       _getLocalRegionsData();
     });
   }
-
-  Box get settings => Hive.box('settings');
 
   Future _getCountryPolygons() async {
     await getCountryPolygonUsecase.call(NoParams()).then(
