@@ -57,12 +57,15 @@ class MapCubit extends Cubit<MapState> {
     await _getDir();
     await Hive.openBox('countries');
     await Hive.openBox('regions');
+    await Hive.openBox('settings');
     _getCurrentPosition();
     await _getCountryPolygons().then((_) {
       _getLocalCountryData();
       _getLocalRegionsData();
     });
   }
+
+  Box get settings => Hive.box('settings');
 
   Future _getCountryPolygons() async {
     await getCountryPolygonUsecase.call(NoParams()).then(
@@ -140,6 +143,11 @@ class MapCubit extends Cubit<MapState> {
 
   Future _getLocalRegionsData() async {
     var box = Hive.box('regions');
+    if (settings.get('should_clear_data', defaultValue: true)) {
+      box.clear();
+      settings.put('should_clear_data', false);
+      return emit(const MapState.readRegionsData(data: {}));
+    }
     final data = box.toMap().cast<String, List<dynamic>>();
     for (String alpha3 in data.keys) {
       countries.firstWhere((c) => c.alpha3 == alpha3)

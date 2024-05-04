@@ -93,18 +93,12 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: SafeArea(
-          child: Stack(
-            children: [
-              _buildBody(context),
-              if (widget.country.moreDataAvailable)
-                _buildCountryModeSwitch(context),
-            ],
-          ),
-        ),
+      body: Stack(
+        children: [
+          _buildBody(context),
+          if (widget.country.moreDataAvailable)
+            _buildCountryModeSwitch(context),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
@@ -122,7 +116,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
 
   Widget _buildCountryModeSwitch(BuildContext context) {
     return Align(
-      alignment: const Alignment(0.95, -0.69),
+      alignment: const Alignment(0.95, -0.485),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -176,20 +170,22 @@ class _CountryManagementPageState extends State<CountryManagementPage>
     return Stack(
       children: [
         _buildCountryMiniature(context),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSizes.paddingDouble,
-            vertical: AppSizes.paddingQuadruple,
-          ),
-          child: SizedBox(
-            width: double.infinity,
-            child: Column(
-              children: [
-                _buildCountryInfo(context),
-                Expanded(
-                    child:
-                        _buildStatusButtons(context, target: widget.country)),
-              ],
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSizes.paddingDouble,
+              vertical: AppSizes.paddingQuadruple,
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  _buildCountryInfo(context),
+                  Expanded(
+                      child:
+                          _buildStatusButtons(context, target: widget.country)),
+                ],
+              ),
             ),
           ),
         ),
@@ -233,29 +229,31 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   // Region
 
   Widget _buildRegionsContent(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSizes.paddingDouble,
-        vertical: AppSizes.paddingQuadruple,
-      ),
-      child: SizedBox(
-        width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildCountryInfo(context),
-              _buildRegionsPreview(context),
-              if (_region != null) _buildRegionInfo(context),
-              const SizedBox(height: AppSizes.padding),
-              if (_region != null)
-                _buildStatusButtons(
-                  context,
-                  target: _region!,
-                  onPressed: (_) {
-                    widget.country.calculateStatus();
-                  },
-                ),
-            ],
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSizes.paddingDouble,
+          vertical: AppSizes.paddingQuadruple,
+        ),
+        child: SizedBox(
+          width: double.infinity,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                _buildCountryInfo(context),
+                _buildRegionsPreview(context),
+                if (_region != null) _buildRegionInfo(context),
+                const SizedBox(height: AppSizes.padding),
+                if (_region != null)
+                  _buildStatusButtons(
+                    context,
+                    target: _region!,
+                    onPressed: (_) {
+                      widget.country.calculateStatus();
+                    },
+                  ),
+              ],
+            ),
           ),
         ),
       ),
