@@ -96,8 +96,15 @@ class _CountryManagementPageState extends State<CountryManagementPage>
       body: Stack(
         children: [
           _buildBody(context),
-          if (widget.country.moreDataAvailable)
-            _buildCountryModeSwitch(context),
+          if (fetchingRegions)
+            Container(
+              width: context.width(),
+              height: context.height(),
+              color: Colors.black26,
+              child: const CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.white,
+              ),
+            ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -115,13 +122,15 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   }
 
   Widget _buildCountryModeSwitch(BuildContext context) {
-    return Align(
-      alignment: const Alignment(0.95, -0.485),
-      child: Column(
+    return Container(
+      alignment: Alignment.centerRight,
+      margin: const EdgeInsets.only(top: AppSizes.paddingHalf),
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(tr('$l10n.labels.showRegions')),
+          const SizedBox(width: AppSizes.padding),
           Stack(
             alignment: Alignment.center,
             children: [
@@ -137,19 +146,6 @@ class _CountryManagementPageState extends State<CountryManagementPage>
                   setState(() => widget.country.displayRegions = value);
                 },
               ),
-              if (fetchingRegions)
-                const Positioned(
-                  right: 12.5,
-                  child: SizedBox(
-                    width: 15,
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: CircularProgressIndicator.adaptive(
-                        backgroundColor: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
             ],
           ),
         ],
@@ -172,20 +168,19 @@ class _CountryManagementPageState extends State<CountryManagementPage>
         _buildCountryMiniature(context),
         SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSizes.paddingDouble,
-              vertical: AppSizes.paddingQuadruple,
+            padding: const EdgeInsets.fromLTRB(
+              AppSizes.paddingDouble,
+              AppSizes.paddingDouble,
+              AppSizes.paddingDouble,
+              AppSizes.paddingHalf,
             ),
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
-                children: [
-                  _buildCountryInfo(context),
-                  Expanded(
-                      child:
-                          _buildStatusButtons(context, target: widget.country)),
-                ],
-              ),
+            child: Column(
+              children: [
+                _buildCountryInfo(context),
+                Expanded(
+                    child:
+                        _buildStatusButtons(context, target: widget.country)),
+              ],
             ),
           ),
         ),
@@ -212,6 +207,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
         borderColor: Theme.of(context).colorScheme.outline,
         borderRadius: 3,
       ),
+      if (widget.country.moreDataAvailable) _buildCountryModeSwitch(context),
     ]);
   }
 
@@ -231,9 +227,11 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   Widget _buildRegionsContent(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSizes.paddingDouble,
-          vertical: AppSizes.paddingQuadruple,
+        padding: const EdgeInsets.fromLTRB(
+          AppSizes.paddingDouble,
+          AppSizes.paddingDouble,
+          AppSizes.paddingDouble,
+          AppSizes.paddingHalf,
         ),
         child: SizedBox(
           width: double.infinity,
