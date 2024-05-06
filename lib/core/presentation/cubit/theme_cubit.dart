@@ -138,9 +138,6 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     snackBarTheme: const SnackBarThemeData(
       actionTextColor: Colors.black,
     ),
-    progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: Colors.black,
-    ),
   );
 
   final ThemeData _defaultDark = ThemeData.dark(
@@ -235,9 +232,6 @@ class ThemeCubit extends Cubit<ThemeDataType> {
           Color.fromARGB(255, 9, 143, 129),
         ),
       ),
-    ),
-    progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: Colors.white,
     ),
   );
 

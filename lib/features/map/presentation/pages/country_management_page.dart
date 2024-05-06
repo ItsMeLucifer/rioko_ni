@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
@@ -8,13 +11,15 @@ import 'package:rioko_ni/core/extensions/build_context2.dart';
 import 'package:rioko_ni/core/extensions/latlng_bounds2.dart';
 import 'package:rioko_ni/core/extensions/string2.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
+import 'package:rioko_ni/core/presentation/widgets/linear_progress_indicator.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
+import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 
 class CountryManagementPage extends StatefulWidget {
   final Country country;
-  final Future<List<Region>> Function(Country) fetchRegions;
+  final void Function(Country) fetchRegions;
   final void Function() saveRegionsLocally;
   final void Function({required Country country, required MOStatus status})
       updateCountryStatus;
@@ -48,7 +53,11 @@ class _CountryManagementPageState extends State<CountryManagementPage>
 
   bool get regionsMode => widget.country.displayRegions;
 
-  bool fetchingRegions = false;
+  Timer? _timer;
+
+  double _remaining = 10;
+
+  final double _secs = 10;
 
   @override
   void initState() {
@@ -83,44 +92,62 @@ class _CountryManagementPageState extends State<CountryManagementPage>
     super.dispose();
   }
 
-  void fetchRegions() {
-    fetchingRegions = true;
-    setState(() {});
-    widget.fetchRegions(widget.country).then((regions) => setState(() {
-          fetchingRegions = false;
-          _region = regions[regions.length ~/ 2];
-        }));
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
+    return BlocListener<MapCubit, MapState>(
+      listener: (context, state) {
+        state.maybeWhen(
+          fetchedRegions: (regions) {
+            _timer?.cancel();
+            setState(() => _region = regions[regions.length ~/ 2]);
+          },
+          orElse: () {},
+        );
+      },
+      child: Stack(
         children: [
-          _buildBody(context),
-          if (fetchingRegions)
-            Container(
-              width: context.width(),
-              height: context.height(),
-              color: Colors.black26,
-              child: const Center(
-                child: CircularProgressIndicator.adaptive(
-                  backgroundColor: Colors.white,
+          Scaffold(
+            body: Stack(children: [
+              _buildBody(context),
+              BlocBuilder<MapCubit, MapState>(
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    fetchingRegions: () => Container(
+                      width: context.width(),
+                      height: context.height(),
+                      color: Colors.black26,
+                      child: Center(
+                        child: SizedBox(
+                          width: context.width(0.7),
+                          child: RiokoLinearProgressIndicator(
+                            remaining: _remaining,
+                            nominative: _secs.toInt(),
+                            message: 'Loading...',
+                          ),
+                        ),
+                      ),
+                    ),
+                    orElse: () => const SizedBox.shrink(),
+                  );
+                },
+              ),
+            ]),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: (_timer?.isActive ?? false)
+                  ? null
+                  : () => pop(context, short: true),
+              label: SizedBox(
+                width: 50,
+                child: Text(
+                  tr('core.dialog.ok'),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => pop(context, short: true),
-        label: SizedBox(
-          width: 50,
-          child: Text(
-            tr('core.dialog.ok'),
-            textAlign: TextAlign.center,
           ),
-        ),
+        ],
       ),
     );
   }
@@ -142,7 +169,15 @@ class _CountryManagementPageState extends State<CountryManagementPage>
                 value: widget.country.displayRegions,
                 onChanged: (value) {
                   if (value && widget.country.regions.isEmpty) {
-                    fetchRegions();
+                    widget.fetchRegions(widget.country);
+                    _remaining = _secs;
+                    _timer = Timer.periodic(
+                      const Duration(milliseconds: 50),
+                      (timer) => setState(() {
+                        if (_remaining < 1) _remaining = _secs;
+                        _remaining -= 0.05;
+                      }),
+                    );
                   }
                   if (!value) {
                     widget.clearRegionData(widget.country.alpha3);
