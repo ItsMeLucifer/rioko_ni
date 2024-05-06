@@ -133,14 +133,17 @@ class Country extends MapObject with _$Country {
     );
   }
 
-  fm.LatLngBounds bounds({bool cutOffFarPolygons = false}) {
+  fm.LatLngBounds bounds({
+    bool cutOffFarPolygons = false,
+    double distance = 2000,
+  }) {
     return GeoUtils.calculateOverallBounds(polygons
         .where((p) {
           if (!cutOffFarPolygons) return true;
           return GeoUtils.calculateDistance(
                   fm.Polygon(points: polygons.first).boundingBox.center,
                   fm.Polygon(points: p).boundingBox.center) <
-              2000;
+              distance;
         })
         .map((p) => fm.Polygon(points: p))
         .toList());

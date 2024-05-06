@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/build_context2.dart';
 import 'package:rioko_ni/core/extensions/latlng_bounds2.dart';
+import 'package:rioko_ni/core/extensions/string2.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
@@ -13,7 +14,7 @@ import 'package:rioko_ni/features/map/domain/entities/region.dart';
 
 class CountryManagementPage extends StatefulWidget {
   final Country country;
-  final Future Function(Country) fetchRegions;
+  final Future<List<Region>> Function(Country) fetchRegions;
   final void Function() saveRegionsLocally;
   final void Function({required Country country, required MOStatus status})
       updateCountryStatus;
@@ -85,9 +86,10 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   void fetchRegions() {
     fetchingRegions = true;
     setState(() {});
-    widget
-        .fetchRegions(widget.country)
-        .then((_) => setState(() => fetchingRegions = false));
+    widget.fetchRegions(widget.country).then((regions) => setState(() {
+          fetchingRegions = false;
+          _region = regions[regions.length ~/ 2];
+        }));
   }
 
   @override
@@ -268,13 +270,13 @@ class _CountryManagementPageState extends State<CountryManagementPage>
     return Column(
       children: [
         Text(
-          _region!.name,
+          _region!.name.toTitleCase(),
           style: Theme.of(context).textTheme.headlineMedium,
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppSizes.paddingHalf),
         Text(
-          regionName,
+          regionName.toTitleCase(),
           style: Theme.of(context).textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
@@ -305,9 +307,10 @@ class _CountryManagementPageState extends State<CountryManagementPage>
         },
         selectedRegion: _region,
         minZoom: widget.country.bounds().zoom(Size(
-              context.width(),
-              context.width(0.7),
-            )),
+                  context.width(),
+                  context.width(0.7),
+                )) -
+            1,
       ),
     );
   }

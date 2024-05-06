@@ -92,18 +92,20 @@ class MapCubit extends Cubit<MapState> {
     return result;
   }
 
-  Future fetchCountryRegions(Country country) async {
+  Future<List<Region>> fetchCountryRegions(Country country) async {
     emit(const MapState.fetchingRegions());
-    await getCountryRegionsUsecase.call(country.alpha3).then(
+    return await getCountryRegionsUsecase.call(country.alpha3).then(
           (result) => result.fold(
             (failure) {
               emit(MapState.error(failure.message));
               debugPrint(failure.fullMessage);
+              return [];
             },
             (data) {
               country.regions = data;
               country.displayRegions = true;
               emit(MapState.fetchedRegions(data));
+              return data;
             },
           ),
         );

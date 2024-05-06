@@ -61,7 +61,8 @@ class MapBuilder {
       ),
       keepAlive: false,
       initialCameraFit: CameraFit.bounds(
-        bounds: country.bounds(cutOffFarPolygons: true).scale(1.2),
+        bounds:
+            country.bounds(cutOffFarPolygons: true, distance: 200).scale(1.2),
       ),
     );
 
@@ -105,7 +106,8 @@ class MapBuilder {
       minZoom: minZoom,
       maxZoom: 6,
       initialCameraFit: CameraFit.bounds(
-          bounds: country.bounds(cutOffFarPolygons: true)..scale(1.005)),
+          bounds: country.bounds(cutOffFarPolygons: true)
+            ..scale(1.005).toSquare()),
       cameraConstraint: CameraConstraint.containCenter(
         bounds: country.bounds().scale(1.01).toSquare(),
       ),
