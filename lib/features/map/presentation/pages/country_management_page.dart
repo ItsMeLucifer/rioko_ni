@@ -101,8 +101,10 @@ class _CountryManagementPageState extends State<CountryManagementPage>
               width: context.width(),
               height: context.height(),
               color: Colors.black26,
-              child: const CircularProgressIndicator.adaptive(
-                backgroundColor: Colors.white,
+              child: const Center(
+                child: CircularProgressIndicator.adaptive(
+                  backgroundColor: Colors.white,
+                ),
               ),
             ),
         ],
