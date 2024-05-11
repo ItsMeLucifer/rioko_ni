@@ -22,11 +22,6 @@ import 'package:rioko_ni/features/map/domain/usecases/get_regions.dart';
 part 'map_state.dart';
 part 'map_cubit.freezed.dart';
 
-enum Countries {
-  been,
-  want,
-}
-
 class MapCubit extends Cubit<MapState> {
   final GetCountries getCountryPolygonUsecase;
   final GetCountryRegions getCountryRegionsUsecase;
