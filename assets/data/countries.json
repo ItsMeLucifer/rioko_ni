@@ -13,11 +13,11 @@
     },
     "PAK": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BGD": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "JPN": {
         "area": 0,
@@ -37,7 +37,7 @@
     },
     "IRN": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "THA": {
         "area": 0,
@@ -53,11 +53,11 @@
     },
     "IRQ": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "AFG": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "SAU": {
         "area": 0,
@@ -65,7 +65,7 @@
     },
     "UZB": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MYS": {
         "area": 0,
@@ -73,7 +73,7 @@
     },
     "YEM": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "NPL": {
         "area": 0,
@@ -81,15 +81,15 @@
     },
     "PRK": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "TWN": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "LKA": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "KAZ": {
         "area": 0,
@@ -97,19 +97,19 @@
     },
     "SYR": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "KHM": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "JOR": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "AZE": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ARE": {
         "area": 0,
@@ -117,11 +117,11 @@
     },
     "TJK": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ISR": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "HKG": {
         "area": 0,
@@ -129,7 +129,7 @@
     },
     "LAO": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "LBN": {
         "area": 0,
@@ -137,11 +137,11 @@
     },
     "KGZ": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "TKM": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "SGP": {
         "area": 0,
@@ -149,11 +149,11 @@
     },
     "OMN": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "PSE": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "KWT": {
         "area": 0,
@@ -161,7 +161,7 @@
     },
     "GEO": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MNG": {
         "area": 0,
@@ -169,7 +169,7 @@
     },
     "ARM": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": false
     },
     "QAT": {
         "area": 0,
@@ -209,31 +209,31 @@
     },
     "CAN": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BMU": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "GRL": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "SPM": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "UMI": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "GTM": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "HND": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "NIC": {
         "area": 1,
@@ -241,35 +241,35 @@
     },
     "SLV": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "CRI": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "PAN": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BLZ": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "HTI": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "CUB": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "DOM": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "PRI": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "JAM": {
         "area": 1,
@@ -281,7 +281,7 @@
     },
     "GLP": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BHS": {
         "area": 1,
@@ -289,11 +289,11 @@
     },
     "MTQ": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BRB": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "LCA": {
         "area": 1,
@@ -301,7 +301,7 @@
     },
     "CUW": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "GRD": {
         "area": 1,
@@ -313,11 +313,11 @@
     },
     "ABW": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "VIR": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ATG": {
         "area": 1,
@@ -329,7 +329,7 @@
     },
     "CYM": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "KNA": {
         "area": 1,
@@ -337,35 +337,35 @@
     },
     "SXM": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "TCA": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MAF": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "VGB": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BES": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "AIA": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MSR": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BLM": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BRA": {
         "area": 2,
@@ -373,7 +373,7 @@
     },
     "COL": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ARG": {
         "area": 2,
@@ -385,27 +385,27 @@
     },
     "VEN": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": false
     },
     "CHL": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ECU": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BOL": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": false
     },
     "PRY": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": false
     },
     "URY": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": false
     },
     "GUY": {
         "area": 2,
@@ -413,27 +413,27 @@
     },
     "SUR": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": false
     },
     "GUF": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": false
     },
     "FLK": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": false
     },
     "NGA": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ETH": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "COD": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "EGY": {
         "area": 3,
@@ -441,31 +441,31 @@
     },
     "TZA": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ZAF": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "KEN": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "UGA": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "DZA": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "SDN": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MAR": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "AGO": {
         "area": 3,
@@ -473,7 +473,7 @@
     },
     "MOZ": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "GHA": {
         "area": 3,
@@ -481,7 +481,7 @@
     },
     "MDG": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "CMR": {
         "area": 3,
@@ -489,11 +489,11 @@
     },
     "CIV": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "NER": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BFA": {
         "area": 3,
@@ -501,87 +501,87 @@
     },
     "MLI": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MWI": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ZMB": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "SEN": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "TCD": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "SOM": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ZWE": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "GIN": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "RWA": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BEN": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BDI": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "TUN": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "SSD": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "TGO": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "SLE": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "LBY": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "COG": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ERI": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "LBR": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "CAF": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MRT": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "NAM": {
         "area": 3,
@@ -593,23 +593,23 @@
     },
     "BWA": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "GAB": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "LSO": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "GNB": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "GNQ": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MUS": {
         "area": 3,
@@ -629,7 +629,7 @@
     },
     "REU": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "CPV": {
         "area": 3,
@@ -637,11 +637,11 @@
     },
     "ESH": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MYT": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "STP": {
         "area": 3,
@@ -653,15 +653,15 @@
     },
     "SHN": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "IOT": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": false
     },
     "RUS": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "DEU": {
         "area": 4,
@@ -681,7 +681,7 @@
     },
     "ESP": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "UKR": {
         "area": 4,
@@ -701,7 +701,7 @@
     },
     "BEL": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "GRC": {
         "area": 4,
@@ -725,11 +725,11 @@
     },
     "BLR": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "AUT": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "CHE": {
         "area": 4,
@@ -741,11 +741,11 @@
     },
     "SRB": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "DNK": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "FIN": {
         "area": 4,
@@ -761,23 +761,23 @@
     },
     "IRL": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "HRV": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BIH": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ALB": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "LTU": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MDA": {
         "area": 4,
@@ -785,15 +785,15 @@
     },
     "SVN": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MKD": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "LVA": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "UNK": {
         "area": 4,
@@ -801,7 +801,7 @@
     },
     "EST": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "CYP": {
         "area": 4,
@@ -821,15 +821,15 @@
     },
     "ISL": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "JEY": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "IMN": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "AND": {
         "area": 4,
@@ -837,11 +837,11 @@
     },
     "GGY": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "FRO": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "MCO": {
         "area": 4,
@@ -857,7 +857,7 @@
     },
     "GIB": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ALA": {
         "area": 4,
@@ -865,7 +865,7 @@
     },
     "SJM": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": false
     },
     "VAT": {
         "area": 4,
@@ -877,7 +877,7 @@
     },
     "PNG": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "NZL": {
         "area": 5,
@@ -885,11 +885,11 @@
     },
     "FJI": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "SLB": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "VUT": {
         "area": 5,
@@ -929,11 +929,11 @@
     },
     "MNP": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ASM": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "COK": {
         "area": 5,
@@ -949,7 +949,7 @@
     },
     "WLF": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "NRU": {
         "area": 5,
@@ -957,27 +957,27 @@
     },
     "NFK": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "CXR": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "NIU": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "TKL": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "CCK": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "PCN": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": false
     },
     "ATA": {
         "area": 6,
@@ -985,18 +985,18 @@
     },
     "ATF": {
         "area": 6,
-        "more_data_available": true
+        "more_data_available": false
     },
     "SGS": {
         "area": 6,
-        "more_data_available": true
+        "more_data_available": false
     },
     "BVT": {
         "area": 6,
-        "more_data_available": true
+        "more_data_available": false
     },
     "HMD": {
         "area": 6,
-        "more_data_available": true
+        "more_data_available": false
     }
 }

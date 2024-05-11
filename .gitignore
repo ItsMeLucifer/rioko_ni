@@ -58,3 +58,6 @@ android/app/upload_key
 
 # Settings
 .vscode/settings.json
+
+
+assets/data/script.dart
