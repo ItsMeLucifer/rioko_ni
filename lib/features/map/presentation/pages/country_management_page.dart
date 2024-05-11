@@ -11,7 +11,6 @@ import 'package:rioko_ni/core/extensions/build_context2.dart';
 import 'package:rioko_ni/core/extensions/latlng_bounds2.dart';
 import 'package:rioko_ni/core/extensions/string2.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
-import 'package:rioko_ni/core/presentation/widgets/linear_progress_indicator.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
@@ -53,12 +52,6 @@ class _CountryManagementPageState extends State<CountryManagementPage>
 
   bool get regionsMode => widget.country.displayRegions;
 
-  Timer? _timer;
-
-  double _remaining = 10;
-
-  final double _secs = 10;
-
   @override
   void initState() {
     _controller = AnimationController(
@@ -98,7 +91,6 @@ class _CountryManagementPageState extends State<CountryManagementPage>
       listener: (context, state) {
         state.maybeWhen(
           fetchedRegions: (regions) {
-            _timer?.cancel();
             setState(() => _region = regions[regions.length ~/ 2]);
           },
           orElse: () {},
@@ -116,15 +108,8 @@ class _CountryManagementPageState extends State<CountryManagementPage>
                       width: context.width(),
                       height: context.height(),
                       color: Colors.black26,
-                      child: Center(
-                        child: SizedBox(
-                          width: context.width(0.7),
-                          child: RiokoLinearProgressIndicator(
-                            remaining: _remaining,
-                            nominative: _secs.toInt(),
-                            message: 'Loading...',
-                          ),
-                        ),
+                      child: const Center(
+                        child: CircularProgressIndicator.adaptive(),
                       ),
                     ),
                     orElse: () => const SizedBox.shrink(),
@@ -135,9 +120,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: FloatingActionButton.extended(
-              onPressed: (_timer?.isActive ?? false)
-                  ? null
-                  : () => pop(context, short: true),
+              onPressed: () => pop(context, short: true),
               label: SizedBox(
                 width: 50,
                 child: Text(
@@ -170,14 +153,6 @@ class _CountryManagementPageState extends State<CountryManagementPage>
                 onChanged: (value) {
                   if (value && widget.country.regions.isEmpty) {
                     widget.fetchRegions(widget.country);
-                    _remaining = _secs;
-                    _timer = Timer.periodic(
-                      const Duration(milliseconds: 50),
-                      (timer) => setState(() {
-                        if (_remaining < 1) _remaining = _secs;
-                        _remaining -= 0.05;
-                      }),
-                    );
                   }
                   if (!value) {
                     widget.clearRegionData(widget.country.alpha3);
