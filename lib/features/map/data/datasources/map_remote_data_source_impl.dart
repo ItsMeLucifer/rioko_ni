@@ -4,14 +4,14 @@ import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:geobase/geobase.dart';
 import 'package:http/io_client.dart';
-import 'package:rioko_ni/core/data/gadm_client.dart';
+import 'package:rioko_ni/core/data/rioko_server_client.dart';
 import 'package:rioko_ni/core/errors/exception.dart';
 import 'package:rioko_ni/core/utils/geo_utils.dart';
 import 'package:rioko_ni/features/map/data/datasources/map_remote_data_source.dart';
 import 'package:rioko_ni/features/map/data/models/region_model.dart';
 
 class MapRemoteDataSourceImpl implements MapRemoteDataSource {
-  final GADMClient client;
+  final RiokoServerClient client;
 
   const MapRemoteDataSourceImpl({required this.client});
 
@@ -26,8 +26,12 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
         "geodata.ucdavis.edu",
         "gadm/gadm4.1/json/gadm41_${countryCode}_1.json.zip",
       );
+      final Map<String,String> headers = {
+        "Authorization":
+            "Bearer ${const String.fromEnvironment('rioko_server_key')}"
+      };
       debugPrint('GET ${uri.host}${uri.path}');
-      final response = await client.get(uri);
+      final response = await client.get(uri,headers: headers);
       if (response.statusCode != 200) {
         throw ServerException(response.toString(), stack: StackTrace.current);
       }

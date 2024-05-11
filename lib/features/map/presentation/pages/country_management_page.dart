@@ -246,7 +246,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
         borderColor: Theme.of(context).colorScheme.outline,
         borderRadius: 3,
       ),
-      // if (widget.country.moreDataAvailable) _buildCountryModeSwitch(context),
+      if (widget.country.moreDataAvailable) _buildCountryModeSwitch(context),
     ]);
   }
 

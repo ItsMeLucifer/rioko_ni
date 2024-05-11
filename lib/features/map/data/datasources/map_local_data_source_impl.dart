@@ -5,13 +5,9 @@ import 'package:rioko_ni/core/utils/geo_utils.dart';
 import 'package:rioko_ni/features/map/data/datasources/map_local_data_source.dart';
 import 'package:rioko_ni/features/map/data/models/country_model.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MapLocalDataSourceImpl implements MapLocalDataSource {
-  final SharedPreferences sharedPreferences;
-  const MapLocalDataSourceImpl({
-    required this.sharedPreferences,
-  });
+  const MapLocalDataSourceImpl();
 
   static String get countriesGeoDataPath =>
       'assets/data/geo/countries_geo.json';
