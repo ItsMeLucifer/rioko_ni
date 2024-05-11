@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:archive/archive.dart';
+import 'package:flutter/material.dart';
 import 'package:geobase/geobase.dart';
+import 'package:http/io_client.dart';
 import 'package:rioko_ni/core/data/gadm_client.dart';
 import 'package:rioko_ni/core/errors/exception.dart';
 import 'package:rioko_ni/core/utils/geo_utils.dart';
@@ -15,14 +20,33 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
     required String countryCode,
   }) async {
     try {
-      final httpResponse =
-          await client.getCountryRegions(countryCode: countryCode);
-      if (httpResponse.response.statusCode != 200) {
-        throw ServerException(httpResponse.response.toString(),
-            stack: StackTrace.current);
+      final stopwatch = Stopwatch()..start();
+      final client = IOClient();
+      final uri = Uri.https(
+        "geodata.ucdavis.edu",
+        "gadm/gadm4.1/json/gadm41_${countryCode}_1.json.zip",
+      );
+      debugPrint('GET ${uri.host}${uri.path}');
+      final response = await client.get(uri);
+      if (response.statusCode != 200) {
+        throw ServerException(response.toString(), stack: StackTrace.current);
+      }
+      debugPrint(
+          'Got data from server in ${stopwatch.elapsedMilliseconds / 1000}s');
+
+      // // Unzip the file
+      final archive = ZipDecoder().decodeBytes(response.bodyBytes);
+
+      Map<String, dynamic> json = {};
+      // Look for JSON file inside the archive
+      for (final file in archive) {
+        if (file.isFile && file.name.endsWith('.json')) {
+          final jsonData = utf8.decode(file.content as List<int>);
+          json = jsonDecode(jsonData);
+        }
       }
 
-      final featureCollection = FeatureCollection.fromData(httpResponse.data);
+      final featureCollection = FeatureCollection.fromData(json);
 
       return featureCollection.features.map((feature) {
         final name = feature.properties["NAME_1"];

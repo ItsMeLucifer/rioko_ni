@@ -104,7 +104,7 @@ class MapBuilder {
       ),
       keepAlive: false,
       minZoom: minZoom,
-      maxZoom: 6,
+      maxZoom: 9,
       initialCameraFit: CameraFit.bounds(
           bounds: country.bounds(cutOffFarPolygons: true)
             ..scale(1.005).toSquare()),

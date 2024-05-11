@@ -11,7 +11,7 @@ abstract class GADMClient {
 
   /// Using [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) code as a parameter.
   @GET('$api/gadm41_{isoA3Code}_1.json')
-  Future<HttpResponse> getCountryRegions({
+  Future<String> getCountryRegions({
     @Path('isoA3Code') required String countryCode,
   });
 }
