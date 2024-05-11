@@ -298,9 +298,9 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   }
 
   Widget _buildRegionInfo(BuildContext context) {
-    String regionName = tr('regions.${_region!.engType.toLowerCase()}');
-    if (!trExists('regions.${_region!.engType.toLowerCase()}')) {
-      regionName = _region!.engType;
+    String regionName = tr('regions.${_region!.type}');
+    if (!trExists('regions.${_region!.type}')) {
+      regionName = tr('regions.region');
     }
     return Column(
       children: [

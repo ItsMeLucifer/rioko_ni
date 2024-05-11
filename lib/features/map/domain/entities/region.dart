@@ -19,8 +19,7 @@ class Region extends MapObject with _$Region {
     @HiveField(2) required String name,
     @HiveField(3) required String type,
     @HiveField(4) required String countryCode,
-    @HiveField(5) required String engType,
-    @HiveField(6) @Default(MOStatus.none) MOStatus status,
+    @HiveField(5) @Default(MOStatus.none) MOStatus status,
   }) = _Region;
 
   List<LatLng> get polygon => polygons.first;
@@ -43,7 +42,5 @@ class Region extends MapObject with _$Region {
             .toList(),
         name: name,
         type: type,
-        countryCode: countryCode,
-        engType: engType,
       );
 }

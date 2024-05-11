@@ -375,8 +375,8 @@
         "locality": "Locality",
         "subregion": "Subregion",
         "voivodeship": "Voivodeship",
-        "decentralizedadministration": "Decentralized Administration",
-        "freestate": "Free State",
-        "developmentregion": "Development Region"
+        "decentralized_administration": "Decentralized Administration",
+        "free_state": "Free State",
+        "development_region": "Development Region"
     }
 }

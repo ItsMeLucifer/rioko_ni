@@ -24,6 +24,10 @@ Future registerDependencies() async {
       receiveDataWhenStatusError: true,
       connectTimeout: connectTimeout,
       receiveTimeout: receiveTimeout,
+      headers: {
+        "Authorization":
+            "Bearer ${const String.fromEnvironment('rioko_server_key')}"
+      },
     ),
   );
   if (kDebugMode == true) {

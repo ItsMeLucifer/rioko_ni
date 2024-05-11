@@ -3,6 +3,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
 
 part 'region_model.freezed.dart';
+part 'region_model.g.dart';
 
 @freezed
 class RegionModel with _$RegionModel {
@@ -13,11 +14,12 @@ class RegionModel with _$RegionModel {
     required String code,
     required String name,
     required String type,
-    required String countryCode,
-    required String engType,
   }) = _RegionModel;
 
-  Region toEntity() {
+  factory RegionModel.fromJson(Map<String, dynamic> json) =>
+      _$RegionModelFromJson(json);
+
+  Region toEntity(String countryCode) {
     return Region(
       code: code,
       polygons: polygons
@@ -26,7 +28,6 @@ class RegionModel with _$RegionModel {
       name: name,
       type: type,
       countryCode: countryCode,
-      engType: engType,
     );
   }
 }

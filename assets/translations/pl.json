@@ -375,8 +375,8 @@
         "locality": "Miejscowość",
         "subregion": "Podregion",
         "voivodeship": "Województwo",
-        "decentralizedadministration": "Administracja zdecentralizowana",
-        "freestate": "Wolny kraj",
-        "developmentregion": "Obszar rozwoju"
+        "decentralized_administration": "Administracja zdecentralizowana",
+        "free_state": "Wolny kraj",
+        "development_region": "Obszar rozwoju"
     }
 }

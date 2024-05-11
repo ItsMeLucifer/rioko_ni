@@ -21,7 +21,6 @@ class RegionAdapter extends TypeAdapter<Region> {
       name: fields[2] as String,
       type: fields[3] as String,
       countryCode: fields[4] as String,
-      engType: fields[5] as String,
       status: fields[6] as MOStatus,
     );
   }
@@ -29,7 +28,7 @@ class RegionAdapter extends TypeAdapter<Region> {
   @override
   void write(BinaryWriter writer, Region obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.polygons
           .map((p) => p.map((p2) => [p2.latitude, p2.longitude]).toList())
@@ -43,8 +42,6 @@ class RegionAdapter extends TypeAdapter<Region> {
       ..writeByte(4)
       ..write(obj.countryCode)
       ..writeByte(5)
-      ..write(obj.engType)
-      ..writeByte(6)
       ..write(obj.status);
   }
 

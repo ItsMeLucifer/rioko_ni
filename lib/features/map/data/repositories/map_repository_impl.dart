@@ -30,7 +30,7 @@ class MapRepositoryImpl with ExceptionHandler implements MapRepository {
     return await execute(() async {
       final result =
           await remoteDataSource.getCountryRegions(countryCode: countryCode);
-      return result.map((country) => country.toEntity()).toList();
+      return result.map((country) => country.toEntity(countryCode)).toList();
     });
   }
 }
