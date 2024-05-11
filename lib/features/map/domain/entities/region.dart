@@ -19,6 +19,7 @@ class Region extends MapObject with _$Region {
     @HiveField(2) required String name,
     @HiveField(3) required String type,
     @HiveField(4) required String countryCode,
+    @HiveField(5) String? engType,
     @HiveField(6) @Default(MOStatus.none) MOStatus status,
   }) = _Region;
 

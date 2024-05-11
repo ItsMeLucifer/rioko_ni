@@ -21,6 +21,7 @@ class RegionAdapter extends TypeAdapter<Region> {
       name: fields[2] as String,
       type: fields[3] as String,
       countryCode: fields[4] as String,
+      engType: null,
       status: fields[6] as MOStatus,
     );
   }
@@ -41,6 +42,8 @@ class RegionAdapter extends TypeAdapter<Region> {
       ..write(obj.type)
       ..writeByte(4)
       ..write(obj.countryCode)
+      ..writeByte(5)
+      ..write(obj.engType)
       ..writeByte(6)
       ..write(obj.status);
   }
