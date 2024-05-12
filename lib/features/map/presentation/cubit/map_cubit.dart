@@ -47,14 +47,14 @@ class MapCubit extends Cubit<MapState> {
     }
   }
 
-  Box<List<Region>> get regionsBox => Hive.box<List<Region>>('regions_v2');
-  Box<List<String>> get countriesBox => Hive.box('countries');
+  late Box regionsBox;
+  late Box countriesBox;
 
   void load() async {
     emit(const MapState.loading());
     await _getDir();
-    await Hive.openBox('countries');
-    await Hive.openBox('regions_v2');
+    countriesBox = await Hive.openBox('countries');
+    regionsBox = await Hive.openBox('regions_v2');
     _getCurrentPosition();
     await _getCountryPolygons().then((_) {
       _getLocalCountryData();

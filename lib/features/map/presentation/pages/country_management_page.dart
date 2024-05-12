@@ -48,6 +48,8 @@ class _CountryManagementPageState extends State<CountryManagementPage>
 
   @override
   void initState() {
+    _region = widget.country.regions
+        .firstWhereOrNull((r) => r.status != MOStatus.none);
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
