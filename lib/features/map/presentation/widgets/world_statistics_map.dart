@@ -70,13 +70,7 @@ class WorldStatisticsMap extends StatelessWidget {
           onTapCountry: (country) {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => CountryManagementPage(
-                  country: country,
-                  fetchRegions: _mapCubit.fetchCountryRegions,
-                  saveRegionsLocally: _mapCubit.saveRegionsLocally,
-                  updateCountryStatus: _mapCubit.updateCountryStatus,
-                  clearRegionData: _mapCubit.clearRegionData,
-                ),
+                builder: (context) => CountryManagementPage(country: country),
               ),
             );
           },

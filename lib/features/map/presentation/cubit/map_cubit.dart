@@ -47,6 +47,9 @@ class MapCubit extends Cubit<MapState> {
     }
   }
 
+  Box<List<Region>> get regionsBox => Hive.box<List<Region>>('regions_v2');
+  Box<List<String>> get countriesBox => Hive.box('countries');
+
   void load() async {
     emit(const MapState.loading());
     await _getDir();
@@ -100,6 +103,7 @@ class MapCubit extends Cubit<MapState> {
               country.regions = data;
               country.displayRegions = true;
               emit(MapState.fetchedRegions(data));
+              regionsBox.put(country.alpha3, data);
               return data;
             },
           ),
@@ -107,10 +111,10 @@ class MapCubit extends Cubit<MapState> {
   }
 
   Future _getLocalCountryData() async {
-    var box = Hive.box('countries');
-    final List<String> beenCodes = box.get('been') ?? [];
-    final List<String> wantCodes = box.get('want') ?? [];
-    final List<String> livedCodes = box.get('lived') ?? [];
+    final List<String> beenCodes = countriesBox.get('been') ?? [];
+    final List<String> wantCodes = countriesBox.get('want') ?? [];
+    final List<String> livedCodes = countriesBox.get('lived') ?? [];
+    final List<String> withRegionsCodes = countriesBox.get('withRegions') ?? [];
 
     if (beenCodes.isNotEmpty) {
       countries
@@ -127,6 +131,11 @@ class MapCubit extends Cubit<MapState> {
           .where((c) => livedCodes.contains(c.alpha3))
           .forEach((country) => country.status = MOStatus.lived);
     }
+    if (withRegionsCodes.isNotEmpty) {
+      countries
+          .where((c) => withRegionsCodes.contains(c.alpha3))
+          .forEach((country) => country.displayRegions = true);
+    }
 
     emit(MapState.readCountriesData(
       been: beenCountries,
@@ -136,8 +145,7 @@ class MapCubit extends Cubit<MapState> {
   }
 
   Future _getLocalRegionsData() async {
-    var box = Hive.box('regions_v2');
-    final data = box.toMap().cast<String, List<dynamic>>();
+    final data = regionsBox.toMap().cast<String, List<Region>>();
     for (String alpha3 in data.keys) {
       countries.firstWhere((c) => c.alpha3 == alpha3)
         ..regions = (data[alpha3] ?? []).cast<Region>()
@@ -147,12 +155,16 @@ class MapCubit extends Cubit<MapState> {
     emit(MapState.readRegionsData(data: data.cast<String, List<Region>>()));
   }
 
+  void updateDisplayRegionsInfo(String code, bool value) {
+    final List<String> withRegionsData = countriesBox.get('withRegions') ?? [];
+    countriesBox.put('withRegions', [...withRegionsData, code]);
+  }
+
   void clearRegionData(String alpha3) {
     countries.firstWhere((c) => c.alpha3 == alpha3)
       ..regions = []
       ..displayRegions = false;
-    var box = Hive.box('regions_v2');
-    box.delete(alpha3);
+    regionsBox.delete(alpha3);
   }
 
   List<Country> get beenCountries =>
@@ -325,14 +337,13 @@ class MapCubit extends Cubit<MapState> {
   }
 
   void saveRegionsLocally() async {
-    var box = Hive.box('regions_v2');
     Map<String, List<Region>> data = {};
     for (Country country in countries) {
       if (country.displayRegions) {
         data[country.alpha3] = country.regions;
       }
     }
-    await box.putAll(data);
+    await regionsBox.putAll(data);
     emit(MapState.savedRegionsData(data: data));
   }
 

@@ -10,6 +10,7 @@ import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/build_context2.dart';
 import 'package:rioko_ni/core/extensions/latlng_bounds2.dart';
 import 'package:rioko_ni/core/extensions/string2.dart';
+import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
@@ -18,18 +19,9 @@ import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 
 class CountryManagementPage extends StatefulWidget {
   final Country country;
-  final void Function(Country) fetchRegions;
-  final void Function() saveRegionsLocally;
-  final void Function({required Country country, required MOStatus status})
-      updateCountryStatus;
-  final void Function(String alpha3) clearRegionData;
 
   const CountryManagementPage({
     required this.country,
-    required this.fetchRegions,
-    required this.updateCountryStatus,
-    required this.saveRegionsLocally,
-    required this.clearRegionData,
     super.key,
   });
 
@@ -51,6 +43,8 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   Region? _region;
 
   bool get regionsMode => widget.country.displayRegions;
+
+  final _mapCubit = locator<MapCubit>();
 
   @override
   void initState() {
@@ -152,11 +146,12 @@ class _CountryManagementPageState extends State<CountryManagementPage>
                 value: widget.country.displayRegions,
                 onChanged: (value) {
                   if (value && widget.country.regions.isEmpty) {
-                    widget.fetchRegions(widget.country);
+                    _mapCubit.fetchCountryRegions(widget.country);
                   }
-                  if (!value) {
-                    widget.clearRegionData(widget.country.alpha3);
-                  }
+                  _mapCubit.updateDisplayRegionsInfo(
+                    widget.country.alpha3,
+                    value,
+                  );
                   setState(() => widget.country.displayRegions = value);
                 },
               ),
@@ -485,12 +480,12 @@ class _CountryManagementPageState extends State<CountryManagementPage>
 
   void pop(BuildContext context, {bool short = false}) {
     if (isPopping) return;
-    widget.updateCountryStatus(
+    _mapCubit.updateCountryStatus(
       country: widget.country,
       status: widget.country.status,
     );
     if (widget.country.displayRegions) {
-      widget.saveRegionsLocally();
+      _mapCubit.saveRegionsLocally();
     }
     isPopping = true;
     _controller.reverse();
