@@ -67,9 +67,6 @@ class WorldStatisticsMap extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => InfoPage(
-          been: _mapCubit.beenCountries,
-          want: _mapCubit.wantCountries,
-          lived: _mapCubit.livedCountries,
           onTapCountry: (country) {
             Navigator.of(context).push(
               MaterialPageRoute(

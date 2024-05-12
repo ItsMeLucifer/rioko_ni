@@ -1,20 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/build_context2.dart';
+import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
+import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 
 class InfoPage extends StatefulWidget {
-  final List<Country> been;
-  final List<Country> want;
-  final List<Country> lived;
   final void Function(Country) onTapCountry;
 
   const InfoPage({
-    required this.been,
-    required this.want,
-    required this.lived,
     required this.onTapCountry,
     super.key,
   });
@@ -25,6 +22,8 @@ class InfoPage extends StatefulWidget {
 
 class _InfoPageState extends State<InfoPage> {
   MOStatus status = MOStatus.been;
+
+  final _cubit = locator<MapCubit>();
 
   Color get borderColor {
     switch (status) {
@@ -40,50 +39,58 @@ class _InfoPageState extends State<InfoPage> {
   List<Country> get countries {
     switch (status) {
       case MOStatus.been:
-        return widget.been;
+        return _cubit.beenCountries;
       case MOStatus.want:
-        return widget.want;
+        return _cubit.wantCountries;
       default:
-        return widget.lived;
+        return _cubit.livedCountries;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: AppSizes.paddingQuadruple,
-              horizontal: AppSizes.paddingDouble,
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: context.width(0.9),
-                  child: SegmentedButton<MOStatus>(
-                    segments: ([...MOStatus.values]..remove(MOStatus.none))
-                        .map((s) => ButtonSegment(
-                              value: s,
-                              label: Text(s.name),
-                            ))
-                        .toList(),
-                    selected: {status},
-                    style: ButtonStyle(
-                      textStyle: MaterialStatePropertyAll(
-                          Theme.of(context).textTheme.titleMedium),
-                      foregroundColor: MaterialStatePropertyAll(
-                          Theme.of(context).colorScheme.outline),
+      body: BlocListener<MapCubit, MapState>(
+        listener: (context, state) {
+          state.maybeWhen(
+            updatedCountryStatus: (country, status) => setState(() {}),
+            orElse: () {},
+          );
+        },
+        child: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: AppSizes.paddingQuadruple,
+                horizontal: AppSizes.paddingDouble,
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: context.width(0.9),
+                    child: SegmentedButton<MOStatus>(
+                      segments: ([...MOStatus.values]..remove(MOStatus.none))
+                          .map((s) => ButtonSegment(
+                                value: s,
+                                label: Text(s.name),
+                              ))
+                          .toList(),
+                      selected: {status},
+                      style: ButtonStyle(
+                        textStyle: MaterialStatePropertyAll(
+                            Theme.of(context).textTheme.titleMedium),
+                        foregroundColor: MaterialStatePropertyAll(
+                            Theme.of(context).colorScheme.outline),
+                      ),
+                      onSelectionChanged: (value) =>
+                          setState(() => status = value.first),
                     ),
-                    onSelectionChanged: (value) =>
-                        setState(() => status = value.first),
                   ),
-                ),
-                _buildCountryList(context, countries: countries),
-              ],
+                  _buildCountryList(context, countries: countries),
+                ],
+              ),
             ),
           ),
         ),
@@ -142,6 +149,7 @@ class _InfoPageState extends State<InfoPage> {
                         border: Border.all(
                           color: borderColor,
                         ),
+                        color: borderColor,
                       ),
                       child: country.flag(scale: 0.5),
                     ),
