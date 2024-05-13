@@ -1,1002 +1,1252 @@
 {
     "CHN": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 18
     },
     "IND": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 17
     },
     "IDN": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 10
     },
     "PAK": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 17
     },
     "BGD": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 17
     },
     "JPN": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 18
     },
     "PHL": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 10
     },
     "VNM": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 10
     },
     "TUR": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 9
     },
     "IRN": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 17
     },
     "THA": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 10
     },
     "MMR": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 10
     },
     "KOR": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 18
     },
     "IRQ": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "AFG": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 17
     },
     "SAU": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 9
     },
     "UZB": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 15
     },
     "MYS": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 10
     },
     "YEM": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "NPL": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 17
     },
     "PRK": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 18
     },
     "TWN": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 18
     },
     "LKA": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 17
     },
     "KAZ": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 15
     },
     "SYR": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "KHM": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 10
     },
     "JOR": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "AZE": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "ARE": {
         "area": 0,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 9
     },
     "TJK": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 15
     },
     "ISR": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "HKG": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 18
     },
     "LAO": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 10
     },
     "LBN": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "KGZ": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 15
     },
     "TKM": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 15
     },
     "SGP": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 10
     },
     "OMN": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "PSE": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "KWT": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "GEO": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "MNG": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 18
     },
     "ARM": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "QAT": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "BHR": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 9
     },
     "TLS": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 10
     },
     "BTN": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 17
     },
     "MAC": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 18
     },
     "MDV": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 17
     },
     "BRN": {
         "area": 0,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 10
     },
     "USA": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": null
     },
     "MEX": {
         "area": 1,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": null
     },
     "CAN": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "BMU": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "GRL": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "SPM": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "UMI": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "GTM": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 19
     },
     "HND": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 19
     },
     "NIC": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 19
     },
     "SLV": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 19
     },
     "CRI": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 19
     },
     "PAN": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 19
     },
     "BLZ": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 19
     },
     "HTI": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "CUB": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "DOM": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "PRI": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "JAM": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "TTO": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "GLP": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "BHS": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "MTQ": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "BRB": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "LCA": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "CUW": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "GRD": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "VCT": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "ABW": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "VIR": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "ATG": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "DMA": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "CYM": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "KNA": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "SXM": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "TCA": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "MAF": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "VGB": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "BES": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "AIA": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "MSR": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "BLM": {
         "area": 1,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 5
     },
     "BRA": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": null
     },
     "COL": {
         "area": 2,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "ARG": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": null
     },
     "PER": {
         "area": 2,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": null
     },
     "VEN": {
         "area": 2,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "CHL": {
         "area": 2,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "ECU": {
         "area": 2,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "BOL": {
         "area": 2,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "PRY": {
         "area": 2,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "URY": {
         "area": 2,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "GUY": {
         "area": 2,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "SUR": {
         "area": 2,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "GUF": {
         "area": 2,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "FLK": {
         "area": 2,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": null
     },
     "NGA": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "ETH": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "COD": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 11
     },
     "EGY": {
         "area": 3,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 12
     },
     "TZA": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "ZAF": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": "Southern Africa"
     },
     "KEN": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "UGA": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "DZA": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 12
     },
     "SDN": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 12
     },
     "MAR": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 12
     },
     "AGO": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 11
     },
     "MOZ": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "GHA": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "MDG": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "CMR": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 11
     },
     "CIV": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "NER": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "BFA": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "MLI": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "MWI": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "ZMB": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "SEN": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "TCD": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 11
     },
     "SOM": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "ZWE": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": "Southern Africa"
     },
     "GIN": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "RWA": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "BEN": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "BDI": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "TUN": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 12
     },
     "SSD": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 11
     },
     "TGO": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "SLE": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "LBY": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 12
     },
     "COG": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 11
     },
     "ERI": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "LBR": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "CAF": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 11
     },
     "MRT": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "NAM": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": "Southern Africa"
     },
     "GMB": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "BWA": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": "Southern Africa"
     },
     "GAB": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 11
     },
     "LSO": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": "Southern Africa"
     },
     "GNB": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "GNQ": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 11
     },
     "MUS": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "SWZ": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": "Southern Africa"
     },
     "DJI": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "COM": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "REU": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "CPV": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "ESH": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 12
     },
     "MYT": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "STP": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 11
     },
     "SYC": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "SHN": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 3
     },
     "IOT": {
         "area": 3,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 1
     },
     "RUS": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 0
     },
     "DEU": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 20
     },
     "FRA": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 20
     },
     "GBR": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 7
     },
     "ITA": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 8
     },
     "ESP": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 8
     },
     "UKR": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 0
     },
     "POL": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 13
     },
     "ROU": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 4
     },
     "NLD": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 20
     },
     "BEL": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 20
     },
     "GRC": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 8
     },
     "CZE": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 13
     },
     "SWE": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 7
     },
     "PRT": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 8
     },
     "HUN": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 13
     },
     "BLR": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 0
     },
     "AUT": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 13
     },
     "CHE": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 20
     },
     "BGR": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 4
     },
     "SRB": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 4
     },
     "DNK": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "FIN": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 7
     },
     "SVK": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 13
     },
     "NOR": {
         "area": 4,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 7
     },
     "IRL": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "HRV": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 4
     },
     "BIH": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 4
     },
     "ALB": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 4
     },
     "LTU": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "MDA": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 0
     },
     "SVN": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 13
     },
     "MKD": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 4
     },
     "LVA": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "UNK": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 4
     },
     "EST": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "CYP": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 8
     },
     "LUX": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 20
     },
     "MNE": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 4
     },
     "MLT": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 8
     },
     "ISL": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "JEY": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "IMN": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "AND": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 8
     },
     "GGY": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "FRO": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "MCO": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 20
     },
     "LIE": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 20
     },
     "SMR": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 8
     },
     "GIB": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 8
     },
     "ALA": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "SJM": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 7
     },
     "VAT": {
         "area": 4,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 8
     },
     "AUS": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 16
     },
     "PNG": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 14
     },
     "NZL": {
         "area": 5,
-        "more_data_available": true
+        "more_data_available": true,
+        "sub_area": 16
     },
     "FJI": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 14
     },
     "SLB": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 14
     },
     "VUT": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 14
     },
     "PYF": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 6
     },
     "NCL": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 14
     },
     "WSM": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 6
     },
     "GUM": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 2
     },
     "KIR": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 2
     },
     "FSM": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 2
     },
     "TON": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 6
     },
     "MHL": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 2
     },
     "MNP": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 2
     },
     "ASM": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 6
     },
     "COK": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 6
     },
     "PLW": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 2
     },
     "TUV": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 6
     },
     "WLF": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 6
     },
     "NRU": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 2
     },
     "NFK": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 16
     },
     "CXR": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 16
     },
     "NIU": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 6
     },
     "TKL": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 6
     },
     "CCK": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 16
     },
     "PCN": {
         "area": 5,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": 6
     },
     "ATA": {
         "area": 6,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": ""
     },
     "ATF": {
         "area": 6,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": ""
     },
     "SGS": {
         "area": 6,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": ""
     },
     "BVT": {
         "area": 6,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": ""
     },
     "HMD": {
         "area": 6,
-        "more_data_available": false
+        "more_data_available": false,
+        "sub_area": ""
     }
 }
