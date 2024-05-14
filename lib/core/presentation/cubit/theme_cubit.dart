@@ -42,6 +42,9 @@ class ThemeCubit extends Cubit<ThemeDataType> {
 
   ThemeDataType type = ThemeDataType.classic;
 
+  bool get isLight =>
+      type == ThemeDataType.classic || type == ThemeDataType.humani;
+
   final ThemeData _default = ThemeData.light(
     useMaterial3: true,
   ).copyWith(

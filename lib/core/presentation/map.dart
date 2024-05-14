@@ -176,6 +176,7 @@ class MapBuilder {
     required Key key,
     required LatLng? center,
     required Key polygonsLayerKey,
+    required bool showRegionsBorders,
   }) {
     final mapOptions = getMapOptions(
       interactionOptions: const InteractionOptions(
@@ -247,7 +248,9 @@ class MapBuilder {
             points: polygon,
             color: region.status.color(context).withMultipliedOpacity(0.4),
             borderColor: Theme.of(context).colorScheme.outline.withOpacity(0.5),
-            borderStrokeWidth: region.status == MOStatus.none ? 0.2 : 0,
+            borderStrokeWidth: region.status == MOStatus.none
+                ? (showRegionsBorders ? 0.2 : 0)
+                : 0,
             isFilled: true,
           ));
         }

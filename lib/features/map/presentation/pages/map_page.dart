@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rioko_ni/core/injector.dart';
+import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/core/presentation/widgets/animated_fab.dart';
 import 'package:rioko_ni/core/presentation/widgets/rioko_drawer.dart';
@@ -24,6 +25,7 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   final _mapCubit = locator<MapCubit>();
+  final _themeCubit = locator<ThemeCubit>();
 
   bool showTopBehindDrawer = false;
 
@@ -186,6 +188,7 @@ class _MapPageState extends State<MapPage> {
         );
       },
       dir: _mapCubit.dir,
+      showRegionsBorders: !_themeCubit.isLight,
     );
   }
 
