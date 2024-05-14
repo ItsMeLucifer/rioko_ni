@@ -101,7 +101,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/data/geo/
-    - assets/data/areas.json
     - assets/data/countries.json
     - assets/translations/
     - assets/paper.jpg

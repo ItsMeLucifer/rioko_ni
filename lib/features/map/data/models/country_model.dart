@@ -12,7 +12,8 @@ class CountryModel with _$CountryModel {
   factory CountryModel({
     required List<List<List<double>>> polygons,
     required String countryCode,
-    required Area region,
+    required int area,
+    required int? subArea,
     required bool moreDataAvailable,
   }) = _CountryModel;
 
@@ -32,7 +33,8 @@ class CountryModel with _$CountryModel {
           p.last
         ];
       }).toList(),
-      region: region,
+      area: AreaExtension.fromIndex(area),
+      subArea: subArea == null ? null : SubAreaExtension.fromIndex(subArea!),
       moreDataAvailable: moreDataAvailable,
     );
   }

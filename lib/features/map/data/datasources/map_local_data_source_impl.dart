@@ -4,7 +4,6 @@ import 'package:rioko_ni/core/errors/exception.dart';
 import 'package:rioko_ni/core/utils/geo_utils.dart';
 import 'package:rioko_ni/features/map/data/datasources/map_local_data_source.dart';
 import 'package:rioko_ni/features/map/data/models/country_model.dart';
-import 'package:rioko_ni/features/map/domain/entities/country.dart';
 
 class MapLocalDataSourceImpl implements MapLocalDataSource {
   const MapLocalDataSourceImpl();
@@ -12,18 +11,15 @@ class MapLocalDataSourceImpl implements MapLocalDataSource {
   static String get countriesGeoDataPath =>
       'assets/data/geo/countries_geo.json';
   static String get countriesDataPath => 'assets/data/countries.json';
-  static String get areasDataPath => 'assets/data/areas.json';
 
   @override
   Future<List<CountryModel>> getCountries() async {
     try {
       final countriesGeoData =
           await rootBundle.loadString(countriesGeoDataPath);
-      final areasData = await rootBundle.loadString(areasDataPath);
       final countriesInfoData = await rootBundle.loadString(countriesDataPath);
       final geoData = jsonDecode(countriesGeoData) as Map<String, dynamic>;
       final infoData = jsonDecode(countriesInfoData) as Map<String, dynamic>;
-      final areas = Map<String, String>.from(jsonDecode(areasData));
       final List<CountryModel> result = [];
       for (String key in geoData.keys) {
         final cca3 = key;
@@ -38,13 +34,15 @@ class MapLocalDataSourceImpl implements MapLocalDataSource {
                         .toList())
                     .toList())
                 .toList());
-        final area = areas[info['area'].toString()] as String;
-        result.add(CountryModel(
-          polygons: polygons,
-          countryCode: cca3,
-          region: AreaExtension.fromString(area),
-          moreDataAvailable: info['more_data_available'] as bool,
-        ));
+        result.add(
+          CountryModel(
+            polygons: polygons,
+            countryCode: cca3,
+            area: info['area'] as int,
+            subArea: info['sub_area'] as int?,
+            moreDataAvailable: info['more_data_available'] as bool,
+          ),
+        );
       }
       return result;
     } catch (e, stack) {

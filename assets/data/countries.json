@@ -557,7 +557,7 @@
     "ZAF": {
         "area": 3,
         "more_data_available": false,
-        "sub_area": "Southern Africa"
+        "sub_area": 21
     },
     "KEN": {
         "area": 3,
@@ -657,7 +657,7 @@
     "ZWE": {
         "area": 3,
         "more_data_available": false,
-        "sub_area": "Southern Africa"
+        "sub_area": 21
     },
     "GIN": {
         "area": 3,
@@ -732,7 +732,7 @@
     "NAM": {
         "area": 3,
         "more_data_available": false,
-        "sub_area": "Southern Africa"
+        "sub_area": 21
     },
     "GMB": {
         "area": 3,
@@ -742,7 +742,7 @@
     "BWA": {
         "area": 3,
         "more_data_available": false,
-        "sub_area": "Southern Africa"
+        "sub_area": 21
     },
     "GAB": {
         "area": 3,
@@ -752,7 +752,7 @@
     "LSO": {
         "area": 3,
         "more_data_available": false,
-        "sub_area": "Southern Africa"
+        "sub_area": 21
     },
     "GNB": {
         "area": 3,
@@ -772,7 +772,7 @@
     "SWZ": {
         "area": 3,
         "more_data_available": false,
-        "sub_area": "Southern Africa"
+        "sub_area": 21
     },
     "DJI": {
         "area": 3,
@@ -1227,26 +1227,26 @@
     "ATA": {
         "area": 6,
         "more_data_available": false,
-        "sub_area": ""
+        "sub_area": null
     },
     "ATF": {
         "area": 6,
         "more_data_available": false,
-        "sub_area": ""
+        "sub_area": null
     },
     "SGS": {
         "area": 6,
         "more_data_available": false,
-        "sub_area": ""
+        "sub_area": null
     },
     "BVT": {
         "area": 6,
         "more_data_available": false,
-        "sub_area": ""
+        "sub_area": null
     },
     "HMD": {
         "area": 6,
         "more_data_available": false,
-        "sub_area": ""
+        "sub_area": null
     }
 }

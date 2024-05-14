@@ -219,6 +219,7 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
     BuildContext context, {
     required Country country,
   }) {
+    final subArea = country.subArea?.name;
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: AppSizes.paddingDouble,
@@ -249,7 +250,7 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
           style: Theme.of(context).textTheme.titleMedium,
         ),
         subtitle: Text(
-          country.region.name,
+          '${country.area.name} ${subArea == null ? '' : '- $subArea'}',
           style: Theme.of(context).textTheme.titleSmall,
         ),
       ),

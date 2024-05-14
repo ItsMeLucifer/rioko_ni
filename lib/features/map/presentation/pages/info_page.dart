@@ -158,7 +158,7 @@ class _InfoPageState extends State<InfoPage> {
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     subtitle: Text(
-                      country.region.name,
+                      country.area.name,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   );

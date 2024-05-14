@@ -200,6 +200,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   }
 
   Widget _buildCountryInfo(BuildContext context) {
+    final subArea = widget.country.subArea?.name;
     return Column(children: [
       Text(
         widget.country.name,
@@ -208,7 +209,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
       ),
       const SizedBox(height: AppSizes.paddingHalf),
       Text(
-        widget.country.region.name,
+        '${widget.country.area.name} ${subArea == null ? '' : '- $subArea'}',
         style: Theme.of(context).textTheme.headlineSmall,
         textAlign: TextAlign.center,
       ),

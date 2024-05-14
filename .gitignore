@@ -60,4 +60,4 @@ android/app/upload_key
 .vscode/settings.json
 
 
-assets/data/script.dart
+script.dart

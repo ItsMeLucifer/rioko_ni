@@ -14,32 +14,32 @@ import 'package:rioko_ni/features/map/domain/entities/region.dart';
 part 'country.freezed.dart';
 
 enum Area {
+  asia,
   northAmerica,
   southAmerica,
-  europe,
   africa,
-  asia,
+  europe,
   oceania,
   antarctic,
 }
 
 extension AreaExtension on Area {
-  static Area fromString(String name) {
-    switch (name) {
-      case 'Asia':
+  static Area fromIndex(int index) {
+    switch (index) {
+      case 0:
         return Area.asia;
-      case 'Africa':
-        return Area.africa;
-      case 'North America':
+      case 1:
         return Area.northAmerica;
-      case 'South America':
+      case 2:
         return Area.southAmerica;
-      case 'Oceania':
-        return Area.oceania;
-      case 'Antarctic':
-        return Area.antarctic;
-      case 'Europe':
+      case 3:
+        return Area.africa;
+      case 4:
         return Area.europe;
+      case 5:
+        return Area.oceania;
+      case 6:
+        return Area.antarctic;
       default:
         return Area.asia;
     }
@@ -72,7 +72,8 @@ class Country extends MapObject with _$Country {
     /// GeoJson data
     required List<List<LatLng>> polygons,
     required CountryCode countryCode,
-    required Area region,
+    required Area area,
+    required SubArea? subArea,
     required bool moreDataAvailable,
     @Default(MOStatus.none) MOStatus status,
     @Default(false) bool displayRegions,
@@ -84,7 +85,8 @@ class Country extends MapObject with _$Country {
         polygons: polygons
             .map((p) => p.map((p2) => [p2.latitude, p2.longitude]).toList())
             .toList(),
-        region: region,
+        area: area.index,
+        subArea: subArea?.index,
         moreDataAvailable: moreDataAvailable,
       );
 
@@ -177,5 +179,132 @@ class Country extends MapObject with _$Country {
       );
     }
     return flag;
+  }
+}
+
+enum SubArea {
+  easternEurope,
+  easternAfrica,
+  micronesia,
+  westernAfrica,
+  southeastEurope,
+  caribbean,
+  polynesia,
+  northernEurope,
+  southernEurope,
+  westernAsia,
+  southEasternAsia,
+  middleAfrica,
+  northernAfrica,
+  centralEurope,
+  melanesia,
+  centralAsia,
+  australiaAndNewZealand,
+  southernAsia,
+  easternAsia,
+  centralAmerica,
+  westernEurope,
+  southernAfrica,
+}
+
+extension SubAreaExtension on SubArea {
+  static SubArea fromIndex(int index) {
+    switch (index) {
+      case 0:
+        return SubArea.easternEurope;
+      case 1:
+        return SubArea.easternAfrica;
+      case 2:
+        return SubArea.micronesia;
+      case 3:
+        return SubArea.westernAfrica;
+      case 4:
+        return SubArea.southeastEurope;
+      case 5:
+        return SubArea.caribbean;
+      case 6:
+        return SubArea.polynesia;
+      case 7:
+        return SubArea.northernEurope;
+      case 8:
+        return SubArea.southernEurope;
+      case 9:
+        return SubArea.westernAsia;
+      case 10:
+        return SubArea.southEasternAsia;
+      case 11:
+        return SubArea.middleAfrica;
+      case 12:
+        return SubArea.northernAfrica;
+      case 13:
+        return SubArea.centralEurope;
+      case 14:
+        return SubArea.melanesia;
+      case 15:
+        return SubArea.centralAsia;
+      case 16:
+        return SubArea.australiaAndNewZealand;
+      case 17:
+        return SubArea.southernAsia;
+      case 18:
+        return SubArea.easternAsia;
+      case 19:
+        return SubArea.centralAmerica;
+      case 20:
+        return SubArea.westernEurope;
+      case 21:
+        return SubArea.southernAfrica;
+      default:
+        return SubArea.easternEurope;
+    }
+  }
+
+  String get name {
+    switch (this) {
+      case SubArea.easternEurope:
+        return tr('subAreas.easternEurope');
+      case SubArea.easternAfrica:
+        return tr('subAreas.easternAfrica');
+      case SubArea.micronesia:
+        return tr('subAreas.micronesia');
+      case SubArea.westernAfrica:
+        return tr('subAreas.westernAfrica');
+      case SubArea.southeastEurope:
+        return tr('subAreas.southeastEurope');
+      case SubArea.caribbean:
+        return tr('subAreas.caribbean');
+      case SubArea.polynesia:
+        return tr('subAreas.polynesia');
+      case SubArea.northernEurope:
+        return tr('subAreas.northernEurope');
+      case SubArea.southernEurope:
+        return tr('subAreas.southernEurope');
+      case SubArea.westernAsia:
+        return tr('subAreas.westernAsia');
+      case SubArea.southEasternAsia:
+        return tr('subAreas.southEasternAsia');
+      case SubArea.middleAfrica:
+        return tr('subAreas.middleAfrica');
+      case SubArea.northernAfrica:
+        return tr('subAreas.northernAfrica');
+      case SubArea.centralEurope:
+        return tr('subAreas.centralEurope');
+      case SubArea.melanesia:
+        return tr('subAreas.melanesia');
+      case SubArea.centralAsia:
+        return tr('subAreas.centralAsia');
+      case SubArea.australiaAndNewZealand:
+        return tr('subAreas.australiaAndNewZealand');
+      case SubArea.southernAsia:
+        return tr('subAreas.southernAsia');
+      case SubArea.easternAsia:
+        return tr('subAreas.easternAsia');
+      case SubArea.centralAmerica:
+        return tr('subAreas.centralAmerica');
+      case SubArea.westernEurope:
+        return tr('subAreas.westernEurope');
+      case SubArea.southernAfrica:
+        return tr('subAreas.southernAfrica');
+    }
   }
 }

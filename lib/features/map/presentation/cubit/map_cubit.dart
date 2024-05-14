@@ -84,7 +84,7 @@ class MapCubit extends Cubit<MapState> {
               tr('countries.${country.alpha3}')
                   .toLowerCase()
                   .contains(text.toLowerCase()) ||
-              country.region.name.toLowerCase().contains(text.toLowerCase()),
+              country.area.name.toLowerCase().contains(text.toLowerCase()),
         )
         .toList();
     return result;
@@ -145,7 +145,7 @@ class MapCubit extends Cubit<MapState> {
   }
 
   Future _getLocalRegionsData() async {
-    final data = regionsBox.toMap().cast<String, List<Region>>();
+    final data = regionsBox.toMap().cast<String, List<dynamic>>();
     for (String alpha3 in data.keys) {
       countries.firstWhere((c) => c.alpha3 == alpha3)
         ..regions = (data[alpha3] ?? []).cast<Region>()
@@ -179,8 +179,8 @@ class MapCubit extends Cubit<MapState> {
   // Asia
 
   int get beenAsiaCountriesNumber {
-    var b = beenCountries.where((c) => c.region == Area.asia).length;
-    var l = livedCountries.where((c) => c.region == Area.asia).length;
+    var b = beenCountries.where((c) => c.area == Area.asia).length;
+    var l = livedCountries.where((c) => c.area == Area.asia).length;
     return b + l;
   }
 
@@ -190,20 +190,20 @@ class MapCubit extends Cubit<MapState> {
   }
 
   int get wantAsianCountriesNumber =>
-      wantCountries.where((c) => c.region == Area.asia).length;
+      wantCountries.where((c) => c.area == Area.asia).length;
   double get wantAsiaPercentage {
     if (allAsiaCountriesNumber == 0) return 0;
     return wantAsianCountriesNumber / allAsiaCountriesNumber * 100;
   }
 
   int get allAsiaCountriesNumber =>
-      countries.where((c) => c.region == Area.asia).length;
+      countries.where((c) => c.area == Area.asia).length;
 
   // Europe
 
   int get beenEuropeCountriesNumber {
-    var b = beenCountries.where((c) => c.region == Area.europe).length;
-    var l = livedCountries.where((c) => c.region == Area.europe).length;
+    var b = beenCountries.where((c) => c.area == Area.europe).length;
+    var l = livedCountries.where((c) => c.area == Area.europe).length;
     return b + l;
   }
 
@@ -213,20 +213,20 @@ class MapCubit extends Cubit<MapState> {
   }
 
   int get wantEuropeCountriesNumber =>
-      beenCountries.where((c) => c.region == Area.europe).length;
+      beenCountries.where((c) => c.area == Area.europe).length;
   double get wantEuropePercentage {
     if (allEuropeCountriesNumber == 0) return 0;
     return wantEuropeCountriesNumber / allEuropeCountriesNumber * 100;
   }
 
   int get allEuropeCountriesNumber =>
-      countries.where((c) => c.region == Area.europe).length;
+      countries.where((c) => c.area == Area.europe).length;
 
   // North America
 
   int get beenNorthAmericaCountriesNumber {
-    var b = beenCountries.where((c) => c.region == Area.northAmerica).length;
-    var l = livedCountries.where((c) => c.region == Area.northAmerica).length;
+    var b = beenCountries.where((c) => c.area == Area.northAmerica).length;
+    var l = livedCountries.where((c) => c.area == Area.northAmerica).length;
     return b + l;
   }
 
@@ -238,7 +238,7 @@ class MapCubit extends Cubit<MapState> {
   }
 
   int get wantNorthAmericaCountriesNumber =>
-      wantCountries.where((c) => c.region == Area.northAmerica).length;
+      wantCountries.where((c) => c.area == Area.northAmerica).length;
   double get wantNorthAmericaPercentage {
     if (allNorthAmericaCountriesNumber == 0) return 0;
     return wantNorthAmericaCountriesNumber /
@@ -247,13 +247,13 @@ class MapCubit extends Cubit<MapState> {
   }
 
   int get allNorthAmericaCountriesNumber =>
-      countries.where((c) => c.region == Area.northAmerica).length;
+      countries.where((c) => c.area == Area.northAmerica).length;
 
   // South America
 
   int get beenSouthAmericaCountriesNumber {
-    var b = beenCountries.where((c) => c.region == Area.southAmerica).length;
-    var l = livedCountries.where((c) => c.region == Area.southAmerica).length;
+    var b = beenCountries.where((c) => c.area == Area.southAmerica).length;
+    var l = livedCountries.where((c) => c.area == Area.southAmerica).length;
     return b + l;
   }
 
@@ -265,7 +265,7 @@ class MapCubit extends Cubit<MapState> {
   }
 
   int get wantSouthAmericaCountriesNumber =>
-      beenCountries.where((c) => c.region == Area.southAmerica).length;
+      beenCountries.where((c) => c.area == Area.southAmerica).length;
   double get wantSouthAmericaPercentage {
     if (allSouthAmericaCountriesNumber == 0) return 0;
     return wantSouthAmericaCountriesNumber /
@@ -274,13 +274,13 @@ class MapCubit extends Cubit<MapState> {
   }
 
   int get allSouthAmericaCountriesNumber =>
-      countries.where((c) => c.region == Area.southAmerica).length;
+      countries.where((c) => c.area == Area.southAmerica).length;
 
   // Africa
 
   int get beenAfricaCountriesNumber {
-    var b = beenCountries.where((c) => c.region == Area.africa).length;
-    var l = livedCountries.where((c) => c.region == Area.africa).length;
+    var b = beenCountries.where((c) => c.area == Area.africa).length;
+    var l = livedCountries.where((c) => c.area == Area.africa).length;
     return b + l;
   }
 
@@ -290,20 +290,20 @@ class MapCubit extends Cubit<MapState> {
   }
 
   int get wantAfricaCountriesNumber =>
-      wantCountries.where((c) => c.region == Area.africa).length;
+      wantCountries.where((c) => c.area == Area.africa).length;
   double get wantAfricaPercentage {
     if (allAfricaCountriesNumber == 0) return 0;
     return wantAfricaCountriesNumber / allAfricaCountriesNumber * 100;
   }
 
   int get allAfricaCountriesNumber =>
-      countries.where((c) => c.region == Area.africa).length;
+      countries.where((c) => c.area == Area.africa).length;
 
   // Oceania
 
   int get beenOceaniaCountriesNumber {
-    var b = beenCountries.where((c) => c.region == Area.oceania).length;
-    var l = livedCountries.where((c) => c.region == Area.oceania).length;
+    var b = beenCountries.where((c) => c.area == Area.oceania).length;
+    var l = livedCountries.where((c) => c.area == Area.oceania).length;
     return b + l;
   }
 
@@ -313,14 +313,14 @@ class MapCubit extends Cubit<MapState> {
   }
 
   int get wantOceaniaCountriesNumber =>
-      wantCountries.where((c) => c.region == Area.oceania).length;
+      wantCountries.where((c) => c.area == Area.oceania).length;
   double get wantOceaniaPercentage {
     if (allOceaniaCountriesNumber == 0) return 0;
     return wantOceaniaCountriesNumber / allOceaniaCountriesNumber * 100;
   }
 
   int get allOceaniaCountriesNumber =>
-      countries.where((c) => c.region == Area.oceania).length;
+      countries.where((c) => c.area == Area.oceania).length;
 
   // -----
 
