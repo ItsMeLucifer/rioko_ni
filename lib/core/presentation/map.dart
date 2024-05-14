@@ -247,7 +247,7 @@ class MapBuilder {
             points: polygon,
             color: region.status.color(context).withMultipliedOpacity(0.4),
             borderColor: Theme.of(context).colorScheme.outline.withOpacity(0.5),
-            borderStrokeWidth: region.status == MOStatus.none ? 0.1 : 0,
+            borderStrokeWidth: region.status == MOStatus.none ? 0.2 : 0,
             isFilled: true,
           ));
         }
