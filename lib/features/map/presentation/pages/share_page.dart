@@ -57,30 +57,33 @@ class SharePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text('Share', style: Theme.of(context).textTheme.headlineLarge),
-                Container(
-                  width: context.width(),
-                  height: 50,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: AppSizes.paddingDouble,
-                    vertical: AppSizes.paddingDouble,
-                  ),
-                  decoration: BoxDecoration(
-                    color: buttonColor(context),
-                    borderRadius: BorderRadius.circular(AppSizes.radiusHalf),
-                    image: DecorationImage(
-                      image: AssetImage(AssetsHandler.worldMiniature),
-                      fit: BoxFit.cover,
-                      alignment: const Alignment(0, -0.4),
+                GestureDetector(
+                  onTap: () => showWorldDialog(context),
+                  child: Container(
+                    width: context.width(),
+                    height: 50,
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: AppSizes.paddingDouble,
+                      vertical: AppSizes.paddingDouble,
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'All world',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(shadows: shadows),
-                      textAlign: TextAlign.center,
+                    decoration: BoxDecoration(
+                      color: buttonColor(context),
+                      borderRadius: BorderRadius.circular(AppSizes.radiusHalf),
+                      image: DecorationImage(
+                        image: AssetImage(AssetsHandler.worldMiniature),
+                        fit: BoxFit.cover,
+                        alignment: const Alignment(0, -0.4),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'All world',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(shadows: shadows),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ),
