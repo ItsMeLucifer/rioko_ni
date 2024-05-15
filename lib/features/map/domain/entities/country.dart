@@ -3,6 +3,7 @@ import 'package:country_flags/country_flags.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:rioko_ni/core/utils/assets_handler.dart';
 import 'package:rioko_ni/core/utils/geo_utils.dart';
 import 'package:rioko_ni/features/map/data/models/country_model.dart';
 import 'package:flutter_map/flutter_map.dart' as fm;
@@ -61,6 +62,25 @@ extension AreaExtension on Area {
         return tr('areas.southAmerica');
       case Area.oceania:
         return tr('areas.oceania');
+    }
+  }
+
+  String get imagePath {
+    switch (this) {
+      case Area.africa:
+        return AssetsHandler.africaMiniature;
+      case Area.asia:
+        return AssetsHandler.asiaMiniature;
+      case Area.europe:
+        return AssetsHandler.europeMiniature;
+      case Area.northAmerica:
+        return AssetsHandler.northAmericaMiniature;
+      case Area.southAmerica:
+        return AssetsHandler.southAmericaMiniature;
+      case Area.oceania:
+        return AssetsHandler.oceaniaMiniature;
+      default:
+        return 'world-image';
     }
   }
 }

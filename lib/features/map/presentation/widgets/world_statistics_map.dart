@@ -12,7 +12,6 @@ import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 import 'package:rioko_ni/features/map/presentation/pages/country_management_page.dart';
 import 'package:rioko_ni/features/map/presentation/pages/info_page.dart';
-import 'package:rioko_ni/features/map/presentation/widgets/share_dialog.dart';
 
 class WorldStatisticsMap extends StatelessWidget {
   final double naPercentage;
@@ -151,24 +150,6 @@ class WorldStatisticsMap extends StatelessWidget {
             label: tr('$l10n.oceania'),
             percentage: ocPercentage,
             footer: true,
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: GestureDetector(
-              onTap: () {
-                onTapButton();
-                showGeneralDialog(
-                  barrierColor: Colors.black.withOpacity(0.5),
-                  context: context,
-                  pageBuilder: (context, animation1, animation2) =>
-                      const ShareDialog(),
-                );
-              },
-              child: const Padding(
-                padding: EdgeInsets.all(AppSizes.paddingDouble),
-                child: Icon(FontAwesomeIcons.shareNodes),
-              ),
-            ),
           ),
           SafeArea(
             child: Align(

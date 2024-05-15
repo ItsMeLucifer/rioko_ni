@@ -5,4 +5,16 @@ class AssetsHandler {
   static String get monochromeMapExample => 'assets/maps/monochrome.png';
 
   static String get authorPicture => 'assets/author.jpg';
+
+  static String get worldMiniature => 'assets/world.png';
+
+  // Continents
+  static String get europeMiniature => 'assets/continents/europe.png';
+  static String get africaMiniature => 'assets/continents/africa.png';
+  static String get southAmericaMiniature =>
+      'assets/continents/south_america.png';
+  static String get northAmericaMiniature =>
+      'assets/continents/north_america.png';
+  static String get oceaniaMiniature => 'assets/continents/oceania.png';
+  static String get asiaMiniature => 'assets/continents/asia.png';
 }

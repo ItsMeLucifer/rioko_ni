@@ -20,14 +20,14 @@ import 'package:share_plus/share_plus.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 import 'package:rioko_ni/core/extensions/double2.dart';
 
-class ShareDialog extends StatefulWidget {
-  const ShareDialog({super.key});
+class ShareWorldDataDialog extends StatefulWidget {
+  const ShareWorldDataDialog({super.key});
 
   @override
-  State<ShareDialog> createState() => _ShareDialogState();
+  State<ShareWorldDataDialog> createState() => _ShareWorldDataDialogState();
 }
 
-class _ShareDialogState extends State<ShareDialog> {
+class _ShareWorldDataDialogState extends State<ShareWorldDataDialog> {
   // WidgetsToImageController to access widget
   List<WidgetsToImageController> controllers =
       List.generate(11, (index) => WidgetsToImageController());
