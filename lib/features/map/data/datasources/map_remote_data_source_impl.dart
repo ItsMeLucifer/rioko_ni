@@ -13,21 +13,14 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
   Future<List<RegionModel>> getCountryRegions({
     required String countryCode,
   }) async {
-    try {
-      final stopwatch = Stopwatch()..start();
-      final httpResponse =
-          await client.getCountryRegions(countryCode: countryCode);
-      if (httpResponse.response.statusCode != 200) {
-        throw ServerException(httpResponse.toString(),
-            stack: StackTrace.current);
-      }
-      debugPrint(
-          'Got data from server in ${stopwatch.elapsedMilliseconds / 1000}s');
-      return httpResponse.data;
-    } on ServerException {
-      rethrow;
-    } catch (e, stack) {
-      throw RequestException(e.toString(), stack: stack);
+    final stopwatch = Stopwatch()..start();
+    final httpResponse =
+        await client.getCountryRegions(countryCode: countryCode);
+    if (httpResponse.response.statusCode != 200) {
+      throw ServerException(httpResponse.toString(), stack: StackTrace.current);
     }
+    debugPrint(
+        'Got data from server in ${stopwatch.elapsedMilliseconds / 1000}s');
+    return httpResponse.data;
   }
 }
