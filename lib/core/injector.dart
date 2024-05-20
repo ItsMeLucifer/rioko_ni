@@ -10,6 +10,7 @@ import 'package:rioko_ni/features/map/data/datasources/map_local_data_source_imp
 import 'package:rioko_ni/features/map/data/datasources/map_remote_data_source_impl.dart';
 import 'package:rioko_ni/features/map/data/repositories/map_repository_impl.dart';
 import 'package:rioko_ni/features/map/domain/usecases/get_countries.dart';
+import 'package:rioko_ni/features/map/domain/usecases/get_marine_areas.dart';
 import 'package:rioko_ni/features/map/domain/usecases/get_regions.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 
@@ -60,10 +61,14 @@ Future registerDependencies() async {
   locator.registerSingleton<GetCountryRegions>(
       GetCountryRegions(locator<MapRepositoryImpl>()));
 
+  locator.registerSingleton<GetMarineAreas>(
+      GetMarineAreas(locator<MapRepositoryImpl>()));
+
   locator.registerSingleton<MapCubit>(
     MapCubit(
       getCountryPolygonUsecase: locator<GetCountries>(),
       getCountryRegionsUsecase: locator<GetCountryRegions>(),
+      getMarineAreasUsecase: locator<GetMarineAreas>(),
     ),
   );
   // Revenue cat

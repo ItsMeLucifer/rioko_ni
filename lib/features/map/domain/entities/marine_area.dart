@@ -5,7 +5,7 @@ part 'marine_area.freezed.dart';
 
 @unfreezed
 class MarineArea with _$MarineArea {
-  const factory MarineArea({
+  factory MarineArea({
     required int rank,
     required int type,
     required String name,

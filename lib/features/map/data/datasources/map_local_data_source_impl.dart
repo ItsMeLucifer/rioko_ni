@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:rioko_ni/core/utils/geo_utils.dart';
 import 'package:rioko_ni/features/map/data/datasources/map_local_data_source.dart';
 import 'package:rioko_ni/features/map/data/models/country_model.dart';
+import 'package:rioko_ni/features/map/data/models/marine_area_model.dart';
 
 class MapLocalDataSourceImpl implements MapLocalDataSource {
   const MapLocalDataSourceImpl();
@@ -43,5 +44,15 @@ class MapLocalDataSourceImpl implements MapLocalDataSource {
       );
     }
     return result;
+  }
+
+  @override
+  Future<List<MarineAreaModel>> getMarineAreas() async {
+    final marineAreasData = await rootBundle.loadString(marineAreasDataPath);
+    final marineAreas = jsonDecode(marineAreasData) as List<dynamic>;
+    return marineAreas
+        .cast<Map<String, dynamic>>()
+        .map((element) => MarineAreaModel.fromJson(element))
+        .toList();
   }
 }

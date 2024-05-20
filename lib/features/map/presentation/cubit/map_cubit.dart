@@ -14,9 +14,11 @@ import 'package:rioko_ni/core/utils/geolocation_handler.dart';
 
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
+import 'package:rioko_ni/features/map/domain/entities/marine_area.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
 import 'package:rioko_ni/features/map/domain/usecases/get_countries.dart';
 import 'package:collection/collection.dart';
+import 'package:rioko_ni/features/map/domain/usecases/get_marine_areas.dart';
 import 'package:rioko_ni/features/map/domain/usecases/get_regions.dart';
 
 part 'map_state.dart';
@@ -25,13 +27,17 @@ part 'map_cubit.freezed.dart';
 class MapCubit extends Cubit<MapState> {
   final GetCountries getCountryPolygonUsecase;
   final GetCountryRegions getCountryRegionsUsecase;
+  final GetMarineAreas getMarineAreasUsecase;
 
   MapCubit({
     required this.getCountryPolygonUsecase,
     required this.getCountryRegionsUsecase,
+    required this.getMarineAreasUsecase,
   }) : super(const MapState.initial());
 
   List<Country> countries = [];
+
+  List<MarineArea> marineAreas = [];
 
   String get urlTemplate {
     final themeCubit = locator<ThemeCubit>();
@@ -60,6 +66,7 @@ class MapCubit extends Cubit<MapState> {
       _getLocalCountryData();
       _getLocalRegionsData();
     });
+    _getMarineAreas();
   }
 
   Future _getCountryPolygons() async {
@@ -72,6 +79,21 @@ class MapCubit extends Cubit<MapState> {
             (countryPolygons) {
               countries = countryPolygons;
               emit(MapState.fetchedCountryPolygons(countryPolygons));
+            },
+          ),
+        );
+  }
+
+  Future _getMarineAreas() async {
+    await getMarineAreasUsecase.call(NoParams()).then(
+          (result) => result.fold(
+            (failure) {
+              emit(MapState.error(failure.message));
+              debugPrint(failure.fullMessage);
+            },
+            (marineAreas) {
+              this.marineAreas = marineAreas;
+              emit(MapState.fetchedMarineAreas(marineAreas));
             },
           ),
         );

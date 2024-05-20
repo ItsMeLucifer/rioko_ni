@@ -11,6 +11,9 @@ class MapState with _$MapState {
   const factory MapState.fetchedCountryPolygons(List<Country> polygons) =
       _FetchedCountryPolygons;
 
+  const factory MapState.fetchedMarineAreas(List<MarineArea> marineAreas) =
+      _FetchedMarineAreas;
+
   const factory MapState.readCountriesData({
     required List<Country> been,
     required List<Country> want,

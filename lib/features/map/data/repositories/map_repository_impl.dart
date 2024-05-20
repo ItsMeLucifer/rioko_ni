@@ -4,6 +4,7 @@ import 'package:rioko_ni/core/utils/exception_handler.dart';
 import 'package:rioko_ni/features/map/data/datasources/map_local_data_source.dart';
 import 'package:rioko_ni/features/map/data/datasources/map_remote_data_source.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
+import 'package:rioko_ni/features/map/domain/entities/marine_area.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
 import 'package:rioko_ni/features/map/domain/repositories/map_repository.dart';
 
@@ -31,6 +32,14 @@ class MapRepositoryImpl with ExceptionHandler implements MapRepository {
       final result =
           await remoteDataSource.getCountryRegions(countryCode: countryCode);
       return result.map((country) => country.toEntity(countryCode)).toList();
+    });
+  }
+
+  @override
+  Future<Either<Failure, List<MarineArea>>> getMarineAreas() async {
+    return await execute(() async {
+      final result = await localDataSource.getMarineAreas();
+      return result.map((country) => country.toEntity()).toList();
     });
   }
 }
