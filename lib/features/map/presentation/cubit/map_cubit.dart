@@ -24,6 +24,11 @@ import 'package:rioko_ni/features/map/domain/usecases/get_regions.dart';
 part 'map_state.dart';
 part 'map_cubit.freezed.dart';
 
+enum RiokoMode {
+  normal,
+  marine,
+}
+
 class MapCubit extends Cubit<MapState> {
   final GetCountries getCountryPolygonUsecase;
   final GetCountryRegions getCountryRegionsUsecase;
@@ -38,6 +43,8 @@ class MapCubit extends Cubit<MapState> {
   List<Country> countries = [];
 
   List<MarineArea> marineAreas = [];
+
+  RiokoMode mode = RiokoMode.marine;
 
   String get urlTemplate {
     final themeCubit = locator<ThemeCubit>();
@@ -409,6 +416,19 @@ class MapCubit extends Cubit<MapState> {
     final watch = Stopwatch()..start();
     final results =
         countries.where((country) => country.contains(position)).toList();
+    if (results.length > 1) {
+      results.sort((a, b) => GeoUtils.calculateDistance(a.center, position)
+          .compareTo(GeoUtils.calculateDistance(b.center, position)));
+    }
+    watch.stop();
+    debugPrint('searched for: ${watch.elapsedMilliseconds / 1000}s');
+    return results.firstOrNull;
+  }
+
+  MarineArea? getMarineAreaFromPosition(LatLng position) {
+    final watch = Stopwatch()..start();
+    final results =
+        marineAreas.where((area) => area.contains(position)).toList();
     if (results.length > 1) {
       results.sort((a, b) => GeoUtils.calculateDistance(a.center, position)
           .compareTo(GeoUtils.calculateDistance(b.center, position)));

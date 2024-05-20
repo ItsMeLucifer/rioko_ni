@@ -13,6 +13,7 @@ import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
+import 'package:rioko_ni/features/map/domain/entities/marine_area.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
 import 'package:rioko_ni/main.dart';
 
@@ -158,6 +159,107 @@ class MapBuilder {
     ];
 
     return Map.noBorder(
+      mapOptions: mapOptions,
+      layers: layers,
+      controller: controller,
+    );
+  }
+
+  Widget buildMarine(
+    BuildContext context, {
+    required String urlTemplate,
+    required List<MarineArea> beenMarineAreas,
+    required List<MarineArea> wantMarineAreas,
+    required MapController controller,
+    void Function(TapPosition, LatLng)? onTap,
+    required String? dir,
+    required Key key,
+    required LatLng? center,
+    required Key polygonsLayerKey,
+  }) {
+    final mapOptions = getMapOptions(
+      interactionOptions: const InteractionOptions(
+        flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
+      ),
+      onTap: onTap,
+      center: center,
+    );
+    List<Widget> layers = [];
+    layers.add(
+      TileLayer(
+        retinaMode: RetinaMode.isHighDensity(context),
+        urlTemplate: urlTemplate,
+        additionalOptions: const {
+          "accessToken": String.fromEnvironment("map_box_access_token"),
+        },
+        tileProvider: kDebugMode
+            ? null
+            : CachedTileProvider(
+                // maxStale keeps the tile cached for the given Duration and
+                // tries to revalidate the next time it gets requested
+                maxStale: const Duration(days: 30),
+                cachePolicy: CachePolicy.forceCache,
+                store: HiveCacheStore(
+                  dir,
+                  hiveBoxName:
+                      'HiveCacheStore_${locator<ThemeCubit>().type.name}',
+                ),
+              ),
+      ),
+    );
+    List<Polygon> polygons = [];
+
+    polygons.addAll(
+      Iterable2(
+            [...beenMarineAreas, ...wantMarineAreas].map((area) {
+              final pointsList = area.polygons;
+              Color color = area.status.color(context);
+              return pointsList.map((points) {
+                return Polygon(
+                  strokeCap: StrokeCap.butt,
+                  strokeJoin: StrokeJoin.miter,
+                  points: points,
+                  borderColor: color,
+                  borderStrokeWidth: 0.3,
+                  isFilled: true,
+                  color: area.status.color(context).withMultipliedOpacity(0.4),
+                );
+              });
+            }),
+          ).reduceOrNull((value, element) => [...value, ...element]) ??
+          [],
+    );
+
+    layers.add(PolygonLayer(
+      key: polygonsLayerKey,
+      polygonCulling: true,
+      polygons: polygons,
+      polygonLabels: false,
+    ));
+
+    if (center != null) {
+      layers.add(
+        MarkerLayer(markers: [
+          Marker(
+            height: 15,
+            width: 15,
+            point: center,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(RiokoNi.navigatorKey.currentContext!)
+                    .colorScheme
+                    .primary,
+                border: Border.all(color: Colors.white, width: 2),
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+          ),
+        ]),
+      );
+    }
+
+    return Map(
+      key: key,
       mapOptions: mapOptions,
       layers: layers,
       controller: controller,

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:rioko_ni/features/map/domain/entities/marine_area.dart';
 
 part 'marine_area_model.freezed.dart';
@@ -21,6 +22,8 @@ class MarineAreaModel with _$MarineAreaModel {
         rank: rank,
         type: type,
         name: name,
-        polygons: polygons,
+        polygons: polygons
+            .map((p) => p.map((p2) => LatLng(p2.first, p2.last)).toList())
+            .toList(),
       );
 }

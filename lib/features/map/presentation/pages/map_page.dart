@@ -165,6 +165,27 @@ class _MapPageState extends State<MapPage> {
   }
 
   Widget _buildMap(BuildContext context) {
+    if (_mapCubit.mode == RiokoMode.marine) {
+      return MapBuilder().buildMarine(
+        context,
+        urlTemplate: _mapCubit.urlTemplate,
+        beenMarineAreas: [],
+        wantMarineAreas: [],
+        controller: mapController,
+        dir: _mapCubit.dir,
+        key: _mapKey,
+        polygonsLayerKey: _polygonsLayerKey,
+        center: _mapCubit.currentPosition,
+        onTap: (position, latLng) {
+          if (showTopBehindDrawer) {
+            return _closeTopDrawer();
+          }
+          final marineArea = _mapCubit.getMarineAreaFromPosition(latLng);
+          debugPrint(marineArea?.name);
+        },
+      );
+    }
+
     return MapBuilder().build(
       context,
       key: _mapKey,
