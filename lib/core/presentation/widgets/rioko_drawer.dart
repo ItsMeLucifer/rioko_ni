@@ -141,8 +141,13 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 onTap: () {
-                  Navigator.of(context).pop();
-                  ChangeThemeDialog(updateMap: widget.updateMap).show(context);
+                  Scaffold.of(context).closeDrawer();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ChangeThemeDialog(updateMap: widget.updateMap),
+                    ),
+                  );
                 },
               ),
               divider,
@@ -153,7 +158,7 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 onTap: () {
-                  Navigator.of(context).pop();
+                  Scaffold.of(context).closeDrawer();
                   const AboutAppDialog().show(context);
                 },
               ),

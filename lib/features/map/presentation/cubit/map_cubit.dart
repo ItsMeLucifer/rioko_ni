@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -33,9 +34,9 @@ class MapCubit extends Cubit<MapState> {
 
   List<Country> countries = [];
 
-  String get urlTemplate {
+  String urlTemplate({ThemeDataType? otherTheme}) {
     final themeCubit = locator<ThemeCubit>();
-    switch (themeCubit.type) {
+    switch (otherTheme ?? themeCubit.type) {
       case ThemeDataType.classic:
         return 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
       case ThemeDataType.humani:
@@ -175,6 +176,22 @@ class MapCubit extends Cubit<MapState> {
 
   List<Country> get livedCountries =>
       countries.where((c) => c.status == MOStatus.lived).toList();
+
+  List<Country> get themePreviewCountries {
+    List<Country> result = [];
+    result.add(countries.firstWhere((c) => c.alpha3 == 'POL')
+      ..status = MOStatus.lived);
+    result.add(
+        countries.firstWhere((c) => c.alpha3 == 'LVA')..status = MOStatus.want);
+    result.add(
+        countries.firstWhere((c) => c.alpha3 == 'DEU')..status = MOStatus.been);
+    result.add(
+      countries.firstWhere((c) => c.alpha3 == 'HUN')
+        ..status = MOStatus.been
+        ..displayRegions = false,
+    );
+    return result;
+  }
 
   // Asia
 

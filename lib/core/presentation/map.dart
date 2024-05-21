@@ -164,6 +164,123 @@ class MapBuilder {
     );
   }
 
+  Widget buildThemePreview(
+    BuildContext context, {
+    required String urlTemplate,
+    required List<Country> mock,
+    required String? dir,
+    required bool showRegionsBorders,
+    required ThemeData theme,
+    required ThemeDataType themeType,
+  }) {
+    final mapOptions = getMapOptions(
+      interactionOptions: const InteractionOptions(flags: InteractiveFlag.none),
+      center: const LatLng(52.079025, 18.978023),
+      initialZoom: 5,
+    );
+    List<Widget> layers = [];
+    layers.add(
+      TileLayer(
+        retinaMode: RetinaMode.isHighDensity(context),
+        urlTemplate: urlTemplate,
+        additionalOptions: const {
+          "accessToken": String.fromEnvironment("map_box_access_token"),
+        },
+        tileProvider: CachedTileProvider(
+          // maxStale keeps the tile cached for the given Duration and
+          // tries to revalidate the next time it gets requested
+          maxStale: const Duration(days: 30),
+          cachePolicy: CachePolicy.forceCache,
+          store: HiveCacheStore(
+            dir,
+            hiveBoxName: 'HiveCacheStore_${themeType.name}',
+          ),
+        ),
+      ),
+    );
+    List<Polygon> polygons = [];
+    List<Region> regions = [];
+
+    polygons.addAll(
+      Iterable2(
+            mock.map((country) {
+              final pointsList = country.polygons;
+              Color color = country.status.color(context);
+              if (country.displayRegions) {
+                regions.addAll(country.regions);
+                color = theme.colorScheme.outline;
+              }
+              return pointsList.map((points) {
+                return Polygon(
+                  strokeCap: StrokeCap.butt,
+                  strokeJoin: StrokeJoin.miter,
+                  points: points,
+                  borderColor: color,
+                  borderStrokeWidth: 0.3,
+                  isFilled: !country.displayRegions,
+                  color: country.status
+                      .color(context, otherTheme: theme)
+                      .withMultipliedOpacity(0.4),
+                );
+              });
+            }),
+          ).reduceOrNull((value, element) => [...value, ...element]) ??
+          [],
+    );
+
+    if (regions.isNotEmpty) {
+      for (Region region in regions) {
+        for (List<LatLng> polygon
+            in region.polygons.sublist(0, min(3, region.polygons.length))) {
+          polygons.add(Polygon(
+            strokeCap: StrokeCap.butt,
+            strokeJoin: StrokeJoin.bevel,
+            points: polygon,
+            color: region.status
+                .color(context, otherTheme: theme)
+                .withMultipliedOpacity(0.4),
+            borderColor: theme.colorScheme.outline.withOpacity(0.5),
+            borderStrokeWidth: region.status == MOStatus.none
+                ? (showRegionsBorders ? 0.2 : 0)
+                : 0,
+            isFilled: true,
+          ));
+        }
+      }
+    }
+
+    layers.add(PolygonLayer(
+      polygonCulling: true,
+      polygons: polygons,
+      polygonLabels: false,
+    ));
+
+    layers.add(
+      MarkerLayer(markers: [
+        Marker(
+          height: 15,
+          width: 15,
+          point: const LatLng(54.349283, 18.537055),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(RiokoNi.navigatorKey.currentContext!)
+                  .colorScheme
+                  .primary,
+              border: Border.all(color: Colors.white, width: 2),
+              borderRadius: BorderRadius.circular(25),
+            ),
+          ),
+        ),
+      ]),
+    );
+
+    return Map(
+      mapOptions: mapOptions,
+      layers: layers,
+      controller: MapController(),
+    );
+  }
+
   Widget build(
     BuildContext context, {
     required String urlTemplate,

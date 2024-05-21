@@ -169,7 +169,7 @@ class _MapPageState extends State<MapPage> {
       context,
       key: _mapKey,
       polygonsLayerKey: _polygonsLayerKey,
-      urlTemplate: _mapCubit.urlTemplate,
+      urlTemplate: _mapCubit.urlTemplate(),
       beenCountries: _mapCubit.beenCountries,
       wantCountries: _mapCubit.wantCountries,
       livedCountries: _mapCubit.livedCountries,
