@@ -108,6 +108,7 @@ flutter:
     - assets/author.jpg
     - assets/continents/
     - assets/world.png
+    - assets/icon_blank.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

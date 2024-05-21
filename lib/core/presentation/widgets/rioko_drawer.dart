@@ -18,13 +18,9 @@ import 'package:rioko_ni/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RiokoDrawer extends StatefulWidget {
-  final bool showWorldStatistics;
-  final void Function() openTopBehindDrawer;
   final void Function() updateMap;
 
   const RiokoDrawer({
-    required this.openTopBehindDrawer,
-    required this.showWorldStatistics,
     required this.updateMap,
     super.key,
   });
@@ -116,7 +112,7 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                 ),
                 onTap: () {
                   Navigator.of(context).pop();
-                  widget.openTopBehindDrawer();
+                  // widget.openTopBehindDrawer();
                 },
               ),
               ListTile(

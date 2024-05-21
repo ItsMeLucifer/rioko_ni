@@ -17,4 +17,6 @@ class AssetsHandler {
       'assets/continents/north_america.png';
   static String get oceaniaMiniature => 'assets/continents/oceania.png';
   static String get asiaMiniature => 'assets/continents/asia.png';
+
+  static String get iconBlank => 'assets/icon_blank.png';
 }

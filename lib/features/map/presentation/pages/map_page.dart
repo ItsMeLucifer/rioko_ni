@@ -1,20 +1,15 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
-import 'package:rioko_ni/core/presentation/widgets/animated_fab.dart';
 import 'package:rioko_ni/core/presentation/widgets/rioko_drawer.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
+import 'package:rioko_ni/core/utils/assets_handler.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 import 'package:rioko_ni/features/map/presentation/pages/country_management_page.dart';
-import 'package:rioko_ni/features/map/presentation/widgets/search_country_dialog.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/floating_ui.dart';
-import 'package:rioko_ni/features/map/presentation/widgets/world_statistics_map.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -26,10 +21,6 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   final _mapCubit = locator<MapCubit>();
   final _themeCubit = locator<ThemeCubit>();
-
-  bool showTopBehindDrawer = false;
-
-  bool showWorldStatistics = false;
 
   late MapController mapController;
 
@@ -52,12 +43,6 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: RiokoDrawer(
-        showWorldStatistics: showWorldStatistics,
-        openTopBehindDrawer: () {
-          showTopBehindDrawer = true;
-          showWorldStatistics = true;
-          setState(() {});
-        },
         updateMap: () => setState(() {
           _mapKey = UniqueKey();
           _polygonsLayerKey = UniqueKey();
@@ -78,50 +63,14 @@ class _MapPageState extends State<MapPage> {
             orElse: () {
               return Stack(
                 children: [
-                  WorldStatisticsMap(
-                    naPercentage: showWorldStatistics
-                        ? _mapCubit.beenNorthAmericaPercentage
-                        : 0,
-                    saPercentage: showWorldStatistics
-                        ? _mapCubit.beenSouthAmericaPercentage
-                        : 0,
-                    euPercentage: showWorldStatistics
-                        ? _mapCubit.beenEuropePercentage
-                        : 0,
-                    afPercentage: showWorldStatistics
-                        ? _mapCubit.beenAfricaPercentage
-                        : 0,
-                    asPercentage:
-                        showWorldStatistics ? _mapCubit.beenAsiaPercentage : 0,
-                    ocPercentage: showWorldStatistics
-                        ? _mapCubit.beenOceaniaPercentage
-                        : 0,
-                    onTapButton: () => Future.delayed(
-                        const Duration(milliseconds: 200),
-                        () => _closeTopDrawer()),
-                  ),
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.fastEaseInToSlowEaseOut,
-                    margin: EdgeInsets.only(
-                      top: showTopBehindDrawer
-                          ? MediaQuery.of(context).size.height * 0.3
-                          : 0,
-                    ),
-                    child: _buildMap(context),
-                  ),
+                  _buildMap(context),
                   FloatingUI(
-                    lowerTopUI: showTopBehindDrawer,
-                    openTopBehindDrawer: () {
-                      if (showTopBehindDrawer) return _closeTopDrawer();
-                      _showTopDrawer();
+                    onSelectCountry: (country) {
+                      mapController.fitCamera(
+                          CameraFit.bounds(bounds: country.bounds()));
+                      mapController.move(mapController.camera.center,
+                          mapController.camera.zoom - 2);
                     },
-                    openDrawer: () {
-                      _closeTopDrawer();
-                      Scaffold.of(context).openDrawer();
-                    },
-                    onDragDown: _showTopDrawer,
-                    onDragUp: _closeTopDrawer,
                   ),
                 ],
               );
@@ -129,36 +78,16 @@ class _MapPageState extends State<MapPage> {
           );
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: AnimatedFAB(
-        onPressed: () {
-          _closeTopDrawer();
-          showGeneralDialog(
-            barrierColor: Colors.black.withOpacity(0.5),
-            transitionBuilder: (context, a1, a2, widget) {
-              return Opacity(
-                opacity: a1.value,
-                child: widget,
-              );
-            },
-            transitionDuration: const Duration(milliseconds: 200),
-            barrierDismissible: true,
-            barrierLabel: '',
-            context: context,
-            pageBuilder: (context, animation1, animation2) =>
-                SearchCountryDialog(
-              onSelectCountry: (country) {
-                mapController
-                    .fitCamera(CameraFit.bounds(bounds: country.bounds()));
-                mapController.move(
-                    mapController.camera.center, mapController.camera.zoom - 2);
-              },
-            ),
-          );
-        },
-        icon: const FaIcon(
-          FontAwesomeIcons.magnifyingGlass,
-          size: 20,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Container(
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(AssetsHandler.iconBlank),
+            colorFilter:
+                const ColorFilter.mode(Color(0xFFEAF3EF), BlendMode.modulate),
+          ),
         ),
       ),
     );
@@ -176,9 +105,6 @@ class _MapPageState extends State<MapPage> {
       center: _mapCubit.currentPosition,
       controller: mapController,
       onTap: (position, latLng) {
-        if (showTopBehindDrawer) {
-          return _closeTopDrawer();
-        }
         final country = _mapCubit.getCountryFromPosition(latLng);
         if (country == null) return;
         Navigator.of(context).push(
@@ -190,21 +116,5 @@ class _MapPageState extends State<MapPage> {
       dir: _mapCubit.dir,
       showRegionsBorders: !_themeCubit.isLight,
     );
-  }
-
-  void _closeTopDrawer() {
-    if (showTopBehindDrawer == false) return;
-    showTopBehindDrawer = false;
-    setState(() {});
-    Future.delayed(const Duration(milliseconds: 500), () {
-      showWorldStatistics = showTopBehindDrawer;
-      setState(() {});
-    });
-  }
-
-  void _showTopDrawer() {
-    showTopBehindDrawer = true;
-    showWorldStatistics = true;
-    setState(() {});
   }
 }
