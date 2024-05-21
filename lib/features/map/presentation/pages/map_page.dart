@@ -169,8 +169,7 @@ class _MapPageState extends State<MapPage> {
       return MapBuilder().buildMarine(
         context,
         urlTemplate: _mapCubit.urlTemplate,
-        beenMarineAreas: [],
-        wantMarineAreas: [],
+        marineAreas: _mapCubit.marineAreas,
         controller: mapController,
         dir: _mapCubit.dir,
         key: _mapKey,

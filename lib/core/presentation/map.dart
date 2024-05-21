@@ -168,8 +168,7 @@ class MapBuilder {
   Widget buildMarine(
     BuildContext context, {
     required String urlTemplate,
-    required List<MarineArea> beenMarineAreas,
-    required List<MarineArea> wantMarineAreas,
+    required List<MarineArea> marineAreas,
     required MapController controller,
     void Function(TapPosition, LatLng)? onTap,
     required String? dir,
@@ -183,6 +182,8 @@ class MapBuilder {
       ),
       onTap: onTap,
       center: center,
+      maxZoom: 10,
+      minZoom: 3,
     );
     List<Widget> layers = [];
     layers.add(
@@ -211,18 +212,24 @@ class MapBuilder {
 
     polygons.addAll(
       Iterable2(
-            [...beenMarineAreas, ...wantMarineAreas].map((area) {
+            [...marineAreas].map((area) {
               final pointsList = area.polygons;
               Color color = area.status.color(context);
+              if (area.status == MOStatus.none) {
+                color = Theme.of(context).colorScheme.outline;
+              }
               return pointsList.map((points) {
                 return Polygon(
                   strokeCap: StrokeCap.butt,
                   strokeJoin: StrokeJoin.miter,
                   points: points,
                   borderColor: color,
-                  borderStrokeWidth: 0.3,
+                  borderStrokeWidth: 2,
                   isFilled: true,
-                  color: area.status.color(context).withMultipliedOpacity(0.4),
+                  color: color.withOpacity(0.1),
+                  label: area.name,
+                  labelStyle: Theme.of(context).textTheme.headlineSmall!,
+                  labelPlacement: PolygonLabelPlacement.polylabel,
                 );
               });
             }),
@@ -234,7 +241,7 @@ class MapBuilder {
       key: polygonsLayerKey,
       polygonCulling: true,
       polygons: polygons,
-      polygonLabels: false,
+      polygonLabels: true,
     ));
 
     if (center != null) {
