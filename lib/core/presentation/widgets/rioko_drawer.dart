@@ -13,7 +13,7 @@ import 'package:rioko_ni/core/presentation/widgets/change_theme_dialog.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
-import 'package:rioko_ni/features/map/presentation/pages/share_page.dart';
+import 'package:rioko_ni/features/map/presentation/widgets/share_world_data_dialog.dart';
 import 'package:rioko_ni/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -126,10 +126,11 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 onTap: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const SharePage(),
-                    ),
+                  showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) =>
+                        const ShareWorldDataDialog(),
                   );
                 },
               ),
