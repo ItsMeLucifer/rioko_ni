@@ -186,16 +186,18 @@ class MapBuilder {
         additionalOptions: const {
           "accessToken": String.fromEnvironment("map_box_access_token"),
         },
-        tileProvider: CachedTileProvider(
-          // maxStale keeps the tile cached for the given Duration and
-          // tries to revalidate the next time it gets requested
-          maxStale: const Duration(days: 30),
-          cachePolicy: CachePolicy.forceCache,
-          store: HiveCacheStore(
-            dir,
-            hiveBoxName: 'HiveCacheStore_${themeType.name}',
-          ),
-        ),
+        tileProvider: kDebugMode
+            ? null
+            : CachedTileProvider(
+                // maxStale keeps the tile cached for the given Duration and
+                // tries to revalidate the next time it gets requested
+                maxStale: const Duration(days: 30),
+                cachePolicy: CachePolicy.forceCache,
+                store: HiveCacheStore(
+                  dir,
+                  hiveBoxName: 'HiveCacheStore_${themeType.name}',
+                ),
+              ),
       ),
     );
     List<Polygon> polygons = [];
