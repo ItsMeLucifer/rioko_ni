@@ -72,6 +72,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     iconTheme: const IconThemeData(
       color: Colors.black,
     ),
+    scaffoldBackgroundColor: const Color(0xFFEAF3EF),
     appBarTheme: const AppBarTheme(
       color: Color.fromARGB(255, 222, 226, 236),
       foregroundColor: Colors.black,
@@ -122,6 +123,13 @@ class ThemeCubit extends Cubit<ThemeDataType> {
         fontFamily: 'Nasalization',
         color: Colors.black,
         fontSize: 35,
+      ),
+    ),
+    primaryTextTheme: const TextTheme(
+      bodyMedium: TextStyle(
+        color: Color(0xFF337554),
+        fontWeight: FontWeight.bold,
+        fontSize: 14,
       ),
     ),
     outlinedButtonTheme: const OutlinedButtonThemeData(

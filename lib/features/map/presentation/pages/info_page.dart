@@ -1,20 +1,20 @@
+import 'package:countries_world_map/countries_world_map.dart';
+import 'package:countries_world_map/data/maps/world_map.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/build_context2.dart';
+import 'package:rioko_ni/core/extensions/iterable2.dart';
 import 'package:rioko_ni/core/injector.dart';
+import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
+import 'package:rioko_ni/features/map/presentation/pages/country_management_page.dart';
 
 class InfoPage extends StatefulWidget {
-  final void Function(Country) onTapCountry;
-
-  const InfoPage({
-    required this.onTapCountry,
-    super.key,
-  });
+  const InfoPage({super.key});
 
   @override
   State<InfoPage> createState() => _InfoPageState();
@@ -24,6 +24,9 @@ class _InfoPageState extends State<InfoPage> {
   MOStatus status = MOStatus.been;
 
   final _cubit = locator<MapCubit>();
+  final _themeCubit = locator<ThemeCubit>();
+
+  Area? area;
 
   Color get borderColor {
     switch (status) {
@@ -47,6 +50,22 @@ class _InfoPageState extends State<InfoPage> {
     }
   }
 
+  Color mapBorderColor(BuildContext context) {
+    switch (_themeCubit.type) {
+      case ThemeDataType.classic:
+      case ThemeDataType.humani:
+        return Colors.black;
+      case ThemeDataType.neoDark:
+      case ThemeDataType.monochrome:
+        return Theme.of(context).colorScheme.onPrimary.withOpacity(1.0);
+    }
+  }
+
+  TextStyle get nonSelectedText => Theme.of(context)
+      .primaryTextTheme
+      .bodyMedium!
+      .copyWith(color: const Color.fromARGB(255, 206, 211, 255));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,40 +76,21 @@ class _InfoPageState extends State<InfoPage> {
             orElse: () {},
           );
         },
-        child: SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: AppSizes.paddingQuadruple,
-                horizontal: AppSizes.paddingDouble,
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: context.width(0.9),
-                    child: SegmentedButton<MOStatus>(
-                      segments: ([...MOStatus.values]..remove(MOStatus.none))
-                          .map((s) => ButtonSegment(
-                                value: s,
-                                label: Text(s.name),
-                              ))
-                          .toList(),
-                      selected: {status},
-                      style: ButtonStyle(
-                        textStyle: MaterialStatePropertyAll(
-                            Theme.of(context).textTheme.titleMedium),
-                        foregroundColor: MaterialStatePropertyAll(
-                            Theme.of(context).colorScheme.outline),
-                      ),
-                      onSelectionChanged: (value) =>
-                          setState(() => status = value.first),
-                    ),
-                  ),
-                  _buildCountryList(context, countries: countries),
-                ],
-              ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSizes.paddingDouble,
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: AppSizes.paddingQuadruple),
+                  child: _buildMap(context),
+                ),
+                _buildAreaSelectButton(context),
+                _buildCountryList(context, countries: countries),
+              ],
             ),
           ),
         ),
@@ -109,15 +109,74 @@ class _InfoPageState extends State<InfoPage> {
     );
   }
 
+  Widget _buildAreaSelectButton(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(AppSizes.radius),
+      ),
+      padding: const EdgeInsets.all(AppSizes.paddingQuadruple),
+      margin: const EdgeInsets.only(bottom: AppSizes.paddingDouble),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            _areaSelectButton(label: 'All world', value: null),
+            ...AreaExtension.fixedValues.map(
+              (a) => _areaSelectButton(label: a.name, value: a),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _areaSelectButton({required String label, required Area? value}) {
+    return GestureDetector(
+      onTap: () => setState(() => area = value),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppSizes.paddingDouble),
+        child: Text(
+          label,
+          style: area == value
+              ? Theme.of(context).primaryTextTheme.bodyMedium
+              : nonSelectedText,
+        ),
+      ),
+    );
+  }
+
   Widget _buildCountryList(
     BuildContext context, {
     required List<Country> countries,
   }) {
     return Column(
       children: [
+        SizedBox(
+          width: context.width(0.7),
+          child: SegmentedButton<MOStatus>(
+            segments: ([...MOStatus.values]..remove(MOStatus.none))
+                .map((s) => ButtonSegment(
+                      value: s,
+                      label: Text(s.name),
+                    ))
+                .toList(),
+            selected: {status},
+            style: ButtonStyle(
+              textStyle: MaterialStatePropertyAll(
+                  Theme.of(context).textTheme.titleSmall),
+              foregroundColor: MaterialStatePropertyAll(
+                  Theme.of(context).colorScheme.outline),
+              padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+              alignment: Alignment.center,
+            ),
+            showSelectedIcon: false,
+            onSelectionChanged: (value) => setState(() => status = value.first),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.only(
-            top: AppSizes.paddingQuadruple,
+            top: AppSizes.paddingDouble,
           ),
           child: Text(countries.isEmpty
               ? 'No results'
@@ -143,7 +202,12 @@ class _InfoPageState extends State<InfoPage> {
                 itemBuilder: (context, index) {
                   final country = countries[index];
                   return ListTile(
-                    onTap: () => widget.onTapCountry(country),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            CountryManagementPage(country: country),
+                      ),
+                    ),
                     leading: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -167,6 +231,22 @@ class _InfoPageState extends State<InfoPage> {
             ),
           ),
       ],
+    );
+  }
+
+  Widget _buildMap(BuildContext context) {
+    return SimpleMap(
+      instructions: SMapWorld.instructionsMercator,
+      defaultColor: Theme.of(context).colorScheme.background,
+      countryBorder: CountryBorder(color: mapBorderColor(context)),
+      colors: _cubit.countries
+          .where((c) => c.status != MOStatus.none)
+          .map(
+            (c) => {
+              c.alpha2.toLowerCase(): c.status.color(context).withOpacity(1),
+            },
+          )
+          .reduceOrNull((value, element) => {...value, ...element}),
     );
   }
 }

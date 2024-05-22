@@ -10,7 +10,6 @@ import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
-import 'package:rioko_ni/features/map/presentation/pages/country_management_page.dart';
 import 'package:rioko_ni/features/map/presentation/pages/info_page.dart';
 
 class WorldStatisticsMap extends StatelessWidget {
@@ -65,15 +64,7 @@ class WorldStatisticsMap extends StatelessWidget {
     onTapButton();
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => InfoPage(
-          onTapCountry: (country) {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => CountryManagementPage(country: country),
-              ),
-            );
-          },
-        ),
+        builder: (context) => const InfoPage(),
       ),
     );
   }

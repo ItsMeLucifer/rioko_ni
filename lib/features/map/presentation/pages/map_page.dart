@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
+import 'package:rioko_ni/core/presentation/widgets/animated_fab.dart';
 import 'package:rioko_ni/core/presentation/widgets/rioko_drawer.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
 import 'package:rioko_ni/core/utils/assets_handler.dart';
@@ -42,12 +43,6 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: RiokoDrawer(
-        updateMap: () => setState(() {
-          _mapKey = UniqueKey();
-          _polygonsLayerKey = UniqueKey();
-        }),
-      ),
       backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       body: BlocConsumer<MapCubit, MapState>(
         listener: (context, state) {
@@ -79,14 +74,26 @@ class _MapPageState extends State<MapPage> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Container(
-        width: 60,
-        height: 60,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(AssetsHandler.iconBlank),
-            colorFilter:
-                const ColorFilter.mode(Color(0xFFEAF3EF), BlendMode.modulate),
+      floatingActionButton: AnimatedFAB(
+        icon: Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AssetsHandler.iconBlank),
+              colorFilter:
+                  const ColorFilter.mode(Color(0xFFEAF3EF), BlendMode.modulate),
+            ),
+          ),
+        ),
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => RiokoDrawer(
+              restartMapKeys: () => setState(() {
+                _mapKey = UniqueKey();
+                _polygonsLayerKey = UniqueKey();
+              }),
+            ),
           ),
         ),
       ),

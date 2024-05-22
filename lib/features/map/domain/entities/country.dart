@@ -25,6 +25,8 @@ enum Area {
 }
 
 extension AreaExtension on Area {
+  static List<Area> get fixedValues => [...Area.values]..remove(Area.antarctic);
+
   static Area fromIndex(int index) {
     switch (index) {
       case 0:

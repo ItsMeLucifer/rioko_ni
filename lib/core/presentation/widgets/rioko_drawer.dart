@@ -1,27 +1,22 @@
-import 'package:countries_world_map/countries_world_map.dart';
-import 'package:countries_world_map/data/maps/world_map.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
-import 'package:rioko_ni/core/extensions/iterable2.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/about_app_dialog.dart';
 import 'package:rioko_ni/core/presentation/cubit/revenue_cat_cubit.dart';
-import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/widgets/change_theme_dialog.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
-import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
-import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
+import 'package:rioko_ni/features/map/presentation/pages/info_page.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/share_world_data_dialog.dart';
 import 'package:rioko_ni/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RiokoDrawer extends StatefulWidget {
-  final void Function() updateMap;
+  final void Function() restartMapKeys;
 
   const RiokoDrawer({
-    required this.updateMap,
+    required this.restartMapKeys,
     super.key,
   });
 
@@ -32,10 +27,6 @@ class RiokoDrawer extends StatefulWidget {
 class _RiokoDrawerState extends State<RiokoDrawer> {
   String get l10n => 'drawer';
 
-  final _cubit = locator<MapCubit>();
-
-  final _themeCubit = locator<ThemeCubit>();
-
   final _revenueCatCubit = locator<RevenueCatCubit>();
 
   bool loadingPurchase = false;
@@ -45,21 +36,10 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
         indent: AppSizes.paddingDouble,
       );
 
-  Color mapBorderColor(BuildContext context) {
-    switch (_themeCubit.type) {
-      case ThemeDataType.classic:
-      case ThemeDataType.humani:
-        return Colors.black;
-      case ThemeDataType.neoDark:
-      case ThemeDataType.monochrome:
-        return Theme.of(context).colorScheme.onPrimary.withOpacity(1.0);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Padding(
+    return Scaffold(
+      body: Padding(
         padding: const EdgeInsets.only(
           bottom: AppSizes.paddingSeptuple,
           top: AppSizes.paddingQuadruple,
@@ -67,23 +47,6 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(AppSizes.padding),
-                child: SimpleMap(
-                  instructions: SMapWorld.instructionsMercator,
-                  defaultColor: Theme.of(context).colorScheme.background,
-                  countryBorder: CountryBorder(color: mapBorderColor(context)),
-                  colors: _cubit.countries
-                      .where((c) => c.status != MOStatus.none)
-                      .map(
-                        (c) => {
-                          c.alpha2.toLowerCase():
-                              c.status.color(context).withOpacity(0.3),
-                        },
-                      )
-                      .reduceOrNull((value, element) => {...value, ...element}),
-                ),
-              ),
               if (!_revenueCatCubit.isPremium) ...[
                 divider,
                 ListTile(
@@ -111,8 +74,11 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 onTap: () {
-                  Navigator.of(context).pop();
-                  // widget.openTopBehindDrawer();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const InfoPage(),
+                    ),
+                  );
                 },
               ),
               ListTile(
@@ -140,8 +106,9 @@ class _RiokoDrawerState extends State<RiokoDrawer> {
                   Scaffold.of(context).closeDrawer();
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) =>
-                          ChangeThemeDialog(updateMap: widget.updateMap),
+                      builder: (context) => ChangeThemePage(
+                        restartMapKeys: widget.restartMapKeys,
+                      ),
                     ),
                   );
                 },

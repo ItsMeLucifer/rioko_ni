@@ -11,19 +11,19 @@ import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/core/utils/assets_handler.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 
-class ChangeThemeDialog extends StatefulWidget {
-  final void Function() updateMap;
+class ChangeThemePage extends StatefulWidget {
+  final void Function() restartMapKeys;
 
-  const ChangeThemeDialog({
-    required this.updateMap,
+  const ChangeThemePage({
+    required this.restartMapKeys,
     super.key,
   });
 
   @override
-  State<ChangeThemeDialog> createState() => _ChangeThemeDialogState();
+  State<ChangeThemePage> createState() => _ChangeThemePageState();
 }
 
-class _ChangeThemeDialogState extends State<ChangeThemeDialog> {
+class _ChangeThemePageState extends State<ChangeThemePage> {
   final _themeCubit = locator<ThemeCubit>();
   final _mapCubit = locator<MapCubit>();
 
@@ -194,7 +194,7 @@ class _ChangeThemeDialogState extends State<ChangeThemeDialog> {
         Navigator.of(context).pop();
         if (selectedThemeType != _themeCubit.type) {
           _themeCubit.changeTheme(selectedThemeType);
-          widget.updateMap();
+          widget.restartMapKeys();
         }
       },
       child: isOptionAvailable
