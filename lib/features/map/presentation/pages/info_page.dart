@@ -76,11 +76,13 @@ class _InfoPageState extends State<InfoPage> {
             orElse: () {},
           );
         },
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSizes.paddingDouble,
-            ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: AppSizes.paddingDouble,
+            right: AppSizes.paddingDouble,
+            top: kToolbarHeight,
+          ),
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 Padding(
@@ -89,7 +91,10 @@ class _InfoPageState extends State<InfoPage> {
                   child: _buildMap(context),
                 ),
                 _buildAreaSelectButton(context),
-                _buildCountryList(context, countries: countries),
+                _buildCountryList(context,
+                    countries: countries
+                        .where((c) => area == null || c.area == area)
+                        .toList()),
               ],
             ),
           ),
@@ -183,51 +188,52 @@ class _InfoPageState extends State<InfoPage> {
               : '${countries.length} countries'),
         ),
         if (countries.isNotEmpty)
-          ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: context.height(0.6)),
-            child: Container(
-              margin: const EdgeInsets.all(
-                AppSizes.paddingDouble,
+          Container(
+            margin: EdgeInsets.only(
+              left: AppSizes.paddingDouble,
+              right: AppSizes.paddingDouble,
+              top: AppSizes.paddingDouble,
+              bottom: context.height(0.15),
+            ),
+            decoration: BoxDecoration(
+              color: borderColor.withOpacity(0.1),
+              border: Border.all(
+                color: borderColor,
               ),
-              decoration: BoxDecoration(
-                color: borderColor.withOpacity(0.1),
-                border: Border.all(
-                  color: borderColor,
-                ),
-                borderRadius: BorderRadius.circular(AppSizes.radiusHalf),
-              ),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: countries.length,
-                itemBuilder: (context, index) {
-                  final country = countries[index];
-                  return ListTile(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            CountryManagementPage(country: country),
-                      ),
+              borderRadius: BorderRadius.circular(AppSizes.radiusHalf),
+            ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: countries.length,
+              itemBuilder: (context, index) {
+                final country = countries[index];
+                return ListTile(
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          CountryManagementPage(country: country),
                     ),
-                    leading: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: borderColor,
-                        ),
+                  ),
+                  leading: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
                         color: borderColor,
                       ),
-                      child: country.flag(scale: 0.5),
+                      color: borderColor,
                     ),
-                    title: Text(
-                      country.name,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    subtitle: Text(
-                      country.area.name,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  );
-                },
-              ),
+                    child: country.flag(scale: 0.5),
+                  ),
+                  title: Text(
+                    country.name,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  subtitle: Text(
+                    country.area.name,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                );
+              },
             ),
           ),
       ],
