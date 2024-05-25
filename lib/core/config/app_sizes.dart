@@ -10,7 +10,8 @@ class AppSizes {
   static const double paddingSeptuple = padding * 7;
   static const double paddingOctuple = padding * 8;
   static const double radiusHalf = radius / 2;
+  static const double radiusSmall = 16;
   static const double radius = 25;
-  static const double bigRadius = radius * 2;
-  static const double enormousRadius = bigRadius * 2;
+  static const double radiusDouble = radius * 2;
+  static const double radiusQuadruple = radiusDouble * 2;
 }

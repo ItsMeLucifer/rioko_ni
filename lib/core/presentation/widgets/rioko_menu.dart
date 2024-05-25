@@ -27,21 +27,24 @@ class RiokoMenu extends StatefulWidget {
 }
 
 class _RiokoMenuState extends State<RiokoMenu> {
-  String get l10n => 'drawer';
+  String get l10n => 'menu';
 
   final _revenueCatCubit = locator<RevenueCatCubit>();
 
   bool loadingPurchase = false;
 
-  Widget get divider => const Divider(
-        endIndent: AppSizes.paddingDouble,
-        indent: AppSizes.paddingDouble,
+  Widget divider(BuildContext context) => SizedBox(
+        width: context.width(0.62),
+        child: Divider(
+          color: Theme.of(context).dividerColor,
+        ),
       );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body: Container(
+        width: double.infinity,
         padding: const EdgeInsets.only(
           bottom: AppSizes.paddingSeptuple,
           top: AppSizes.paddingQuadruple,
@@ -51,32 +54,28 @@ class _RiokoMenuState extends State<RiokoMenu> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                _buildHeader(context),
                 if (!_revenueCatCubit.isPremium) ...[
-                  divider,
-                  ListTile(
-                    leading: const Icon(FontAwesomeIcons.gem),
-                    title: Text(
-                      tr('$l10n.labels.buyPremium'),
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    trailing: loadingPurchase
-                        ? const CircularProgressIndicator.adaptive()
-                        : null,
+                  divider(context),
+                  _buildTile(
+                    context,
+                    iconData: FontAwesomeIcons.gem,
                     onTap: () {
                       setState(() => loadingPurchase = true);
                       _revenueCatCubit.purchasePremium().then((_) => setState(
                             () => loadingPurchase = false,
                           ));
                     },
+                    trailing: loadingPurchase
+                        ? const CircularProgressIndicator.adaptive()
+                        : null,
+                    label: tr('$l10n.labels.buyPremium'),
                   ),
                 ],
-                divider,
-                ListTile(
-                  leading: const Icon(FontAwesomeIcons.chartPie),
-                  title: Text(
-                    tr('$l10n.labels.showStatistics'),
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
+                divider(context),
+                _buildTile(
+                  context,
+                  iconData: FontAwesomeIcons.chartPie,
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -84,13 +83,12 @@ class _RiokoMenuState extends State<RiokoMenu> {
                       ),
                     );
                   },
+                  label: tr('$l10n.labels.showStatistics'),
                 ),
-                ListTile(
-                  leading: const Icon(FontAwesomeIcons.shareNodes),
-                  title: Text(
-                    tr('$l10n.labels.shareStatistics'),
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
+                const SizedBox(height: AppSizes.padding),
+                _buildTile(
+                  context,
+                  iconData: FontAwesomeIcons.shareNodes,
                   onTap: () {
                     showGeneralDialog(
                       barrierColor: Colors.black.withOpacity(0.5),
@@ -99,16 +97,14 @@ class _RiokoMenuState extends State<RiokoMenu> {
                           const ShareWorldDataDialog(),
                     );
                   },
+                  label: tr('$l10n.labels.shareStatistics'),
                 ),
-                ListTile(
-                  leading: const Icon(FontAwesomeIcons.paintRoller),
-                  title: Text(
-                    tr('$l10n.labels.changeTheme'),
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
+                const SizedBox(height: AppSizes.padding),
+                _buildTile(
+                  context,
+                  iconData: FontAwesomeIcons.paintRoller,
                   onTap: () {
-                    Scaffold.of(context).closeDrawer();
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => ChangeThemePage(
                           restartMapKeys: widget.restartMapKeys,
@@ -116,25 +112,22 @@ class _RiokoMenuState extends State<RiokoMenu> {
                       ),
                     );
                   },
+                  label: tr('$l10n.labels.changeTheme'),
                 ),
-                divider,
-                ListTile(
-                  leading: const Icon(FontAwesomeIcons.circleInfo),
-                  title: Text(
-                    tr('$l10n.labels.aboutApp'),
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
+                divider(context),
+                _buildTile(
+                  context,
+                  iconData: FontAwesomeIcons.circleInfo,
                   onTap: () {
                     Scaffold.of(context).closeDrawer();
                     const AboutAppDialog().show(context);
                   },
+                  label: tr('$l10n.labels.aboutApp'),
                 ),
-                ListTile(
-                  leading: const Icon(FontAwesomeIcons.shieldHalved),
-                  title: Text(
-                    tr('$l10n.labels.privacyPolicy'),
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
+                const SizedBox(height: AppSizes.padding),
+                _buildTile(
+                  context,
+                  iconData: FontAwesomeIcons.shieldHalved,
                   onTap: () async {
                     try {
                       await launchUrl(Uri.parse(
@@ -148,6 +141,7 @@ class _RiokoMenuState extends State<RiokoMenu> {
                       ).show(RiokoNi.navigatorKey.currentContext!);
                     }
                   },
+                  label: tr('$l10n.labels.privacyPolicy'),
                 ),
               ],
             ),
@@ -157,19 +151,64 @@ class _RiokoMenuState extends State<RiokoMenu> {
     );
   }
 
+  Widget _buildTile(
+    BuildContext context, {
+    required void Function() onTap,
+    required IconData iconData,
+    required String label,
+    Widget? trailing,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: context.width(0.62),
+        decoration: BoxDecoration(
+          border: Border.all(),
+          borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
+          color: Theme.of(context).buttonTheme.colorScheme?.background,
+        ),
+        padding: const EdgeInsets.symmetric(
+            horizontal: AppSizes.padding,
+            vertical: AppSizes.paddingDouble * 3 / 4),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(iconData),
+            Text(
+              label,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            trailing ?? const SizedBox.shrink(),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildHeader(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: context.width(0.5),
-          child: Image.asset(AssetsHandler.textLogo),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSizes.paddingDouble),
-          child: Text('Odkryj świat!'),
-        ),
-      ],
+    return SizedBox(
+      width: context.width(0.8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: context.width(0.5),
+            child: Image.asset(AssetsHandler.textLogo),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: AppSizes.paddingDouble),
+            child: Text(tr('$l10n.labels.title')),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppSizes.paddingDouble),
+            child: Text(
+              tr('$l10n.labels.subtitle'),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

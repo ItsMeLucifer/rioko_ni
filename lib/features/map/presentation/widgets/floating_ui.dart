@@ -89,7 +89,7 @@ class FloatingUI extends StatelessWidget {
                     Theme.of(context).colorScheme.background.withOpacity(0.7),
                 border:
                     Border.all(color: Theme.of(context).colorScheme.onPrimary),
-                borderRadius: BorderRadius.circular(AppSizes.bigRadius),
+                borderRadius: BorderRadius.circular(AppSizes.radiusDouble),
               ),
               padding: const EdgeInsets.all(AppSizes.paddingDouble),
               child: const FaIcon(

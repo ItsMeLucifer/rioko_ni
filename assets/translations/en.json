@@ -356,14 +356,16 @@
             "buyPremium": "Buy Rioko Premium"
         }
     },
-    "drawer": {
+    "menu": {
         "labels": {
             "showStatistics": "Show statistics",
             "shareStatistics": "Share your statistics",
             "changeTheme": "Change theme",
             "privacyPolicy": "Privacy policy",
             "aboutApp": "About app",
-            "buyPremium": "Buy Rioko Premium"
+            "buyPremium": "Buy Rioko Premium",
+            "title": "Discover the world!",
+            "subtitle": "Your map of memories at your fingertips."
         }
     },
     "changeThemeDialog": {

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -85,13 +86,21 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       ),
     ),
     primaryColor: const Color.fromARGB(255, 240, 244, 255),
+    dividerColor: const Color.fromARGB(255, 7, 76, 41),
+    buttonTheme: ButtonThemeData(
+      buttonColor: Colors.white,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: const Color.fromARGB(255, 7, 76, 41),
+      ).copyWith(background: Colors.white),
+    ),
     textTheme: TextTheme(
       bodySmall: const TextStyle(
         fontFamily: 'Nasalization',
         color: Colors.black,
       ),
-      bodyMedium: TextStyle(
-        color: Colors.black,
+      bodyMedium: GoogleFonts.montserrat(
+        color: const Color.fromARGB(255, 7, 76, 41),
+        fontWeight: FontWeight.w500,
       ),
       bodyLarge: const TextStyle(
         fontFamily: 'Nasalization',
@@ -109,10 +118,10 @@ class ThemeCubit extends Cubit<ThemeDataType> {
         fontFamily: 'Nasalization',
         color: Colors.white,
       ),
-      headlineSmall: const TextStyle(
-        fontFamily: 'Nasalization',
+      headlineSmall: GoogleFonts.montserrat(
         color: Colors.black,
-        fontSize: 15,
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
       ),
       headlineMedium: const TextStyle(
         fontFamily: 'Nasalization',
