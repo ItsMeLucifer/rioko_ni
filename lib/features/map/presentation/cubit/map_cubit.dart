@@ -195,6 +195,9 @@ class MapCubit extends Cubit<MapState> {
     return result;
   }
 
+  LatLng getWorldCenter({bool withAntarctic = true}) =>
+      LatLng(withAntarctic ? 15.6642 : 43.6642, 0.9432);
+
   // Asia
 
   int get beenAsiaCountriesNumber {

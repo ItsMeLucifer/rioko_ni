@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/build_context2.dart';
 import 'package:rioko_ni/core/extensions/color2.dart';
@@ -19,13 +20,31 @@ class InfoPage extends StatefulWidget {
   State<InfoPage> createState() => _InfoPageState();
 }
 
-class _InfoPageState extends State<InfoPage> {
+class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
   MOStatus status = MOStatus.been;
 
   final _cubit = locator<MapCubit>();
   final _themeCubit = locator<ThemeCubit>();
 
-  Area? area;
+  Area area = Area.world;
+
+  late AnimatedMapController mapController;
+
+  @override
+  void initState() {
+    mapController = AnimatedMapController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
+  }
 
   Color get borderColor {
     switch (status) {
@@ -92,7 +111,7 @@ class _InfoPageState extends State<InfoPage> {
                 _buildAreaSelectButton(context),
                 _buildCountryList(context,
                     countries: countries
-                        .where((c) => area == null || c.area == area)
+                        .where((c) => area == Area.world || c.area == area)
                         .toList()),
               ],
             ),
@@ -125,7 +144,6 @@ class _InfoPageState extends State<InfoPage> {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            _areaSelectButton(label: 'All world', value: null),
             ...AreaExtension.fixedValues.map(
               (a) => _areaSelectButton(label: a.name, value: a),
             ),
@@ -135,9 +153,13 @@ class _InfoPageState extends State<InfoPage> {
     );
   }
 
-  Widget _areaSelectButton({required String label, required Area? value}) {
+  Widget _areaSelectButton({required String label, required Area value}) {
     return GestureDetector(
-      onTap: () => setState(() => area = value),
+      onTap: () {
+        area = value;
+        mapController.animateTo(dest: area.center, zoom: area.zoom);
+        setState(() {});
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppSizes.paddingDouble),
         child: Text(
@@ -253,6 +275,7 @@ class _InfoPageState extends State<InfoPage> {
             status.color(context).withMultipliedOpacity(0.4),
         getCountryBorderStrokeWidth: (status) =>
             status == MOStatus.none ? 0.3 : 0.6,
+        controller: mapController.mapController,
       ),
     );
   }

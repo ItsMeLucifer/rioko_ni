@@ -172,12 +172,16 @@ class MapBuilder {
     required Color Function(MOStatus) getCountryColor,
     Color Function(MOStatus)? getCountryBorderColor,
     required double Function(MOStatus) getCountryBorderStrokeWidth,
+    MapController? controller,
   }) {
     final mapOptions = getMapOptions(
-        interactionOptions:
-            const InteractionOptions(flags: InteractiveFlag.none),
-        initialZoom: zoom ?? 0.45,
-        center: LatLng(withAntarctic ? 15.6642 : 43.6642, 0.9432));
+      interactionOptions: const InteractionOptions(flags: InteractiveFlag.none),
+      initialZoom: zoom ?? 0.45,
+      center: LatLng(withAntarctic ? 15.6642 : 43.6642, 0.9432),
+      minZoom: 0,
+      maxZoom: 10,
+      cameraConstraint: const CameraConstraint.unconstrained(),
+    );
     List<Widget> layers = [];
     List<Polygon> polygons = [];
 
@@ -216,7 +220,7 @@ class MapBuilder {
     return Map.noBorder(
       mapOptions: mapOptions,
       layers: layers,
-      controller: MapController(),
+      controller: controller ?? MapController(),
     );
   }
 
