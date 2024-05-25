@@ -176,6 +176,9 @@ class MapCubit extends Cubit<MapState> {
   List<Country> get livedCountries =>
       countries.where((c) => c.status == MOStatus.lived).toList();
 
+  List<Country> get noAntarcticCountries =>
+      countries.where((c) => c.area != Area.antarctic).toList();
+
   List<Country> get themePreviewCountries {
     List<Country> result = [];
     result.add(countries.firstWhere((c) => c.alpha3 == 'POL')

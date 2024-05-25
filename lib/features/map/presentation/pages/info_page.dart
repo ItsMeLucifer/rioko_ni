@@ -1,13 +1,12 @@
-import 'package:countries_world_map/countries_world_map.dart';
-import 'package:countries_world_map/data/maps/world_map.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/build_context2.dart';
-import 'package:rioko_ni/core/extensions/iterable2.dart';
+import 'package:rioko_ni/core/extensions/color2.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
+import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
@@ -241,18 +240,20 @@ class _InfoPageState extends State<InfoPage> {
   }
 
   Widget _buildMap(BuildContext context) {
-    return SimpleMap(
-      instructions: SMapWorld.instructionsMercator,
-      defaultColor: Theme.of(context).colorScheme.background,
-      countryBorder: CountryBorder(color: mapBorderColor(context)),
-      colors: _cubit.countries
-          .where((c) => c.status != MOStatus.none)
-          .map(
-            (c) => {
-              c.alpha2.toLowerCase(): c.status.color(context).withOpacity(1),
-            },
-          )
-          .reduceOrNull((value, element) => {...value, ...element}),
+    return Container(
+      height: context.height(0.3),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        borderRadius: BorderRadius.circular(AppSizes.radius),
+      ),
+      child: MapBuilder().buildWorldMapSummary(
+        context,
+        countries: _cubit.countries,
+        getCountryColor: (status) =>
+            status.color(context).withMultipliedOpacity(0.4),
+        getCountryBorderStrokeWidth: (status) =>
+            status == MOStatus.none ? 0.3 : 0.6,
+      ),
     );
   }
 }

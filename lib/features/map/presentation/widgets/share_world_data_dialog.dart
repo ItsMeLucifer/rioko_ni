@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:countries_world_map/countries_world_map.dart';
-import 'package:countries_world_map/data/maps/world_map.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,9 +8,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
-import 'package:rioko_ni/core/extensions/iterable2.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/revenue_cat_cubit.dart';
+import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
@@ -301,23 +299,25 @@ class _ShareWorldDataDialogState extends State<ShareWorldDataDialog> {
                       height: imageHeight(context) * 0.33,
                       padding: const EdgeInsets.symmetric(
                           horizontal: AppSizes.paddingHalf),
-                      child: SimpleMap(
-                        instructions: SMapWorld.instructionsMercator,
-                        defaultColor: Colors.transparent,
-                        countryBorder: CountryBorder(color: primaryColor),
-                        colors: [
-                          ..._cubit.beenCountries,
-                          ..._cubit.livedCountries
-                        ]
-                            .map(
-                              (c) => {
-                                c.alpha2.toLowerCase():
-                                    primaryColor.withOpacity(
-                                        c.status == MOStatus.been ? 0.6 : 1),
-                              },
-                            )
-                            .reduceOrNull(
-                                (value, element) => {...value, ...element}),
+                      child: MapBuilder().buildWorldMapSummary(
+                        context,
+                        countries: _cubit.noAntarcticCountries,
+                        zoom: 0.25,
+                        withAntarctic: false,
+                        getCountryBorderColor: (status) {
+                          if (status == MOStatus.lived) {
+                            return backgroundColor.withOpacity(0.6);
+                          }
+                          return primaryColor;
+                        },
+                        getCountryColor: (status) {
+                          if (status == MOStatus.none) {
+                            return Colors.transparent;
+                          }
+                          return primaryColor
+                              .withOpacity(status == MOStatus.been ? 0.6 : 1);
+                        },
+                        getCountryBorderStrokeWidth: (status) => 0.3,
                       ),
                     ),
                     Align(

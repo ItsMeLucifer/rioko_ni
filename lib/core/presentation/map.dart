@@ -164,6 +164,62 @@ class MapBuilder {
     );
   }
 
+  Widget buildWorldMapSummary(
+    BuildContext context, {
+    required List<Country> countries,
+    double? zoom,
+    bool withAntarctic = true,
+    required Color Function(MOStatus) getCountryColor,
+    Color Function(MOStatus)? getCountryBorderColor,
+    required double Function(MOStatus) getCountryBorderStrokeWidth,
+  }) {
+    final mapOptions = getMapOptions(
+        interactionOptions:
+            const InteractionOptions(flags: InteractiveFlag.none),
+        initialZoom: zoom ?? 0.45,
+        center: LatLng(withAntarctic ? 15.6642 : 43.6642, 0.9432));
+    List<Widget> layers = [];
+    List<Polygon> polygons = [];
+
+    polygons.addAll(
+      Iterable2(
+            countries.map((country) {
+              final pointsList = country.polygons;
+              Color color = country.status.color(context);
+              if (country.status == MOStatus.none) {
+                color = Colors.black;
+              }
+              return pointsList.map((points) {
+                return Polygon(
+                  strokeCap: StrokeCap.butt,
+                  strokeJoin: StrokeJoin.miter,
+                  points: points,
+                  borderColor:
+                      getCountryBorderColor?.call(country.status) ?? color,
+                  borderStrokeWidth:
+                      getCountryBorderStrokeWidth(country.status),
+                  isFilled: !country.displayRegions,
+                  color: getCountryColor(country.status),
+                );
+              });
+            }),
+          ).reduceOrNull((value, element) => [...value, ...element]) ??
+          [],
+    );
+
+    layers.add(PolygonLayer(
+      polygonCulling: true,
+      polygons: polygons,
+      polygonLabels: false,
+    ));
+
+    return Map.noBorder(
+      mapOptions: mapOptions,
+      layers: layers,
+      controller: MapController(),
+    );
+  }
+
   Widget buildThemePreview(
     BuildContext context, {
     required String urlTemplate,

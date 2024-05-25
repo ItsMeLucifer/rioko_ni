@@ -5,7 +5,7 @@ import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/core/presentation/widgets/animated_fab.dart';
-import 'package:rioko_ni/core/presentation/widgets/rioko_drawer.dart';
+import 'package:rioko_ni/core/presentation/widgets/rioko_menu.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
 import 'package:rioko_ni/core/utils/assets_handler.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
@@ -88,7 +88,7 @@ class _MapPageState extends State<MapPage> {
         ),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => RiokoDrawer(
+            builder: (context) => RiokoMenu(
               restartMapKeys: () => setState(() {
                 _mapKey = UniqueKey();
                 _polygonsLayerKey = UniqueKey();
