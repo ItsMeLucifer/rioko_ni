@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
@@ -19,18 +20,22 @@ class MapPage extends StatefulWidget {
   State<MapPage> createState() => _MapPageState();
 }
 
-class _MapPageState extends State<MapPage> {
+class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
   final _mapCubit = locator<MapCubit>();
   final _themeCubit = locator<ThemeCubit>();
 
-  late MapController mapController;
+  late AnimatedMapController mapController;
 
   Key _mapKey = UniqueKey();
   Key _polygonsLayerKey = UniqueKey();
 
   @override
   void initState() {
-    mapController = MapController();
+    mapController = AnimatedMapController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
     super.initState();
   }
 
@@ -48,8 +53,8 @@ class _MapPageState extends State<MapPage> {
         listener: (context, state) {
           state.maybeWhen(
             error: (message) => ToastBuilder(message: message).show(context),
-            setCurrentPosition: (position) =>
-                mapController.move(position, mapController.camera.zoom),
+            setCurrentPosition: (position) => mapController.animateTo(
+                dest: position, zoom: mapController.mapController.camera.zoom),
             orElse: () {},
           );
         },
@@ -61,10 +66,16 @@ class _MapPageState extends State<MapPage> {
                   _buildMap(context),
                   FloatingUI(
                     onSelectCountry: (country) {
-                      mapController.fitCamera(
-                          CameraFit.bounds(bounds: country.bounds()));
-                      mapController.move(mapController.camera.center,
-                          mapController.camera.zoom - 2);
+                      final constrained = CameraFit.bounds(
+                        bounds: country.bounds(),
+                      ).fit(mapController.mapController.camera);
+                      Future.delayed(
+                        const Duration(milliseconds: 600),
+                        () => mapController.animateTo(
+                          dest: constrained.center,
+                          zoom: constrained.zoom - 2,
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -110,7 +121,7 @@ class _MapPageState extends State<MapPage> {
       wantCountries: _mapCubit.wantCountries,
       livedCountries: _mapCubit.livedCountries,
       center: _mapCubit.currentPosition,
-      controller: mapController,
+      controller: mapController.mapController,
       onTap: (position, latLng) {
         final country = _mapCubit.getCountryFromPosition(latLng);
         if (country == null) return;
