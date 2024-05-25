@@ -5,10 +5,8 @@ import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
-import 'package:rioko_ni/core/presentation/widgets/animated_fab.dart';
 import 'package:rioko_ni/core/presentation/widgets/rioko_menu.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
-import 'package:rioko_ni/core/utils/assets_handler.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 import 'package:rioko_ni/features/map/presentation/pages/country_management_page.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/floating_ui.dart';
@@ -85,19 +83,18 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: AnimatedFAB(
-        icon: Container(
+      floatingActionButton: GestureDetector(
+        child: const SizedBox(
           width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(AssetsHandler.iconBlank),
-              colorFilter:
-                  const ColorFilter.mode(Color(0xFFEAF3EF), BlendMode.modulate),
+          child: Text(
+            'R',
+            style: TextStyle(
+              fontFamily: 'Kamikaze',
+              fontSize: 70,
             ),
           ),
         ),
-        onPressed: () => Navigator.of(context).push(
+        onTap: () => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => RiokoMenu(
               restartMapKeys: () => setState(() {
