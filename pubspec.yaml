@@ -110,7 +110,6 @@ flutter:
     - assets/continents/
     - assets/world.png
     - assets/icon_blank.png
-    - assets/text_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -143,6 +142,12 @@ flutter:
         - asset: assets/fonts/Caveat-Regular.ttf
         - asset: assets/fonts/Caveat-Bold.ttf
           weight: 700
+    - family: Osaka
+      fonts:
+        - asset: assets/fonts/osaka-re.ttf
+    - family: Kamikaze
+      fonts:
+        - asset: assets/fonts/Kamikaze3DGradient.ttf
     # - family: Schyler
     #   fonts:
     #     - asset: fonts/Schyler-Regular.ttf

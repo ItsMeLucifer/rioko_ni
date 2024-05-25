@@ -8,7 +8,6 @@ import 'package:rioko_ni/core/presentation/about_app_dialog.dart';
 import 'package:rioko_ni/core/presentation/cubit/revenue_cat_cubit.dart';
 import 'package:rioko_ni/core/presentation/widgets/change_theme_dialog.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
-import 'package:rioko_ni/core/utils/assets_handler.dart';
 import 'package:rioko_ni/features/map/presentation/pages/info_page.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/share_world_data_dialog.dart';
 import 'package:rioko_ni/main.dart';
@@ -191,17 +190,17 @@ class _RiokoMenuState extends State<RiokoMenu> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: context.width(0.5),
-            child: Image.asset(AssetsHandler.textLogo),
+          const Text(
+            'RIOKO',
+            style: TextStyle(
+              fontFamily: 'Kamikaze',
+              fontSize: 80,
+            ),
           ),
+          Text(tr('$l10n.labels.title')),
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: AppSizes.paddingDouble),
-            child: Text(tr('$l10n.labels.title')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: AppSizes.paddingDouble),
             child: Text(
               tr('$l10n.labels.subtitle'),
               textAlign: TextAlign.center,
