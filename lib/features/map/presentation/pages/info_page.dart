@@ -227,6 +227,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: countries.length,
+              padding: EdgeInsets.zero,
               itemBuilder: (context, index) {
                 final country = countries[index];
                 return ListTile(
@@ -273,8 +274,12 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
         countries: _cubit.countries,
         getCountryColor: (status) =>
             status.color(context).withMultipliedOpacity(0.4),
-        getCountryBorderStrokeWidth: (status) =>
-            status == MOStatus.none ? 0.3 : 0.6,
+        getCountryBorderStrokeWidth: (status) {
+          if (area == Area.world) {
+            return status == MOStatus.none ? 0.1 : 0.3;
+          }
+          return status == MOStatus.none ? 0.3 : 0.6;
+        },
         controller: mapController.mapController,
       ),
     );
