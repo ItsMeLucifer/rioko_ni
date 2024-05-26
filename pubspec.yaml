@@ -142,12 +142,12 @@ flutter:
         - asset: assets/fonts/Caveat-Regular.ttf
         - asset: assets/fonts/Caveat-Bold.ttf
           weight: 700
-    - family: Osaka
-      fonts:
-        - asset: assets/fonts/osaka-re.ttf
-    - family: Kamikaze
+    - family: KamikazeGradient
       fonts:
         - asset: assets/fonts/Kamikaze3DGradient.ttf
+    - family: Kamikaze
+      fonts:
+        - asset: assets/fonts/Kamikaze.ttf
     # - family: Schyler
     #   fonts:
     #     - asset: fonts/Schyler-Regular.ttf

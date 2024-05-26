@@ -159,16 +159,9 @@ class _RiokoMenuState extends State<RiokoMenu> {
   }) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: context.width(0.62),
-        decoration: BoxDecoration(
-          border: Border.all(),
-          borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
-          color: Theme.of(context).buttonTheme.colorScheme?.background,
-        ),
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSizes.padding,
-            vertical: AppSizes.paddingDouble * 3 / 4),
+      child: SizedBox(
+        width: context.width(0.8),
+        height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -193,7 +186,7 @@ class _RiokoMenuState extends State<RiokoMenu> {
           const Text(
             'RIOKO',
             style: TextStyle(
-              fontFamily: 'Kamikaze',
+              fontFamily: 'KamikazeGradient',
               fontSize: 80,
             ),
           ),

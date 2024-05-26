@@ -120,8 +120,8 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       ),
       headlineSmall: GoogleFonts.montserrat(
         color: Colors.black,
-        fontSize: 14,
-        fontWeight: FontWeight.w600,
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
       ),
       headlineMedium: const TextStyle(
         fontFamily: 'Nasalization',

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
+import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
@@ -84,13 +85,26 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: GestureDetector(
-        child: const SizedBox(
+        child: SizedBox(
           width: 60,
-          child: Text(
-            'R',
-            style: TextStyle(
-              fontFamily: 'Kamikaze',
-              fontSize: 70,
+          child: AspectRatio(
+            aspectRatio: 1.0,
+            child: Container(
+              decoration: BoxDecoration(
+                border:
+                    Border.all(color: Theme.of(context).colorScheme.primary),
+                borderRadius: BorderRadius.circular(AppSizes.radiusDouble),
+                color: Theme.of(context).colorScheme.background,
+              ),
+              child: const Center(
+                child: Text(
+                  'R',
+                  style: TextStyle(
+                    fontFamily: 'Kamikaze',
+                    fontSize: 45,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
