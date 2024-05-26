@@ -74,7 +74,8 @@
         "europe": "Europa",
         "asia": "Azja",
         "oceania": "Oceania",
-        "antarctic": "Antarktyda"
+        "antarctic": "Antarktyda",
+        "allWorld": "Cały świat"
     },
     "subAreas": {
         "easternEurope": "Europa Wschodnia",
@@ -372,7 +373,8 @@
         }
     },
     "changeThemeDialog": {
-        "buttonName": "Wybierz ten motyw"
+        "buttonName": "Wybierz ten motyw",
+        "title": "Wybór motywu"
     },
     "aboutAppDialog": {
         "labels": {

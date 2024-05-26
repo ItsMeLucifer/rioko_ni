@@ -74,7 +74,8 @@
         "europe": "Europe",
         "asia": "Asia",
         "oceania": "Oceania",
-        "antarctic": "Antarctic"
+        "antarctic": "Antarctic",
+        "allWorld": "All world"
     },
     "subAreas": {
         "easternEurope": "Eastern Europe",
@@ -372,7 +373,8 @@
         }
     },
     "changeThemeDialog": {
-        "buttonName": "Select this theme"
+        "buttonName": "Select this theme",
+        "title": "Theme selection"
     },
     "aboutAppDialog": {
         "labels": {

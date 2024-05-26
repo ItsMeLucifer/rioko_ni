@@ -172,7 +172,7 @@ class _ChangeThemePageState extends State<ChangeThemePage> {
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Text(
-                    'Select Theme',
+                    'Theme selection',
                     style: selectedTheme.textTheme.headlineLarge,
                     textAlign: TextAlign.center,
                   ),

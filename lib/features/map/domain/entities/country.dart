@@ -112,7 +112,7 @@ extension AreaExtension on Area {
       case Area.oceania:
         return tr('areas.oceania');
       case Area.world:
-        return 'All world';
+        return tr('areas.allWorld');
     }
   }
 
