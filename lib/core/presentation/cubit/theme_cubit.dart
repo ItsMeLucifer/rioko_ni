@@ -134,22 +134,32 @@ class ThemeCubit extends Cubit<ThemeDataType> {
         color: Colors.black,
         fontSize: 35,
       ),
+      labelMedium: GoogleFonts.montserrat(
+        color: Colors.white,
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+      ),
     ),
-    primaryTextTheme: const TextTheme(
-      bodyMedium: TextStyle(
+    primaryTextTheme: TextTheme(
+      bodyMedium: const TextStyle(
         color: Color(0xFF337554),
         fontWeight: FontWeight.bold,
         fontSize: 15,
       ),
-      headlineSmall: TextStyle(
+      headlineSmall: const TextStyle(
         fontFamily: 'KamikazeGradient',
         fontSize: 45,
         color: Color(0xFF337554),
       ),
-      headlineLarge: TextStyle(
+      headlineLarge: const TextStyle(
         fontFamily: 'KamikazeGradient',
         fontSize: 80,
         color: Color(0xFF337554),
+      ),
+      labelMedium: GoogleFonts.montserrat(
+        color: Colors.black,
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
       ),
     ),
     outlinedButtonTheme: const OutlinedButtonThemeData(
@@ -228,6 +238,11 @@ class ThemeCubit extends Cubit<ThemeDataType> {
         color: Colors.white,
         fontFamily: 'Nasalization',
       ),
+      labelMedium: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.white,
+        fontSize: 14,
+      ),
       titleLarge: TextStyle(
         fontFamily: 'Nasalization',
         color: Colors.white,
@@ -255,6 +270,11 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       bodyMedium: TextStyle(
         color: Colors.tealAccent,
         fontWeight: FontWeight.bold,
+        fontSize: 14,
+      ),
+      labelMedium: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.black,
         fontSize: 14,
       ),
       headlineSmall: TextStyle(

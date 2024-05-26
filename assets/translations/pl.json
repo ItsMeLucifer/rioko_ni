@@ -24,7 +24,8 @@
         "purchaseSuccessfullMessage": "Zakupiono Rioko Premium!",
         "dialog": {
             "ok": "OK",
-            "back": "Wróć"
+            "back": "Wróć",
+            "confirm": "Zatwierdź"
         },
         "themes": {
             "classic": "Klasyczny",
@@ -46,7 +47,8 @@
                 "been": "Zwiedziłem!",
                 "want": "Chcę zwiedzić!",
                 "lived": "Żyłem tam!",
-                "showRegions": "Pokaż regiony"
+                "showRegions": "Pokaż regiony",
+                "hideRegions": "Ukryj regiony"
             }
         },
         "searchCountry": {
