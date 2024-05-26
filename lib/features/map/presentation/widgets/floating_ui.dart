@@ -26,43 +26,6 @@ class FloatingUI extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            height: 50,
-            alignment: Alignment.topCenter,
-            margin:
-                const EdgeInsets.symmetric(horizontal: AppSizes.paddingDouble),
-            padding: const EdgeInsets.symmetric(
-                vertical: AppSizes.padding, horizontal: AppSizes.paddingDouble),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background.withOpacity(0.7),
-              border: Border.all(
-                  color: Theme.of(context).colorScheme.onPrimary, width: 1),
-              borderRadius: BorderRadius.circular(AppSizes.radius),
-            ),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const SizedBox(),
-                  Text(
-                    "${tr('$l10n.labels.been')}: ${_cubit.beenCountries.length}",
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    "${tr('$l10n.labels.want')}: ${_cubit.wantCountries.length}",
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    "${tr('$l10n.labels.lived')}: ${_cubit.livedCountries.length}",
-                  ),
-                  const SizedBox(),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: AppSizes.padding),
           GestureDetector(
             onTap: () {
               showGeneralDialog(
@@ -84,17 +47,65 @@ class FloatingUI extends StatelessWidget {
               );
             },
             child: Container(
+              height: 50,
+              alignment: Alignment.topCenter,
+              margin: const EdgeInsets.symmetric(
+                  horizontal: AppSizes.paddingDouble),
               decoration: BoxDecoration(
                 color:
                     Theme.of(context).colorScheme.background.withOpacity(0.7),
-                border:
-                    Border.all(color: Theme.of(context).colorScheme.onPrimary),
-                borderRadius: BorderRadius.circular(AppSizes.radiusDouble),
+                border: Border.all(
+                    color: Theme.of(context).colorScheme.onPrimary, width: 1),
+                borderRadius: BorderRadius.circular(AppSizes.radius),
               ),
-              padding: const EdgeInsets.all(AppSizes.paddingDouble),
-              child: const FaIcon(
-                FontAwesomeIcons.magnifyingGlass,
-                size: 20,
+              child: Center(
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: AppSizes.padding,
+                          horizontal: AppSizes.paddingDouble),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              width: 1),
+                        ),
+                      ),
+                      child: const FaIcon(
+                        FontAwesomeIcons.magnifyingGlass,
+                        size: 20,
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: AppSizes.padding,
+                            horizontal: AppSizes.paddingDouble),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            const SizedBox(),
+                            Text(
+                              "${tr('$l10n.labels.been')}: ${_cubit.beenCountries.length}",
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              "${tr('$l10n.labels.want')}: ${_cubit.wantCountries.length}",
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              "${tr('$l10n.labels.lived')}: ${_cubit.livedCountries.length}",
+                            ),
+                            const SizedBox(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
