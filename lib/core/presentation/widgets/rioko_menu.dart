@@ -147,6 +147,18 @@ class _RiokoMenuState extends State<RiokoMenu> {
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => Navigator.of(context).pop(),
+        label: SizedBox(
+          width: 100,
+          child: Text(
+            tr('core.dialog.close'),
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+        ),
+      ),
     );
   }
 

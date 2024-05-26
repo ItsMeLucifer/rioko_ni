@@ -25,7 +25,8 @@
         "dialog": {
             "ok": "OK",
             "back": "Wróć",
-            "confirm": "Zatwierdź"
+            "confirm": "Zatwierdź",
+            "close": "Zamknij"
         },
         "themes": {
             "classic": "Klasyczny",
