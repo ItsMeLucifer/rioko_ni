@@ -321,6 +321,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
             onSecondary: const Color.fromARGB(255, 218, 121, 178),
             tertiary: const Color.fromARGB(255, 119, 151, 50),
             onTertiary: const Color.fromARGB(255, 150, 186, 74),
+            onSurface: Colors.white,
           ),
           outlinedButtonTheme: const OutlinedButtonThemeData(
             style: ButtonStyle(
@@ -350,6 +351,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
             onSecondary: const Color.fromARGB(76, 255, 102, 133),
             tertiary: Colors.white,
             onTertiary: Colors.white30,
+            onSurface: Colors.white10,
           ),
           primaryColor: Colors.grey,
           outlinedButtonTheme: const OutlinedButtonThemeData(
