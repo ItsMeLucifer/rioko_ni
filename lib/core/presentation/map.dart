@@ -363,6 +363,7 @@ class MapBuilder {
       ),
       onTap: onTap,
       center: center,
+      backgroundColor: Theme.of(context).colorScheme.onBackground,
     );
     List<Widget> layers = [];
     layers.add(

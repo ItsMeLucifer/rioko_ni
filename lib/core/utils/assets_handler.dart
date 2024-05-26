@@ -20,4 +20,5 @@ class AssetsHandler {
 
   static String get iconBlank => 'assets/icon_blank.png';
   static String get appIcon => 'assets/icon/icon.png';
+  static String get appIconCartoon => 'assets/icon/icon_cartoon.png';
 }
