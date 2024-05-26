@@ -135,7 +135,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
   Widget _buildAreaSelectButton(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.onSurface,
         borderRadius: BorderRadius.circular(AppSizes.radius),
       ),
       padding: const EdgeInsets.all(AppSizes.paddingQuadruple),
@@ -191,8 +191,12 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
             style: ButtonStyle(
               textStyle: MaterialStatePropertyAll(
                   Theme.of(context).textTheme.titleSmall),
-              foregroundColor: MaterialStatePropertyAll(
-                  Theme.of(context).colorScheme.outline),
+              foregroundColor: MaterialStateProperty.resolveWith((states) {
+                if (states.contains(MaterialState.selected)) {
+                  return Colors.black;
+                }
+                return Theme.of(context).colorScheme.outline;
+              }),
               padding: const MaterialStatePropertyAll(EdgeInsets.zero),
               alignment: Alignment.center,
             ),
@@ -266,7 +270,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
     return Container(
       height: context.height(0.3),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
+        border: Border.all(color: Theme.of(context).colorScheme.outline),
         borderRadius: BorderRadius.circular(AppSizes.radius),
       ),
       child: MapBuilder().buildWorldMapSummary(
@@ -274,6 +278,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
         countries: _cubit.countries,
         getCountryColor: (status) =>
             status.color(context).withMultipliedOpacity(0.4),
+        getCountryBorderColor: (_) => Theme.of(context).colorScheme.outline,
         getCountryBorderStrokeWidth: (status) {
           if (area == Area.world) {
             return status == MOStatus.none ? 0.1 : 0.3;

@@ -6,7 +6,7 @@ import 'package:rioko_ni/core/extensions/build_context2.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/about_app_dialog.dart';
 import 'package:rioko_ni/core/presentation/cubit/revenue_cat_cubit.dart';
-import 'package:rioko_ni/core/presentation/widgets/change_theme_dialog.dart';
+import 'package:rioko_ni/core/presentation/widgets/change_theme_page.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
 import 'package:rioko_ni/features/map/presentation/pages/info_page.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/share_world_data_dialog.dart';
@@ -160,7 +160,7 @@ class _RiokoMenuState extends State<RiokoMenu> {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        width: context.width(0.8),
+        width: context.width(0.62),
         height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -183,20 +183,21 @@ class _RiokoMenuState extends State<RiokoMenu> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             'RIOKO',
-            style: TextStyle(
-              fontFamily: 'KamikazeGradient',
-              fontSize: 80,
-            ),
+            style: Theme.of(context).primaryTextTheme.headlineLarge,
           ),
-          Text(tr('$l10n.labels.title')),
+          Text(
+            tr('$l10n.labels.title'),
+            style: Theme.of(context).primaryTextTheme.bodyMedium,
+          ),
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: AppSizes.paddingDouble),
             child: Text(
               tr('$l10n.labels.subtitle'),
               textAlign: TextAlign.center,
+              style: Theme.of(context).primaryTextTheme.bodyMedium,
             ),
           ),
         ],

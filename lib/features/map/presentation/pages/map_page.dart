@@ -96,13 +96,10 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                 borderRadius: BorderRadius.circular(AppSizes.radiusDouble),
                 color: Theme.of(context).colorScheme.background,
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
                   'R',
-                  style: TextStyle(
-                    fontFamily: 'Kamikaze',
-                    fontSize: 45,
-                  ),
+                  style: Theme.of(context).primaryTextTheme.headlineSmall,
                 ),
               ),
             ),

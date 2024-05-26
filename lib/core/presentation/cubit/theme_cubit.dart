@@ -62,6 +62,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       tertiary: Colors.grey,
       onTertiary: Colors.grey,
       outline: Colors.black,
+      onSurface: Colors.white,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.black,
@@ -99,7 +100,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
         color: Colors.black,
       ),
       bodyMedium: GoogleFonts.montserrat(
-        color: const Color.fromARGB(255, 7, 76, 41),
+        color: Colors.black,
         fontWeight: FontWeight.w500,
       ),
       bodyLarge: const TextStyle(
@@ -120,7 +121,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       ),
       headlineSmall: GoogleFonts.montserrat(
         color: Colors.black,
-        fontSize: 22,
+        fontSize: 14,
         fontWeight: FontWeight.bold,
       ),
       headlineMedium: const TextStyle(
@@ -138,7 +139,17 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       bodyMedium: TextStyle(
         color: Color(0xFF337554),
         fontWeight: FontWeight.bold,
-        fontSize: 14,
+        fontSize: 15,
+      ),
+      headlineSmall: TextStyle(
+        fontFamily: 'KamikazeGradient',
+        fontSize: 45,
+        color: Color(0xFF337554),
+      ),
+      headlineLarge: TextStyle(
+        fontFamily: 'KamikazeGradient',
+        fontSize: 80,
+        color: Color(0xFF337554),
       ),
     ),
     outlinedButtonTheme: const OutlinedButtonThemeData(
@@ -173,6 +184,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       tertiary: Colors.lime,
       onTertiary: Colors.limeAccent,
       outline: Colors.white,
+      onSurface: Colors.white12,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.black,
@@ -238,6 +250,23 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     ),
     snackBarTheme: const SnackBarThemeData(
       actionTextColor: Colors.white,
+    ),
+    primaryTextTheme: const TextTheme(
+      bodyMedium: TextStyle(
+        color: Colors.tealAccent,
+        fontWeight: FontWeight.bold,
+        fontSize: 14,
+      ),
+      headlineSmall: TextStyle(
+        fontFamily: 'KamikazeGradient',
+        fontSize: 45,
+        color: Colors.tealAccent,
+      ),
+      headlineLarge: TextStyle(
+        fontFamily: 'KamikazeGradient',
+        fontSize: 80,
+        color: Colors.tealAccent,
+      ),
     ),
     outlinedButtonTheme: const OutlinedButtonThemeData(
       style: ButtonStyle(

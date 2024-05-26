@@ -40,7 +40,7 @@ class _ChangeThemePageState extends State<ChangeThemePage> {
     }
   }
 
-  List<int> freeIndices = [0, 1];
+  List<int> freeIndices = [0, 1, 2, 3];
 
   bool get isOptionAvailable {
     if (_revenueCatCubit.isPremium) return true;
