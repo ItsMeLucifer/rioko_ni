@@ -294,16 +294,23 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
         ),
         Align(
           alignment: Alignment.topRight,
-          child: IconButton(
-            onPressed: () {
-              showGeneralDialog(
-                barrierColor: Colors.black.withOpacity(0.5),
-                context: context,
-                pageBuilder: (context, animation1, animation2) =>
-                    const ShareWorldDataDialog(),
-              );
-            },
-            icon: const Icon(FontAwesomeIcons.share),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Theme.of(context).colorScheme.outline),
+              borderRadius: BorderRadius.circular(AppSizes.radius),
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
+            child: IconButton(
+              onPressed: () {
+                showGeneralDialog(
+                  barrierColor: Colors.black.withOpacity(0.5),
+                  context: context,
+                  pageBuilder: (context, animation1, animation2) =>
+                      const ShareWorldDataDialog(),
+                );
+              },
+              icon: const Icon(FontAwesomeIcons.share),
+            ),
           ),
         )
       ],
