@@ -19,4 +19,5 @@ class AssetsHandler {
   static String get asiaMiniature => 'assets/continents/asia.png';
 
   static String get iconBlank => 'assets/icon_blank.png';
+  static String get appIcon => 'assets/icon/icon.png';
 }
