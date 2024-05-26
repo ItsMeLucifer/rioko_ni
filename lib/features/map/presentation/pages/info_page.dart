@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/extensions/build_context2.dart';
 import 'package:rioko_ni/core/extensions/color2.dart';
@@ -12,6 +13,7 @@ import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 import 'package:rioko_ni/features/map/presentation/pages/country_management_page.dart';
+import 'package:rioko_ni/features/map/presentation/widgets/share_world_data_dialog.dart';
 
 class InfoPage extends StatefulWidget {
   const InfoPage({super.key});
@@ -267,26 +269,44 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
   }
 
   Widget _buildMap(BuildContext context) {
-    return Container(
-      height: context.height(0.3),
-      decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).colorScheme.outline),
-        borderRadius: BorderRadius.circular(AppSizes.radius),
-      ),
-      child: MapBuilder().buildWorldMapSummary(
-        context,
-        countries: _cubit.countries,
-        getCountryColor: (status) =>
-            status.color(context).withMultipliedOpacity(0.4),
-        getCountryBorderColor: (_) => Theme.of(context).colorScheme.outline,
-        getCountryBorderStrokeWidth: (status) {
-          if (area == Area.world) {
-            return status == MOStatus.none ? 0.1 : 0.3;
-          }
-          return status == MOStatus.none ? 0.3 : 0.6;
-        },
-        controller: mapController.mapController,
-      ),
+    return Stack(
+      children: [
+        Container(
+          height: context.height(0.3),
+          decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).colorScheme.outline),
+            borderRadius: BorderRadius.circular(AppSizes.radius),
+          ),
+          child: MapBuilder().buildWorldMapSummary(
+            context,
+            countries: _cubit.countries,
+            getCountryColor: (status) =>
+                status.color(context).withMultipliedOpacity(0.4),
+            getCountryBorderColor: (_) => Theme.of(context).colorScheme.outline,
+            getCountryBorderStrokeWidth: (status) {
+              if (area == Area.world) {
+                return status == MOStatus.none ? 0.1 : 0.3;
+              }
+              return status == MOStatus.none ? 0.3 : 0.6;
+            },
+            controller: mapController.mapController,
+          ),
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: IconButton(
+            onPressed: () {
+              showGeneralDialog(
+                barrierColor: Colors.black.withOpacity(0.5),
+                context: context,
+                pageBuilder: (context, animation1, animation2) =>
+                    const ShareWorldDataDialog(),
+              );
+            },
+            icon: const Icon(FontAwesomeIcons.share),
+          ),
+        )
+      ],
     );
   }
 }
