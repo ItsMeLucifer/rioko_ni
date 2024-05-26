@@ -464,7 +464,7 @@ class MapBuilder {
       );
     }
 
-    return Map(
+    return Map.noBorder(
       key: key,
       mapOptions: mapOptions,
       layers: layers,
