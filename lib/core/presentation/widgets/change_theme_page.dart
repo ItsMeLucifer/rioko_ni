@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,7 +41,7 @@ class _ChangeThemePageState extends State<ChangeThemePage> {
     }
   }
 
-  List<int> freeIndices = [0, 1, 2, 3];
+  List<int> freeIndices = [0, 1];
 
   bool get isOptionAvailable {
     if (_revenueCatCubit.isPremium) return true;
@@ -65,6 +66,9 @@ class _ChangeThemePageState extends State<ChangeThemePage> {
   @override
   void initState() {
     selectedIndex = ThemeDataType.values.indexOf(_themeCubit.type);
+    if (kDebugMode) {
+      freeIndices.addAll([2, 3]);
+    }
     super.initState();
   }
 
