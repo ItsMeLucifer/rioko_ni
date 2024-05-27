@@ -289,7 +289,7 @@ class MapBuilder {
                   isFilled: true,
                   color: color.withOpacity(0.1),
                   label: area.name,
-                  labelStyle: Theme.of(context).textTheme.headlineSmall!,
+                  labelStyle: Theme.of(context).primaryTextTheme.labelSmall!,
                   labelPlacement: PolygonLabelPlacement.polylabel,
                 );
               });

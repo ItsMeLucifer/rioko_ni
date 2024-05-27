@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/injector.dart';
-import 'package:rioko_ni/features/map/domain/entities/country.dart';
+import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
-import 'package:rioko_ni/features/map/presentation/widgets/search_country_dialog.dart';
+import 'package:rioko_ni/features/map/presentation/widgets/search_map_object_dialog.dart';
 
 class FloatingUI extends StatelessWidget {
-  final void Function(Country) onSelectCountry;
+  final void Function(MapObject) onSelectMapObject;
   const FloatingUI({
-    required this.onSelectCountry,
+    required this.onSelectMapObject,
     super.key,
   });
 
@@ -41,9 +41,7 @@ class FloatingUI extends StatelessWidget {
                 barrierLabel: '',
                 context: context,
                 pageBuilder: (context, animation1, animation2) =>
-                    SearchCountryDialog(
-                  onSelectCountry: onSelectCountry,
-                ),
+                    SearchMapObjectDialog(onSelectMapObject: onSelectMapObject),
               );
             },
             child: Container(

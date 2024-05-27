@@ -42,6 +42,8 @@ class MapState with _$MapState {
   const factory MapState.setCurrentPosition(LatLng position) =
       _SetCurrentPosition;
 
+  const factory MapState.changeRiokoMode(RiokoMode mode) = _ChangeRiokoMode;
+
   const factory MapState.fetchingRegions() = _FetchingRegions;
 
   const factory MapState.fetchedRegions(List<Region> regions) = _FetchedRegions;

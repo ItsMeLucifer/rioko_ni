@@ -47,6 +47,34 @@ class ThemeCubit extends Cubit<ThemeDataType> {
   bool get isLight =>
       type == ThemeDataType.classic || type == ThemeDataType.humani;
 
+  static List<Shadow> getShadows({
+    Color color = Colors.black,
+    double offsetValue = 1.0,
+    double blurRadius = 8.0,
+  }) =>
+      [
+        Shadow(
+          offset: Offset(offsetValue, -offsetValue),
+          blurRadius: blurRadius,
+          color: color,
+        ),
+        Shadow(
+          offset: Offset(offsetValue, offsetValue),
+          blurRadius: blurRadius,
+          color: color,
+        ),
+        Shadow(
+          offset: Offset(-offsetValue, offsetValue),
+          blurRadius: blurRadius,
+          color: color,
+        ),
+        Shadow(
+          offset: Offset(-offsetValue, -offsetValue),
+          blurRadius: blurRadius,
+          color: color,
+        ),
+      ];
+
   final ThemeData _default = ThemeData.light(
     useMaterial3: true,
   ).copyWith(
@@ -156,10 +184,23 @@ class ThemeCubit extends Cubit<ThemeDataType> {
         fontSize: 80,
         color: Color(0xFF337554),
       ),
+      headlineMedium: TextStyle(
+        color: const Color.fromARGB(255, 18, 164, 197),
+        fontSize: 45,
+        fontFamily: 'Frau',
+        fontWeight: FontWeight.w500,
+        shadows: getShadows(color: Colors.white),
+      ),
       labelMedium: GoogleFonts.montserrat(
         color: Colors.black,
         fontSize: 15,
         fontWeight: FontWeight.w500,
+      ),
+      labelSmall: GoogleFonts.montserrat(
+        color: Colors.black,
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        shadows: getShadows(color: Colors.white, blurRadius: 5.0),
       ),
     ),
     outlinedButtonTheme: const OutlinedButtonThemeData(
@@ -266,26 +307,38 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     snackBarTheme: const SnackBarThemeData(
       actionTextColor: Colors.white,
     ),
-    primaryTextTheme: const TextTheme(
-      bodyMedium: TextStyle(
+    primaryTextTheme: TextTheme(
+      bodyMedium: const TextStyle(
         color: Colors.tealAccent,
         fontWeight: FontWeight.bold,
         fontSize: 14,
       ),
-      labelMedium: TextStyle(
+      labelMedium: const TextStyle(
         fontFamily: 'Nasalization',
         color: Colors.black,
         fontSize: 14,
       ),
-      headlineSmall: TextStyle(
+      headlineSmall: const TextStyle(
         fontFamily: 'KamikazeGradient',
         fontSize: 45,
         color: Colors.tealAccent,
       ),
-      headlineLarge: TextStyle(
+      headlineMedium: TextStyle(
+        color: const Color.fromARGB(255, 68, 189, 255),
+        fontSize: 45,
+        fontFamily: 'Frau',
+        shadows: getShadows(),
+      ),
+      headlineLarge: const TextStyle(
         fontFamily: 'KamikazeGradient',
         fontSize: 80,
         color: Colors.tealAccent,
+      ),
+      labelSmall: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.white,
+        fontSize: 15,
+        shadows: getShadows(blurRadius: 5),
       ),
     ),
     outlinedButtonTheme: const OutlinedButtonThemeData(

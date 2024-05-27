@@ -138,7 +138,7 @@ extension AreaExtension on Area {
 
 @unfreezed
 class Country extends MapObject with _$Country {
-  Country._() : super(status: MOStatus.none);
+  Country._() : super(status: MOStatus.none, name: '');
   factory Country({
     /// GeoJson data
     required List<List<LatLng>> polygons,
@@ -206,6 +206,7 @@ class Country extends MapObject with _$Country {
     );
   }
 
+  @override
   fm.LatLngBounds bounds({
     bool cutOffFarPolygons = false,
     double distance = 2000,

@@ -4,30 +4,34 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
+import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
+import 'package:rioko_ni/features/map/domain/entities/marine_area.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 
-class SearchCountryDialog extends StatefulWidget {
-  final void Function(Country) onSelectCountry;
+class SearchMapObjectDialog extends StatefulWidget {
+  final void Function(MapObject) onSelectMapObject;
 
-  const SearchCountryDialog({
-    required this.onSelectCountry,
+  const SearchMapObjectDialog({
+    required this.onSelectMapObject,
     super.key,
   });
 
   @override
-  State<SearchCountryDialog> createState() => _SearchCountryDialogState();
+  State<SearchMapObjectDialog> createState() => _SearchMapObjectDialogState();
 }
 
-class _SearchCountryDialogState extends State<SearchCountryDialog>
+class _SearchMapObjectDialogState extends State<SearchMapObjectDialog>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
   late TextEditingController searchController;
 
-  List<Country> searchedCountries = [];
+  List<MapObject> searchedMapObjects = [];
 
-  final _cubit = locator<MapCubit>();
+  final _mapCubit = locator<MapCubit>();
+
+  bool get umi => _mapCubit.mode == RiokoMode.umi;
 
   Color get borderColor =>
       Theme.of(context).colorScheme.onPrimary.withOpacity(0.8);
@@ -35,7 +39,7 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
   @override
   void initState() {
     isPopping = false;
-    searchedCountries = _cubit.countries;
+    searchedMapObjects = umi ? _mapCubit.marineAreas : _mapCubit.countries;
     searchController = TextEditingController();
     _controller = AnimationController(
       vsync: this,
@@ -61,7 +65,7 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
 
   bool isPopping = false;
 
-  String get l10n => 'map.searchCountry';
+  String get l10n => 'map.searchDialog';
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +105,12 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
                   child: TextField(
                     controller: searchController,
                     onChanged: (value) {
-                      searchedCountries = _cubit.countriesByString(value);
+                      if (umi) {
+                        searchedMapObjects =
+                            _mapCubit.marineAreasByString(value);
+                      } else {
+                        searchedMapObjects = _mapCubit.countriesByString(value);
+                      }
                       setState(() {});
                     },
                     style: Theme.of(context).textTheme.titleLarge,
@@ -120,7 +129,8 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
                         borderRadius:
                             BorderRadius.circular(AppSizes.radiusHalf),
                       ),
-                      labelText: tr('$l10n.labels.searchCountry'),
+                      labelText: tr(
+                          '$l10n.labels.${umi ? 'searchMarineArea' : 'searchCountry'}'),
                       labelStyle: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -149,15 +159,15 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
                       top: AppSizes.paddingDouble,
                     ),
                     child: ListView.builder(
-                      itemCount: searchedCountries.length,
+                      itemCount: searchedMapObjects.length,
                       shrinkWrap: true,
                       padding: const EdgeInsets.only(
                         bottom: AppSizes.paddingQuadruple,
                       ),
                       itemBuilder: (context, i) {
-                        return _buildCountryItem(
+                        return _buildMapObjectItem(
                           context,
-                          country: searchedCountries.elementAt(i),
+                          mapObject: searchedMapObjects.elementAt(i),
                         );
                       },
                     ),
@@ -215,11 +225,28 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
     );
   }
 
-  Widget _buildCountryItem(
+  Widget _buildMapObjectItem(
     BuildContext context, {
-    required Country country,
+    required MapObject mapObject,
   }) {
-    final subArea = country.subArea?.name;
+    String subtitle = '';
+    Widget? leading;
+    if (mapObject is Country) {
+      final subArea = mapObject.subArea?.name;
+      subtitle =
+          '${mapObject.area.name} ${subArea == null ? '' : '- $subArea'}';
+      leading = Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: borderColor,
+          ),
+        ),
+        child: mapObject.flag(scale: 0.5),
+      );
+    }
+    if (mapObject is MarineArea) {
+      subtitle = mapObject.typeName;
+    }
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: AppSizes.paddingDouble,
@@ -235,22 +262,15 @@ class _SearchCountryDialogState extends State<SearchCountryDialog>
       child: ListTile(
         onTap: () {
           pop();
-          widget.onSelectCountry(country);
+          widget.onSelectMapObject(mapObject);
         },
-        leading: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: borderColor,
-            ),
-          ),
-          child: country.flag(scale: 0.5),
-        ),
+        leading: leading,
         title: Text(
-          country.name,
+          mapObject.name,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         subtitle: Text(
-          '${country.area.name} ${subArea == null ? '' : '- $subArea'}',
+          subtitle,
           style: Theme.of(context).textTheme.titleSmall,
         ),
       ),

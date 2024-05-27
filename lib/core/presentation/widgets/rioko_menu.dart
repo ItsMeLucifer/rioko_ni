@@ -10,6 +10,7 @@ import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/widgets/change_theme_page.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
 import 'package:rioko_ni/core/utils/assets_handler.dart';
+import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 import 'package:rioko_ni/features/map/presentation/pages/info_page.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/share_world_data_dialog.dart';
 import 'package:rioko_ni/main.dart';
@@ -32,6 +33,7 @@ class _RiokoMenuState extends State<RiokoMenu> {
 
   final _revenueCatCubit = locator<RevenueCatCubit>();
   final _themeCubit = locator<ThemeCubit>();
+  final _mapCubit = locator<MapCubit>();
 
   bool loadingPurchase = false;
 
@@ -116,6 +118,17 @@ class _RiokoMenuState extends State<RiokoMenu> {
                   },
                   label: tr('$l10n.labels.changeTheme'),
                 ),
+                const SizedBox(height: AppSizes.padding),
+                _buildTile(
+                  context,
+                  iconData: _mapCubit.mode == RiokoMode.umi
+                      ? FontAwesomeIcons.plane
+                      : FontAwesomeIcons.water,
+                  onTap: () => setState(() => _mapCubit.toggleMode()),
+                  label: _mapCubit.mode == RiokoMode.umi
+                      ? 'Rioko Classic'
+                      : 'Rioko UMI',
+                ),
                 divider(context),
                 _buildTile(
                   context,
@@ -198,7 +211,27 @@ class _RiokoMenuState extends State<RiokoMenu> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _buildTextLogo(context),
+          SizedBox(
+            height: 101,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                _buildTextLogo(context),
+                if (_mapCubit.mode == RiokoMode.umi)
+                  Align(
+                    alignment: const Alignment(0.83, 1),
+                    child: Transform.rotate(
+                      angle: -0.55,
+                      child: Text(
+                        'UMI',
+                        style:
+                            Theme.of(context).primaryTextTheme.headlineMedium,
+                      ),
+                    ),
+                  )
+              ],
+            ),
+          ),
           Text(
             tr('$l10n.labels.title'),
             style: Theme.of(context).primaryTextTheme.bodyMedium,
@@ -222,6 +255,7 @@ class _RiokoMenuState extends State<RiokoMenu> {
       return Text(
         'RIOKO',
         style: Theme.of(context).primaryTextTheme.headlineLarge,
+        textAlign: TextAlign.center,
       );
     }
     return Padding(

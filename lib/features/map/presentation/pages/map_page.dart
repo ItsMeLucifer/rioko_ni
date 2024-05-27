@@ -65,9 +65,9 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                 children: [
                   _buildMap(context),
                   FloatingUI(
-                    onSelectCountry: (country) {
+                    onSelectMapObject: (mapObject) {
                       final constrained = CameraFit.bounds(
-                        bounds: country.bounds(),
+                        bounds: mapObject.bounds(),
                       ).fit(mapController.mapController.camera);
                       Future.delayed(
                         const Duration(milliseconds: 600),
@@ -118,7 +118,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
   }
 
   Widget _buildMap(BuildContext context) {
-    if (_mapCubit.mode == RiokoMode.marine) {
+    if (_mapCubit.mode == RiokoMode.umi) {
       return MapBuilder().buildMarine(
         context,
         urlTemplate: _mapCubit.urlTemplate(),

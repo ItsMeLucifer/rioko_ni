@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
@@ -8,14 +9,18 @@ part 'marine_area.freezed.dart';
 
 @unfreezed
 class MarineArea extends MapObject with _$MarineArea {
-  MarineArea._() : super(status: MOStatus.none);
+  MarineArea._() : super(status: MOStatus.none, name: '');
   factory MarineArea({
     required int rank,
     required int type,
-    required String name,
+    required String nameCode,
     required List<List<LatLng>> polygons,
     @Default(MOStatus.none) MOStatus status,
   }) = _MarineArea;
+
+  String get typeName => tr('marineAreaTypes.$type');
+
+  String get name => tr('marineAreas.$nameCode');
 
   bool contains(LatLng position) {
     final bounds = polygons.map((p) => fm.LatLngBounds.fromPoints(p)).toList();
@@ -39,6 +44,7 @@ class MarineArea extends MapObject with _$MarineArea {
 
   /// return the bounds od the biggest polygon
   /// (in the marine areas it is not necessary to get overall bounds as in Country object)
+  @override
   fm.LatLngBounds bounds() {
     return fm.LatLngBounds.fromPoints(polygons.first);
   }

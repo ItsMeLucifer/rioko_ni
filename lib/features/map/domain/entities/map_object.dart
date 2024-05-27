@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'map_object.g.dart';
@@ -37,6 +38,12 @@ extension MOStatusExtension on MOStatus {
 
 abstract class MapObject extends HiveObject {
   MOStatus status;
+  final String name;
 
-  MapObject({required this.status});
+  MapObject({
+    required this.status,
+    required this.name,
+  });
+
+  LatLngBounds bounds();
 }

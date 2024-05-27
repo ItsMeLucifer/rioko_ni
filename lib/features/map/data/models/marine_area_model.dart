@@ -21,7 +21,7 @@ class MarineAreaModel with _$MarineAreaModel {
   MarineArea toEntity() => MarineArea(
         rank: rank,
         type: type,
-        name: name,
+        nameCode: name,
         polygons: polygons
             .map((p) => p.map((p2) => LatLng(p2.first, p2.last)).toList())
             .toList(),

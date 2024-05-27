@@ -1,3 +1,4 @@
+import 'package:flutter_map/flutter_map.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:latlong2/latlong.dart';
@@ -10,7 +11,7 @@ part 'region_hive_adapter.dart';
 
 @unfreezed
 class Region extends MapObject with _$Region {
-  Region._() : super(status: MOStatus.none);
+  Region._() : super(status: MOStatus.none, name: '');
   @HiveType(typeId: 1)
   factory Region({
     /// GeoJson data
@@ -34,6 +35,11 @@ class Region extends MapObject with _$Region {
             .toList(),
       );
     });
+  }
+
+  @override
+  LatLngBounds bounds() {
+    return LatLngBounds.fromPoints(polygons.first);
   }
 
   RegionModel toModel() => RegionModel(

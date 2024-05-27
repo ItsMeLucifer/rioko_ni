@@ -26,7 +26,7 @@ part 'map_cubit.freezed.dart';
 
 enum RiokoMode {
   normal,
-  marine,
+  umi,
 }
 
 class MapCubit extends Cubit<MapState> {
@@ -44,7 +44,12 @@ class MapCubit extends Cubit<MapState> {
 
   List<MarineArea> marineAreas = [];
 
-  RiokoMode mode = RiokoMode.marine;
+  RiokoMode mode = RiokoMode.umi;
+
+  void toggleMode() {
+    mode = (mode == RiokoMode.umi ? RiokoMode.normal : RiokoMode.umi);
+    emit(MapState.changeRiokoMode(mode));
+  }
 
   String urlTemplate({ThemeDataType? otherTheme}) {
     final themeCubit = locator<ThemeCubit>();
@@ -114,6 +119,17 @@ class MapCubit extends Cubit<MapState> {
                   .toLowerCase()
                   .contains(text.toLowerCase()) ||
               country.area.name.toLowerCase().contains(text.toLowerCase()),
+        )
+        .toList();
+    return result;
+  }
+
+  List<MarineArea> marineAreasByString(String text) {
+    final result = marineAreas
+        .where(
+          (marineArea) =>
+              marineArea.name.toLowerCase().contains(text.toLowerCase()) ||
+              marineArea.typeName.toLowerCase().contains(text.toLowerCase()),
         )
         .toList();
     return result;
