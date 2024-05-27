@@ -370,7 +370,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
           ),
           primaryTextTheme: const TextTheme(
             bodyMedium: TextStyle(
-              color: Color.fromARGB(255, 203, 109, 238),
+              color: Color.fromARGB(248, 101, 178, 227),
               fontWeight: FontWeight.bold,
               fontSize: 14,
             ),
@@ -382,12 +382,12 @@ class ThemeCubit extends Cubit<ThemeDataType> {
             headlineSmall: TextStyle(
               fontFamily: 'KamikazeGradient',
               fontSize: 45,
-              color: Color.fromARGB(255, 203, 109, 238),
+              color: Color.fromARGB(248, 101, 178, 227),
             ),
             headlineLarge: TextStyle(
               fontFamily: 'KamikazeGradient',
               fontSize: 80,
-              color: Color.fromARGB(255, 203, 109, 238),
+              color: Color.fromARGB(248, 101, 178, 227),
             ),
           ),
         );
