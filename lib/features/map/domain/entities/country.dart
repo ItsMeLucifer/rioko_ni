@@ -22,9 +22,20 @@ enum Area {
   europe,
   oceania,
   antarctic,
+  world,
 }
 
 extension AreaExtension on Area {
+  static List<Area> get fixedValues => [
+        Area.world,
+        Area.europe,
+        Area.africa,
+        Area.northAmerica,
+        Area.southAmerica,
+        Area.asia,
+        Area.oceania,
+      ];
+
   static Area fromIndex(int index) {
     switch (index) {
       case 0:
@@ -46,6 +57,44 @@ extension AreaExtension on Area {
     }
   }
 
+  LatLng get center {
+    switch (this) {
+      case Area.europe:
+        return const LatLng(54, 13);
+      case Area.northAmerica:
+        return const LatLng(50, -100);
+      case Area.southAmerica:
+        return const LatLng(-26, -64);
+      case Area.africa:
+        return const LatLng(2, 17);
+      case Area.asia:
+        return const LatLng(35, 85);
+      case Area.oceania:
+        return const LatLng(-16.810507, 143.407079);
+      default:
+        return const LatLng(15.6, 0.9);
+    }
+  }
+
+  double get zoom {
+    switch (this) {
+      case Area.europe:
+        return 2.7;
+      case Area.northAmerica:
+        return 1.7;
+      case Area.southAmerica:
+        return 2;
+      case Area.africa:
+        return 2.17;
+      case Area.asia:
+        return 2;
+      case Area.oceania:
+        return 2.1;
+      default:
+        return 0.45;
+    }
+  }
+
   String get name {
     switch (this) {
       case Area.africa:
@@ -62,6 +111,8 @@ extension AreaExtension on Area {
         return tr('areas.southAmerica');
       case Area.oceania:
         return tr('areas.oceania');
+      case Area.world:
+        return tr('areas.allWorld');
     }
   }
 

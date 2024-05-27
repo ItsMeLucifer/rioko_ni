@@ -17,4 +17,9 @@ class AssetsHandler {
       'assets/continents/north_america.png';
   static String get oceaniaMiniature => 'assets/continents/oceania.png';
   static String get asiaMiniature => 'assets/continents/asia.png';
+
+  static String get iconBlank => 'assets/icon_blank.png';
+  static String get appIcon => 'assets/icon/icon.png';
+  static String get appIconCartoon => 'assets/icon/icon_cartoon.png';
+  static String get textLogoDark => 'assets/text_logo_dark.png';
 }

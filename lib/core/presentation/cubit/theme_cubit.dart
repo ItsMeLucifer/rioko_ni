@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'theme_state.dart';
@@ -60,6 +62,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       tertiary: Colors.grey,
       onTertiary: Colors.grey,
       outline: Colors.black,
+      onSurface: Colors.white,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.black,
@@ -72,6 +75,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     iconTheme: const IconThemeData(
       color: Colors.black,
     ),
+    scaffoldBackgroundColor: const Color(0xFFEAF3EF),
     appBarTheme: const AppBarTheme(
       color: Color.fromARGB(255, 222, 226, 236),
       foregroundColor: Colors.black,
@@ -83,45 +87,79 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       ),
     ),
     primaryColor: const Color.fromARGB(255, 240, 244, 255),
-    textTheme: const TextTheme(
-      bodySmall: TextStyle(
+    dividerColor: const Color.fromARGB(255, 7, 76, 41),
+    buttonTheme: ButtonThemeData(
+      buttonColor: Colors.white,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: const Color.fromARGB(255, 7, 76, 41),
+      ).copyWith(background: Colors.white),
+    ),
+    textTheme: TextTheme(
+      bodySmall: const TextStyle(
         fontFamily: 'Nasalization',
         color: Colors.black,
       ),
-      bodyMedium: TextStyle(
+      bodyMedium: GoogleFonts.montserrat(
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      bodyLarge: const TextStyle(
         fontFamily: 'Nasalization',
         color: Colors.black,
       ),
-      bodyLarge: TextStyle(
-        fontFamily: 'Nasalization',
-        color: Colors.black,
-      ),
-      titleSmall: TextStyle(
+      titleSmall: const TextStyle(
         color: Colors.white70,
         fontFamily: 'Nasalization',
       ),
-      titleMedium: TextStyle(
+      titleMedium: const TextStyle(
         color: Colors.white,
         fontFamily: 'Nasalization',
       ),
-      titleLarge: TextStyle(
+      titleLarge: const TextStyle(
         fontFamily: 'Nasalization',
         color: Colors.white,
       ),
-      headlineSmall: TextStyle(
-        fontFamily: 'Nasalization',
+      headlineSmall: GoogleFonts.montserrat(
         color: Colors.black,
-        fontSize: 15,
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
       ),
-      headlineMedium: TextStyle(
+      headlineMedium: const TextStyle(
         fontFamily: 'Nasalization',
         color: Colors.black,
         fontSize: 22,
       ),
-      headlineLarge: TextStyle(
+      headlineLarge: const TextStyle(
         fontFamily: 'Nasalization',
         color: Colors.black,
         fontSize: 35,
+      ),
+      labelMedium: GoogleFonts.montserrat(
+        color: Colors.white,
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    primaryTextTheme: TextTheme(
+      bodyMedium: const TextStyle(
+        color: Color(0xFF337554),
+        fontWeight: FontWeight.bold,
+        fontSize: 15,
+      ),
+      headlineSmall: const TextStyle(
+        fontFamily: 'KamikazeGradient',
+        fontSize: 45,
+        color: Color(0xFF337554),
+      ),
+      headlineLarge: const TextStyle(
+        fontFamily: 'KamikazeGradient',
+        fontSize: 80,
+        color: Color(0xFF337554),
+      ),
+      labelMedium: GoogleFonts.montserrat(
+        color: Colors.black,
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
       ),
     ),
     outlinedButtonTheme: const OutlinedButtonThemeData(
@@ -156,6 +194,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       tertiary: Colors.lime,
       onTertiary: Colors.limeAccent,
       outline: Colors.white,
+      onSurface: Colors.white12,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.black,
@@ -199,6 +238,11 @@ class ThemeCubit extends Cubit<ThemeDataType> {
         color: Colors.white,
         fontFamily: 'Nasalization',
       ),
+      labelMedium: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.white,
+        fontSize: 14,
+      ),
       titleLarge: TextStyle(
         fontFamily: 'Nasalization',
         color: Colors.white,
@@ -221,6 +265,28 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     ),
     snackBarTheme: const SnackBarThemeData(
       actionTextColor: Colors.white,
+    ),
+    primaryTextTheme: const TextTheme(
+      bodyMedium: TextStyle(
+        color: Colors.tealAccent,
+        fontWeight: FontWeight.bold,
+        fontSize: 14,
+      ),
+      labelMedium: TextStyle(
+        fontFamily: 'Nasalization',
+        color: Colors.black,
+        fontSize: 14,
+      ),
+      headlineSmall: TextStyle(
+        fontFamily: 'KamikazeGradient',
+        fontSize: 45,
+        color: Colors.tealAccent,
+      ),
+      headlineLarge: TextStyle(
+        fontFamily: 'KamikazeGradient',
+        fontSize: 80,
+        color: Colors.tealAccent,
+      ),
     ),
     outlinedButtonTheme: const OutlinedButtonThemeData(
       style: ButtonStyle(
@@ -255,6 +321,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
             onSecondary: const Color.fromARGB(255, 218, 121, 178),
             tertiary: const Color.fromARGB(255, 119, 151, 50),
             onTertiary: const Color.fromARGB(255, 150, 186, 74),
+            onSurface: Colors.white,
           ),
           outlinedButtonTheme: const OutlinedButtonThemeData(
             style: ButtonStyle(
@@ -284,6 +351,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
             onSecondary: const Color.fromARGB(76, 255, 102, 133),
             tertiary: Colors.white,
             onTertiary: Colors.white30,
+            onSurface: Colors.white10,
           ),
           primaryColor: Colors.grey,
           outlinedButtonTheme: const OutlinedButtonThemeData(
@@ -298,6 +366,28 @@ class ThemeCubit extends Cubit<ThemeDataType> {
               foregroundColor: MaterialStatePropertyAll(
                 Color.fromARGB(255, 121, 130, 129),
               ),
+            ),
+          ),
+          primaryTextTheme: const TextTheme(
+            bodyMedium: TextStyle(
+              color: Color.fromARGB(248, 101, 178, 227),
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+            labelMedium: TextStyle(
+              fontFamily: 'Nasalization',
+              color: Colors.black,
+              fontSize: 14,
+            ),
+            headlineSmall: TextStyle(
+              fontFamily: 'KamikazeGradient',
+              fontSize: 45,
+              color: Color.fromARGB(248, 101, 178, 227),
+            ),
+            headlineLarge: TextStyle(
+              fontFamily: 'KamikazeGradient',
+              fontSize: 80,
+              color: Color.fromARGB(248, 101, 178, 227),
             ),
           ),
         );

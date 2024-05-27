@@ -115,49 +115,47 @@ class _CountryManagementPageState extends State<CountryManagementPage>
             ]),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () => pop(context, short: true),
-              label: SizedBox(
-                width: 50,
-                child: Text(
-                  tr('core.dialog.ok'),
-                  textAlign: TextAlign.center,
+            floatingActionButton: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingActionButton.extended(
+                  backgroundColor: Colors.white,
+                  onPressed: () {
+                    final value = !widget.country.displayRegions;
+                    if (value && widget.country.regions.isEmpty) {
+                      _mapCubit.fetchCountryRegions(widget.country);
+                    }
+                    _mapCubit.updateDisplayRegionsInfo(
+                      widget.country.alpha3,
+                      value,
+                    );
+                    setState(() => widget.country.displayRegions = value);
+                  },
+                  label: SizedBox(
+                    width: 100,
+                    child: Text(
+                      widget.country.displayRegions
+                          ? tr('$l10n.labels.hideRegions')
+                          : tr('$l10n.labels.showRegions'),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).primaryTextTheme.labelMedium,
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(width: AppSizes.paddingTriple),
+                FloatingActionButton.extended(
+                  onPressed: () => pop(context, short: true),
+                  label: SizedBox(
+                    width: 100,
+                    child: Text(
+                      tr('core.dialog.confirm'),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCountryModeSwitch(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerRight,
-      margin: const EdgeInsets.only(top: AppSizes.paddingHalf),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(tr('$l10n.labels.showRegions')),
-          const SizedBox(width: AppSizes.padding),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Switch(
-                value: widget.country.displayRegions,
-                onChanged: (value) {
-                  if (value && widget.country.regions.isEmpty) {
-                    _mapCubit.fetchCountryRegions(widget.country);
-                  }
-                  _mapCubit.updateDisplayRegionsInfo(
-                    widget.country.alpha3,
-                    value,
-                  );
-                  setState(() => widget.country.displayRegions = value);
-                },
-              ),
-            ],
           ),
         ],
       ),
@@ -219,7 +217,6 @@ class _CountryManagementPageState extends State<CountryManagementPage>
         borderColor: Theme.of(context).colorScheme.outline,
         borderRadius: 3,
       ),
-      if (widget.country.moreDataAvailable) _buildCountryModeSwitch(context),
     ]);
   }
 

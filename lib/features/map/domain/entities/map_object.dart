@@ -19,8 +19,9 @@ extension MOStatusExtension on MOStatus {
   Color color(
     BuildContext context, {
     Color? customDefaultColor,
+    ThemeData? otherTheme,
   }) {
-    final scheme = Theme.of(context).colorScheme;
+    final scheme = otherTheme?.colorScheme ?? Theme.of(context).colorScheme;
     switch (this) {
       case MOStatus.been:
         return scheme.onPrimary;

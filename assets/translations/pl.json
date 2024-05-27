@@ -24,7 +24,9 @@
         "purchaseSuccessfullMessage": "Zakupiono Rioko Premium!",
         "dialog": {
             "ok": "OK",
-            "back": "Wróć"
+            "back": "Wróć",
+            "confirm": "Zatwierdź",
+            "close": "Zamknij"
         },
         "themes": {
             "classic": "Klasyczny",
@@ -46,7 +48,8 @@
                 "been": "Zwiedziłem!",
                 "want": "Chcę zwiedzić!",
                 "lived": "Żyłem tam!",
-                "showRegions": "Pokaż regiony"
+                "showRegions": "Pokaż regiony",
+                "hideRegions": "Ukryj regiony"
             }
         },
         "searchCountry": {
@@ -71,7 +74,8 @@
         "europe": "Europa",
         "asia": "Azja",
         "oceania": "Oceania",
-        "antarctic": "Antarktyda"
+        "antarctic": "Antarktyda",
+        "allWorld": "Cały świat"
     },
     "subAreas": {
         "easternEurope": "Europa Wschodnia",
@@ -356,18 +360,21 @@
             "buyPremium": "Kup Rioko Premium"
         }
     },
-    "drawer": {
+    "menu": {
         "labels": {
             "showStatistics": "Pokaż statystyki",
             "shareStatistics": "Udostępnij swoje statystyki",
             "changeTheme": "Zmień motyw",
             "privacyPolicy": "Polityka prywatności",
             "aboutApp": "O aplikacji",
-            "buyPremium": "Kup Rioko Premium"
+            "buyPremium": "Kup Rioko Premium",
+            "title": "Odkryj świat!",
+            "subtitle": "Twoja mapa wspomnień na wyciągnięcie dłoni."
         }
     },
     "changeThemeDialog": {
-        "buttonName": "Wybierz ten motyw"
+        "buttonName": "Wybierz ten motyw",
+        "title": "Wybór motywu"
     },
     "aboutAppDialog": {
         "labels": {

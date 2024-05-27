@@ -46,9 +46,9 @@ class MapCubit extends Cubit<MapState> {
 
   RiokoMode mode = RiokoMode.marine;
 
-  String get urlTemplate {
+  String urlTemplate({ThemeDataType? otherTheme}) {
     final themeCubit = locator<ThemeCubit>();
-    switch (themeCubit.type) {
+    switch (otherTheme ?? themeCubit.type) {
       case ThemeDataType.classic:
         return 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
       case ThemeDataType.humani:
@@ -204,6 +204,28 @@ class MapCubit extends Cubit<MapState> {
 
   List<Country> get livedCountries =>
       countries.where((c) => c.status == MOStatus.lived).toList();
+
+  List<Country> get noAntarcticCountries =>
+      countries.where((c) => c.area != Area.antarctic).toList();
+
+  List<Country> get themePreviewCountries {
+    List<Country> result = [];
+    result.add(countries.firstWhere((c) => c.alpha3 == 'POL')
+      ..status = MOStatus.lived);
+    result.add(
+        countries.firstWhere((c) => c.alpha3 == 'LVA')..status = MOStatus.want);
+    result.add(
+        countries.firstWhere((c) => c.alpha3 == 'DEU')..status = MOStatus.been);
+    result.add(
+      countries.firstWhere((c) => c.alpha3 == 'HUN')
+        ..status = MOStatus.been
+        ..displayRegions = false,
+    );
+    return result;
+  }
+
+  LatLng getWorldCenter({bool withAntarctic = true}) =>
+      LatLng(withAntarctic ? 15.6642 : 43.6642, 0.9432);
 
   // Asia
 

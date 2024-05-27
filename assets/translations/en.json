@@ -24,7 +24,9 @@
         "purchaseSuccessfullMessage": "Purchased Rioko Premium!",
         "dialog": {
             "ok": "OK",
-            "back": "Back"
+            "back": "Back",
+            "confirm": "Confirm",
+            "close": "Close"
         },
         "themes": {
             "classic": "Classic",
@@ -46,7 +48,8 @@
                 "been": "Been there!",
                 "want": "Want to travel",
                 "lived": "Lived there",
-                "showRegions": "Show regions"
+                "showRegions": "Show regions",
+                "hideRegions": "Hide regions"
             }
         },
         "searchCountry": {
@@ -71,7 +74,8 @@
         "europe": "Europe",
         "asia": "Asia",
         "oceania": "Oceania",
-        "antarctic": "Antarctic"
+        "antarctic": "Antarctic",
+        "allWorld": "All world"
     },
     "subAreas": {
         "easternEurope": "Eastern Europe",
@@ -356,18 +360,21 @@
             "buyPremium": "Buy Rioko Premium"
         }
     },
-    "drawer": {
+    "menu": {
         "labels": {
             "showStatistics": "Show statistics",
             "shareStatistics": "Share your statistics",
             "changeTheme": "Change theme",
             "privacyPolicy": "Privacy policy",
             "aboutApp": "About app",
-            "buyPremium": "Buy Rioko Premium"
+            "buyPremium": "Buy Rioko Premium",
+            "title": "Discover the world!",
+            "subtitle": "Your map of memories at your fingertips."
         }
     },
     "changeThemeDialog": {
-        "buttonName": "Select this theme"
+        "buttonName": "Select this theme",
+        "title": "Theme selection"
     },
     "aboutAppDialog": {
         "labels": {
