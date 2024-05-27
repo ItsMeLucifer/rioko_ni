@@ -10,7 +10,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/cubit/revenue_cat_cubit.dart';
-import 'package:rioko_ni/core/presentation/map.dart';
+import 'package:rioko_ni/core/presentation/map.dart' as map;
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
@@ -76,117 +76,112 @@ class _ShareWorldDataDialogState extends State<ShareWorldDataDialog> {
     );
   }
 
+  List<Map<String, dynamic>> get graphicsData => [
+        {
+          "backgroundColor": Colors.black,
+          "primaryColor": Colors.white,
+          "textColor": Colors.white,
+        },
+        {
+          "backgroundColor": Colors.white,
+          "primaryColor": Colors.black,
+          "textColor": Colors.black,
+        },
+        {
+          "primaryColor": Colors.tealAccent,
+          "textColor": Colors.white,
+          "fontFamily": 'Nasalization',
+        },
+        {
+          "backgroundColor": Colors.black,
+          "primaryColor": Colors.blue,
+          "textColor": Colors.white,
+          "fontFamily": 'Nasalization',
+        },
+        {
+          "backgroundColor": Colors.black,
+          "primaryColor": Colors.red,
+          "textColor": Colors.white,
+          "fontFamily": 'Nasalization',
+        },
+        {
+          "backgroundColor": Colors.grey[300]!,
+          "primaryColor": Colors.black,
+          "textColor": Colors.black,
+          "fontFamily": 'Caveat',
+          "textScale": 1.5,
+        },
+        {
+          "backgroundColor": Colors.black,
+          "primaryColor": Colors.white,
+          "textColor": Colors.white,
+          "fontFamily": 'Caveat',
+          "textScale": 1.5,
+        },
+        {
+          "primaryColor": Colors.black,
+          "textColor": Colors.black,
+          "fontFamily": 'Caveat',
+          "textScale": 1.7,
+          "image": const AssetImage('assets/paper.jpg'),
+        },
+        {
+          "backgroundColor": const Color.fromARGB(255, 241, 250, 238),
+          "primaryColor": const Color.fromARGB(255, 29, 53, 87),
+          "textColor": const Color.fromARGB(255, 29, 53, 87),
+          "fontFamily": 'Rajdhani',
+          "textScale": 1.2,
+          "secondaryColor": const Color.fromARGB(255, 230, 57, 70),
+        },
+        {
+          "backgroundColor": const Color.fromARGB(255, 237, 242, 244),
+          "primaryColor": const Color.fromARGB(255, 43, 45, 66),
+          "textColor": const Color.fromARGB(255, 43, 45, 66),
+          "fontFamily": 'Rajdhani',
+          "textScale": 1.2,
+          "secondaryColor": const Color.fromARGB(255, 239, 35, 60),
+        },
+        {
+          "backgroundColor": const Color.fromARGB(255, 244, 241, 222),
+          "primaryColor": const Color.fromARGB(255, 71, 122, 106),
+          "textColor": const Color.fromARGB(255, 61, 64, 91),
+          "fontFamily": 'Rajdhani',
+          "textScale": 1.2,
+          "secondaryColor": const Color.fromARGB(255, 224, 122, 95),
+        }
+      ];
+
   Widget _buildBody(BuildContext context) {
     return Stack(
       children: [
-        CarouselSlider(
-            items: [
-              _buildGraphic(
-                context,
-                index: 0,
-                backgroundColor: Colors.black,
-                primaryColor: Colors.white,
-                textColor: Colors.white,
-              ),
-              _buildGraphic(
-                context,
-                index: 1,
-                backgroundColor: Colors.white,
-                primaryColor: Colors.black,
-                textColor: Colors.black,
-              ),
-              _buildGraphic(
-                context,
-                index: 2,
-                primaryColor: Colors.tealAccent,
-                textColor: Colors.white,
-                fontFamily: 'Nasalization',
-              ),
-              _buildGraphic(
-                context,
-                index: 3,
-                backgroundColor: Colors.black,
-                primaryColor: Colors.blue,
-                textColor: Colors.white,
-                fontFamily: 'Nasalization',
-              ),
-              _buildGraphic(
-                context,
-                index: 4,
-                backgroundColor: Colors.black,
-                primaryColor: Colors.red,
-                textColor: Colors.white,
-                fontFamily: 'Nasalization',
-              ),
-              _buildGraphic(
-                context,
-                index: 5,
-                backgroundColor: Colors.grey[300]!,
-                primaryColor: Colors.black,
-                textColor: Colors.black,
-                fontFamily: 'Caveat',
-                textScale: 1.5,
-              ),
-              _buildGraphic(
-                context,
-                index: 6,
-                backgroundColor: Colors.black,
-                primaryColor: Colors.white,
-                textColor: Colors.white,
-                fontFamily: 'Caveat',
-                textScale: 1.5,
-              ),
-              _buildGraphic(
-                context,
-                index: 7,
-                primaryColor: Colors.black,
-                textColor: Colors.black,
-                fontFamily: 'Caveat',
-                textScale: 1.7,
-                image: const AssetImage('assets/paper.jpg'),
-              ),
-              _buildGraphic(
-                context,
-                index: 8,
-                backgroundColor: const Color.fromARGB(255, 241, 250, 238),
-                primaryColor: const Color.fromARGB(255, 29, 53, 87),
-                textColor: const Color.fromARGB(255, 29, 53, 87),
-                fontFamily: 'Rajdhani',
-                textScale: 1.2,
-                secondaryColor: const Color.fromARGB(255, 230, 57, 70),
-              ),
-              _buildGraphic(
-                context,
-                index: 9,
-                backgroundColor: const Color.fromARGB(255, 237, 242, 244),
-                primaryColor: const Color.fromARGB(255, 43, 45, 66),
-                textColor: const Color.fromARGB(255, 43, 45, 66),
-                fontFamily: 'Rajdhani',
-                textScale: 1.2,
-                secondaryColor: const Color.fromARGB(255, 239, 35, 60),
-              ),
-              _buildGraphic(
-                context,
-                index: 10,
-                backgroundColor: const Color.fromARGB(255, 244, 241, 222),
-                primaryColor: const Color.fromARGB(255, 71, 122, 106),
-                textColor: const Color.fromARGB(255, 61, 64, 91),
-                fontFamily: 'Rajdhani',
-                textScale: 1.2,
-                secondaryColor: const Color.fromARGB(255, 224, 122, 95),
-              ),
-            ],
-            options: CarouselOptions(
-              height: MediaQuery.of(context).size.height,
-              initialPage: 0,
-              enableInfiniteScroll: false,
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeCenterPage: true,
-              enlargeFactor: 0.3,
-              onPageChanged: (index, reason) =>
-                  setState(() => currentIndex = index),
-              scrollDirection: Axis.horizontal,
-            )),
+        CarouselSlider.builder(
+          itemCount: graphicsData.length,
+          itemBuilder:
+              (BuildContext context, int itemIndex, int pageViewIndex) {
+            final data = graphicsData[itemIndex];
+            return _buildGraphic(
+              context,
+              index: itemIndex,
+              textColor: data['textColor'],
+              primaryColor: data['primaryColor'],
+              backgroundColor: data['backgroundColor'],
+              secondaryColor: data['secondaryColor'],
+              textScale: data['textScale'],
+              fontFamily: data['fontFamily'],
+              image: data['image'],
+            );
+          },
+          options: CarouselOptions(
+            height: MediaQuery.of(context).size.height,
+            initialPage: 0,
+            enableInfiniteScroll: false,
+            enlargeCenterPage: true,
+            enlargeFactor: 0.3,
+            onPageChanged: (index, reason) =>
+                setState(() => currentIndex = index),
+            scrollDirection: Axis.horizontal,
+          ),
+        ),
         Align(
           alignment: const Alignment(0.9, -0.85),
           child: GestureDetector(
@@ -269,10 +264,12 @@ class _ShareWorldDataDialogState extends State<ShareWorldDataDialog> {
     required Color primaryColor,
     Color? secondaryColor,
     String? fontFamily,
-    Color backgroundColor = Colors.black,
-    double textScale = 1,
+    Color? backgroundColor,
+    double? textScale,
     ImageProvider<Object>? image,
   }) {
+    textScale ??= 1;
+    backgroundColor ??= Colors.black;
     return Center(
       child: WidgetsToImage(
         key: keys[index],
@@ -299,14 +296,14 @@ class _ShareWorldDataDialogState extends State<ShareWorldDataDialog> {
                       height: imageHeight(context) * 0.33,
                       padding: const EdgeInsets.symmetric(
                           horizontal: AppSizes.paddingHalf),
-                      child: MapBuilder().buildWorldMapSummary(
+                      child: map.MapBuilder().buildWorldMapSummary(
                         context,
                         countries: _cubit.noAntarcticCountries,
                         zoom: 0.25,
                         withAntarctic: false,
                         getCountryBorderColor: (status) {
                           if (status == MOStatus.lived) {
-                            return backgroundColor.withOpacity(0.6);
+                            return backgroundColor!.withOpacity(0.6);
                           }
                           return primaryColor;
                         },
@@ -458,10 +455,8 @@ class _ShareWorldDataDialogState extends State<ShareWorldDataDialog> {
                 ),
                 progressColor: secondaryColor ?? primaryColor,
                 circularStrokeCap: CircularStrokeCap.round,
-                curve: Curves.fastEaseInToSlowEaseOut,
-                animationDuration: 1000,
-                animation: true,
-                restartAnimation: false,
+                animation: false,
+                addAutomaticKeepAlive: false,
                 arcType: ArcType.FULL,
                 arcBackgroundColor:
                     (secondaryColor ?? primaryColor).withOpacity(0.1),
@@ -474,7 +469,7 @@ class _ShareWorldDataDialogState extends State<ShareWorldDataDialog> {
                 label,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontFamily: fontFamily,
-                      fontSize: (width / 30) * textScale,
+                      fontSize: (width / 32) * textScale,
                       color: textColor,
                     ),
               ),

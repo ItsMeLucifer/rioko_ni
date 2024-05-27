@@ -181,6 +181,7 @@ class MapBuilder {
       minZoom: 0,
       maxZoom: 10,
       cameraConstraint: const CameraConstraint.unconstrained(),
+      keepAlive: false,
     );
     List<Widget> layers = [];
     List<Polygon> polygons = [];
