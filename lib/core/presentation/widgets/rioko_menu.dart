@@ -6,8 +6,10 @@ import 'package:rioko_ni/core/extensions/build_context2.dart';
 import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/about_app_dialog.dart';
 import 'package:rioko_ni/core/presentation/cubit/revenue_cat_cubit.dart';
+import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/widgets/change_theme_page.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
+import 'package:rioko_ni/core/utils/assets_handler.dart';
 import 'package:rioko_ni/features/map/presentation/pages/info_page.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/share_world_data_dialog.dart';
 import 'package:rioko_ni/main.dart';
@@ -29,6 +31,7 @@ class _RiokoMenuState extends State<RiokoMenu> {
   String get l10n => 'menu';
 
   final _revenueCatCubit = locator<RevenueCatCubit>();
+  final _themeCubit = locator<ThemeCubit>();
 
   bool loadingPurchase = false;
 
@@ -195,10 +198,7 @@ class _RiokoMenuState extends State<RiokoMenu> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            'RIOKO',
-            style: Theme.of(context).primaryTextTheme.headlineLarge,
-          ),
+          _buildTextLogo(context),
           Text(
             tr('$l10n.labels.title'),
             style: Theme.of(context).primaryTextTheme.bodyMedium,
@@ -213,6 +213,25 @@ class _RiokoMenuState extends State<RiokoMenu> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTextLogo(BuildContext context) {
+    if (_themeCubit.isLight) {
+      return Text(
+        'RIOKO',
+        style: Theme.of(context).primaryTextTheme.headlineLarge,
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          horizontal: AppSizes.paddingQuadruple,
+          vertical: AppSizes.paddingDouble),
+      child: Image.asset(
+        AssetsHandler.textLogoDark,
+        colorBlendMode: BlendMode.modulate,
+        color: Theme.of(context).primaryTextTheme.headlineLarge!.color,
       ),
     );
   }
