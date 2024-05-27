@@ -121,7 +121,7 @@ class _RiokoMenuState extends State<RiokoMenu> {
                   context,
                   iconData: FontAwesomeIcons.circleInfo,
                   onTap: () {
-                    Scaffold.of(context).closeDrawer();
+                    Navigator.of(context).pop();
                     const AboutAppDialog().show(context);
                   },
                   label: tr('$l10n.labels.aboutApp'),
