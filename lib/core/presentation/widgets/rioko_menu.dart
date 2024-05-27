@@ -36,7 +36,7 @@ class _RiokoMenuState extends State<RiokoMenu> {
   bool loadingPurchase = false;
 
   Widget divider(BuildContext context) => SizedBox(
-        width: context.width(0.62),
+        width: context.width(0.7),
         child: Divider(
           color: Theme.of(context).dividerColor,
         ),
@@ -175,7 +175,7 @@ class _RiokoMenuState extends State<RiokoMenu> {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        width: context.width(0.62),
+        width: context.width(0.7),
         height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

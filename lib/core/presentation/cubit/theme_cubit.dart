@@ -368,6 +368,28 @@ class ThemeCubit extends Cubit<ThemeDataType> {
               ),
             ),
           ),
+          primaryTextTheme: const TextTheme(
+            bodyMedium: TextStyle(
+              color: Color.fromARGB(255, 203, 109, 238),
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+            labelMedium: TextStyle(
+              fontFamily: 'Nasalization',
+              color: Colors.black,
+              fontSize: 14,
+            ),
+            headlineSmall: TextStyle(
+              fontFamily: 'KamikazeGradient',
+              fontSize: 45,
+              color: Color.fromARGB(255, 203, 109, 238),
+            ),
+            headlineLarge: TextStyle(
+              fontFamily: 'KamikazeGradient',
+              fontSize: 80,
+              color: Color.fromARGB(255, 203, 109, 238),
+            ),
+          ),
         );
     }
   }
