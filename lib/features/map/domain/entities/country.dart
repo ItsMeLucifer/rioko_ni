@@ -228,6 +228,7 @@ class Country extends MapObject with _$Country {
     return bounds().center;
   }
 
+  @override
   Widget flag({
     double scale = 1,
     double borderRadius = 0,

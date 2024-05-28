@@ -54,7 +54,9 @@ class MapBuilder {
   Widget buildMapObjectPreview(
     BuildContext context, {
     required MapObject mapObject,
-    required MapController controller,
+    MapController? controller,
+    Color? polygonColor,
+    double? zoom,
   }) {
     LatLngBounds? bounds;
     if (mapObject is Country) {
@@ -72,6 +74,9 @@ class MapBuilder {
       initialCameraFit: CameraFit.bounds(
         bounds: bounds!,
       ),
+      initialZoom: zoom,
+      minZoom: zoom,
+      center: mapObject.center,
     );
 
     final layers = [
@@ -82,7 +87,8 @@ class MapBuilder {
             strokeCap: StrokeCap.butt,
             strokeJoin: StrokeJoin.miter,
             points: points,
-            color: Theme.of(context).colorScheme.outline.withOpacity(0.1),
+            color: polygonColor ??
+                Theme.of(context).colorScheme.outline.withOpacity(0.1),
             isFilled: true,
           );
         }).toList(),

@@ -49,4 +49,10 @@ abstract class MapObject extends HiveObject {
   });
 
   LatLngBounds bounds();
+  Widget flag({
+    double scale = 1,
+    double borderRadius = 0,
+    Color? borderColor,
+  });
+  LatLng get center;
 }

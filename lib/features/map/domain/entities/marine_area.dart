@@ -1,10 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:rioko_ni/core/utils/geo_utils.dart';
+import 'package:rioko_ni/core/config/app_sizes.dart';
+import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:flutter_map/flutter_map.dart' as fm;
 import 'package:point_in_polygon/point_in_polygon.dart' as pip;
+import 'package:rioko_ni/main.dart';
 
 part 'marine_area.freezed.dart';
 
@@ -48,11 +51,46 @@ class MarineArea extends MapObject with _$MarineArea {
   /// (in the marine areas it is not necessary to get overall bounds as in Country object)
   @override
   fm.LatLngBounds bounds() {
-    return GeoUtils.calculateOverallBounds(
-        polygons.map((p) => fm.Polygon(points: p)).toList());
+    return fm.LatLngBounds.fromPoints(polygons.first);
   }
 
+  @override
   LatLng get center {
     return bounds().center;
+  }
+
+  @override
+  Widget flag({
+    double scale = 1,
+    double borderRadius = 0,
+    Color? borderColor,
+  }) {
+    const double height = 48;
+    const double width = 62;
+    final flag = Container(
+      height: height * scale,
+      width: width * scale,
+      color: Colors.blue,
+      padding: const EdgeInsets.all(AppSizes.paddingHalf),
+      child: Center(
+        child: MapBuilder().buildMapObjectPreview(
+          RiokoNi.navigatorKey.currentContext!,
+          mapObject: this,
+          polygonColor: Colors.white,
+          zoom: 0,
+        ),
+      ),
+    );
+    if (borderColor != null) {
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(borderRadius),
+          border: Border.all(color: borderColor, width: 1),
+          color: borderColor,
+        ),
+        child: flag,
+      );
+    }
+    return flag;
   }
 }

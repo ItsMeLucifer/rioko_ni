@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -42,6 +43,9 @@ class Region extends MapObject with _$Region {
     return LatLngBounds.fromPoints(polygons.first);
   }
 
+  @override
+  LatLng get center => bounds().center;
+
   RegionModel toModel() => RegionModel(
         code: code,
         polygons: polygons
@@ -50,4 +54,12 @@ class Region extends MapObject with _$Region {
         name: name,
         type: type,
       );
+
+  @override
+  Widget flag({
+    double scale = 1,
+    double borderRadius = 0,
+    Color? borderColor,
+  }) =>
+      const SizedBox();
 }

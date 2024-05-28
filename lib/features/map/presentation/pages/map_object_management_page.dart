@@ -44,7 +44,7 @@ class _MapObjectManagementPageState extends State<MapObjectManagementPage>
 
   Region? _region;
 
-  bool get umi => locator<MapCubit>().mode == RiokoMode.umi;
+  bool get umi => _mapCubit.mode == RiokoMode.umi;
 
   bool get regionsMode => (widget.mapObject as Country).displayRegions;
 
@@ -232,12 +232,11 @@ class _MapObjectManagementPageState extends State<MapObjectManagementPage>
         textAlign: TextAlign.center,
       ),
       const SizedBox(height: AppSizes.padding),
-      if (!umi)
-        (widget.mapObject as Country).flag(
-          scale: 0.4,
-          borderColor: Theme.of(context).colorScheme.outline,
-          borderRadius: 3,
-        ),
+      widget.mapObject.flag(
+        scale: 0.4,
+        borderColor: Theme.of(context).colorScheme.outline,
+        borderRadius: 3,
+      ),
     ]);
   }
 

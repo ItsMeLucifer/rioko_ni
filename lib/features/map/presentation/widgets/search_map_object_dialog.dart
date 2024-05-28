@@ -235,18 +235,18 @@ class _SearchMapObjectDialogState extends State<SearchMapObjectDialog>
       final subArea = mapObject.subArea?.name;
       subtitle =
           '${mapObject.area.name} ${subArea == null ? '' : '- $subArea'}';
-      leading = Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: borderColor,
-          ),
-        ),
-        child: mapObject.flag(scale: 0.5),
-      );
     }
     if (mapObject is MarineArea) {
       subtitle = mapObject.typeName;
     }
+    leading = Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: borderColor,
+        ),
+      ),
+      child: mapObject.flag(scale: 0.5),
+    );
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: AppSizes.paddingDouble,
