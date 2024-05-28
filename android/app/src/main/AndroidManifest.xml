@@ -35,6 +35,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- Admob -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6556175768591042~2656365494"/>
     </application>
     <!-- Provide required visibility configuration for API level 30 and above -->
     <queries>

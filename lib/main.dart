@@ -1,8 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:rioko_ni/core/extensions/build_context2.dart';
 import 'package:rioko_ni/core/injector.dart';
+import 'package:rioko_ni/core/presentation/cubit/admob_cubit.dart';
 import 'package:rioko_ni/core/presentation/cubit/revenue_cat_cubit.dart';
 import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
@@ -15,6 +18,7 @@ import 'package:toastification/toastification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   await Hive.initFlutter();
   Hive.registerAdapter(ThemeDataTypeAdapter());
   await Hive.openBox('theme_data');
@@ -39,6 +43,9 @@ void main() async {
           BlocProvider<ThemeCubit>(
             create: (BuildContext context) => locator<ThemeCubit>(),
           ),
+          BlocProvider<AdmobCubit>(
+            create: (BuildContext context) => locator<AdmobCubit>(),
+          ),
         ],
         child: const RiokoNi(),
       ),
@@ -58,6 +65,7 @@ class _RiokoNiState extends State<RiokoNi> {
   final _mapCubit = locator<MapCubit>();
   final _revenueCat = locator<RevenueCatCubit>();
   final _themeCubit = locator<ThemeCubit>();
+  final _admobCubit = locator<AdmobCubit>();
 
   @override
   void initState() {
@@ -66,6 +74,8 @@ class _RiokoNiState extends State<RiokoNi> {
       _revenueCat.fetchProduct();
       _revenueCat.fetchCustomerInfo();
     });
+    Future.delayed(const Duration(milliseconds: 200),
+        () => _admobCubit.loadAds(width: context.width().round()));
     super.initState();
   }
 

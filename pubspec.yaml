@@ -73,6 +73,7 @@ dependencies:
   json_serializable: ^6.8.0
   flutter_map_animations: ^0.6.0
   google_fonts: 6.1.0
+  google_mobile_ads: ^4.0.0
 
 dev_dependencies:
   flutter_test:

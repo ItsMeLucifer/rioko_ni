@@ -53,5 +53,7 @@
 	<string>Used to create and share travels statistics to other aps</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Used to center map to the user&apos;s current location</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-6556175768591042~9921059101</string>
 </dict>
 </plist>
