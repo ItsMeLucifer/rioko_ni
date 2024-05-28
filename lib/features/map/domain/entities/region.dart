@@ -11,7 +11,7 @@ part 'region_hive_adapter.dart';
 
 @unfreezed
 class Region extends MapObject with _$Region {
-  Region._() : super(status: MOStatus.none, name: '');
+  Region._() : super();
   @HiveType(typeId: 1)
   factory Region({
     /// GeoJson data

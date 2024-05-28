@@ -420,7 +420,17 @@ class MapCubit extends Cubit<MapState> {
   }) {
     countries.firstWhere((c) => c.alpha3 == country.alpha3).status = status;
     saveCountriesLocally();
-    emit(MapState.updatedCountryStatus(country: country, status: status));
+    emit(MapState.updatedMapObjectStatus(mapObject: country, status: status));
+  }
+
+  void updateMarineAreaStatus({
+    required MarineArea marineArea,
+    required MOStatus status,
+  }) {
+    marineAreas.firstWhere((m) => m.name == marineArea.name).status = status;
+    saveCountriesLocally();
+    emit(
+        MapState.updatedMapObjectStatus(mapObject: marineArea, status: status));
   }
 
   LatLng? currentPosition;
@@ -472,7 +482,18 @@ class MapCubit extends Cubit<MapState> {
           .compareTo(GeoUtils.calculateDistance(b.center, position)));
     }
     watch.stop();
-    debugPrint('searched for: ${watch.elapsedMilliseconds / 1000}s');
+    if (results.isEmpty) {
+      if (position.latitude > 80) {
+        results.add(marineAreas.firstWhere((m) => m.nameCode == 'arcticOcean'));
+      }
+      if (position.latitude < -60) {
+        results
+            .add(marineAreas.firstWhere((m) => m.nameCode == 'southernOcean'));
+      }
+    }
+    debugPrint('$position searched for: ${watch.elapsedMilliseconds / 1000}s');
+    results.sort((a, b) => GeoUtils.calculateDistance(a.center, position)
+        .compareTo(GeoUtils.calculateDistance(b.center, position)));
     return results.firstOrNull;
   }
 }

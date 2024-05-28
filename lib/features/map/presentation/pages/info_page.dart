@@ -12,7 +12,7 @@ import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
-import 'package:rioko_ni/features/map/presentation/pages/country_management_page.dart';
+import 'package:rioko_ni/features/map/presentation/pages/map_object_management_page.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/share_world_data_dialog.dart';
 
 class InfoPage extends StatefulWidget {
@@ -92,7 +92,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
       body: BlocListener<MapCubit, MapState>(
         listener: (context, state) {
           state.maybeWhen(
-            updatedCountryStatus: (country, status) => setState(() {}),
+            updatedMapObjectStatus: (country, status) => setState(() {}),
             orElse: () {},
           );
         },
@@ -240,7 +240,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          CountryManagementPage(country: country),
+                          MapObjectManagementPage(mapObject: country),
                     ),
                   ),
                   leading: Container(

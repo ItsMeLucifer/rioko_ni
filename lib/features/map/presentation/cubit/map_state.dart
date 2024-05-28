@@ -34,8 +34,8 @@ class MapState with _$MapState {
     required Map<String, List<Region>> data,
   }) = _SavedRegionsData;
 
-  const factory MapState.updatedCountryStatus({
-    required Country country,
+  const factory MapState.updatedMapObjectStatus({
+    required MapObject mapObject,
     required MOStatus status,
   }) = _UpdatedCountryStatus;
 

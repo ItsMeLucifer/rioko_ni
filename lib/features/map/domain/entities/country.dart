@@ -138,7 +138,7 @@ extension AreaExtension on Area {
 
 @unfreezed
 class Country extends MapObject with _$Country {
-  Country._() : super(status: MOStatus.none, name: '');
+  Country._() : super();
   factory Country({
     /// GeoJson data
     required List<List<LatLng>> polygons,
@@ -164,6 +164,7 @@ class Country extends MapObject with _$Country {
   String get alpha2 => countryCode.alpha2;
   String get alpha3 => countryCode.alpha3;
 
+  @override
   String get name => tr('countries.$alpha3');
 
   /// Updated country status, based on the regions data

@@ -14,26 +14,28 @@ import 'package:rioko_ni/core/injector.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
+import 'package:rioko_ni/features/map/domain/entities/marine_area.dart';
 import 'package:rioko_ni/features/map/domain/entities/region.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 
-class CountryManagementPage extends StatefulWidget {
-  final Country country;
+class MapObjectManagementPage extends StatefulWidget {
+  final MapObject mapObject;
 
-  const CountryManagementPage({
-    required this.country,
+  const MapObjectManagementPage({
+    required this.mapObject,
     super.key,
   });
 
   @override
-  State<CountryManagementPage> createState() => _CountryManagementPageState();
+  State<MapObjectManagementPage> createState() =>
+      _MapObjectManagementPageState();
 }
 
-class _CountryManagementPageState extends State<CountryManagementPage>
+class _MapObjectManagementPageState extends State<MapObjectManagementPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  late MapController _countryPreviewMapController;
+  late MapController _mapObjectPreviewMapController;
   late MapController _regionsPreviewMapController;
 
   bool isPopping = false;
@@ -42,19 +44,24 @@ class _CountryManagementPageState extends State<CountryManagementPage>
 
   Region? _region;
 
-  bool get regionsMode => widget.country.displayRegions;
+  bool get umi => locator<MapCubit>().mode == RiokoMode.umi;
+
+  bool get regionsMode => (widget.mapObject as Country).displayRegions;
 
   final _mapCubit = locator<MapCubit>();
 
   @override
   void initState() {
-    _region = widget.country.regions
-        .firstWhereOrNull((r) => r.status != MOStatus.none);
+    if (!umi) {
+      _region = (widget.mapObject as Country)
+          .regions
+          .firstWhereOrNull((r) => r.status != MOStatus.none);
+    }
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _countryPreviewMapController = MapController();
+    _mapObjectPreviewMapController = MapController();
     _regionsPreviewMapController = MapController();
     _animation = CurvedAnimation(
       parent: _controller,
@@ -76,7 +83,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   @override
   void dispose() {
     _controller.dispose();
-    _countryPreviewMapController.dispose();
+    _mapObjectPreviewMapController.dispose();
     _regionsPreviewMapController.dispose();
     super.dispose();
   }
@@ -118,30 +125,35 @@ class _CountryManagementPageState extends State<CountryManagementPage>
             floatingActionButton: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FloatingActionButton.extended(
-                  backgroundColor: Colors.white,
-                  onPressed: () {
-                    final value = !widget.country.displayRegions;
-                    if (value && widget.country.regions.isEmpty) {
-                      _mapCubit.fetchCountryRegions(widget.country);
-                    }
-                    _mapCubit.updateDisplayRegionsInfo(
-                      widget.country.alpha3,
-                      value,
-                    );
-                    setState(() => widget.country.displayRegions = value);
-                  },
-                  label: SizedBox(
-                    width: 100,
-                    child: Text(
-                      widget.country.displayRegions
-                          ? tr('$l10n.labels.hideRegions')
-                          : tr('$l10n.labels.showRegions'),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.labelMedium,
+                if (!umi)
+                  FloatingActionButton.extended(
+                    backgroundColor: Colors.white,
+                    onPressed: () {
+                      final value =
+                          !(widget.mapObject as Country).displayRegions;
+                      if (value &&
+                          (widget.mapObject as Country).regions.isEmpty) {
+                        _mapCubit
+                            .fetchCountryRegions((widget.mapObject as Country));
+                      }
+                      _mapCubit.updateDisplayRegionsInfo(
+                        (widget.mapObject as Country).alpha3,
+                        value,
+                      );
+                      setState(() =>
+                          (widget.mapObject as Country).displayRegions = value);
+                    },
+                    label: SizedBox(
+                      width: 100,
+                      child: Text(
+                        (widget.mapObject as Country).displayRegions
+                            ? tr('$l10n.labels.hideRegions')
+                            : tr('$l10n.labels.showRegions'),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).primaryTextTheme.labelMedium,
+                      ),
                     ),
                   ),
-                ),
                 const SizedBox(width: AppSizes.paddingTriple),
                 FloatingActionButton.extended(
                   onPressed: () => pop(context, short: true),
@@ -163,18 +175,17 @@ class _CountryManagementPageState extends State<CountryManagementPage>
   }
 
   Widget _buildBody(BuildContext context) {
-    if (regionsMode) {
+    if (!umi && regionsMode) {
       return _buildRegionsContent(context);
     }
-    return _buildCountryContent(context);
+    return _buildMapObjectContent(context);
   }
 
   // Country
-
-  Widget _buildCountryContent(BuildContext context) {
+  Widget _buildMapObjectContent(BuildContext context) {
     return Stack(
       children: [
-        _buildCountryMiniature(context),
+        _buildMapObjectMiniature(context),
         SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(
@@ -185,10 +196,10 @@ class _CountryManagementPageState extends State<CountryManagementPage>
             ),
             child: Column(
               children: [
-                _buildCountryInfo(context),
+                _buildMapObjectInfo(context),
                 Expanded(
-                    child:
-                        _buildStatusButtons(context, target: widget.country)),
+                  child: _buildStatusButtons(context, target: widget.mapObject),
+                ),
               ],
             ),
           ),
@@ -197,36 +208,46 @@ class _CountryManagementPageState extends State<CountryManagementPage>
     );
   }
 
-  Widget _buildCountryInfo(BuildContext context) {
-    final subArea = widget.country.subArea?.name;
+  Widget _buildMapObjectInfo(BuildContext context) {
+    String subtitle = '';
+    if (widget.mapObject is Country) {
+      final subArea = (widget.mapObject as Country).subArea?.name;
+      subtitle =
+          '${(widget.mapObject as Country).area.name} ${subArea == null ? '' : '- $subArea'}';
+    }
+    if (umi) {
+      subtitle = (widget.mapObject as MarineArea).typeName;
+    }
+
     return Column(children: [
       Text(
-        widget.country.name,
+        widget.mapObject.name,
         style: Theme.of(context).textTheme.headlineLarge,
         textAlign: TextAlign.center,
       ),
       const SizedBox(height: AppSizes.paddingHalf),
       Text(
-        '${widget.country.area.name} ${subArea == null ? '' : '- $subArea'}',
+        subtitle,
         style: Theme.of(context).textTheme.headlineSmall,
         textAlign: TextAlign.center,
       ),
       const SizedBox(height: AppSizes.padding),
-      widget.country.flag(
-        scale: 0.4,
-        borderColor: Theme.of(context).colorScheme.outline,
-        borderRadius: 3,
-      ),
+      if (!umi)
+        (widget.mapObject as Country).flag(
+          scale: 0.4,
+          borderColor: Theme.of(context).colorScheme.outline,
+          borderRadius: 3,
+        ),
     ]);
   }
 
-  Widget _buildCountryMiniature(BuildContext context) {
+  Widget _buildMapObjectMiniature(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      child: MapBuilder().buildCountryMapPreview(
+      child: MapBuilder().buildMapObjectPreview(
         context,
-        country: widget.country,
-        controller: _countryPreviewMapController,
+        mapObject: widget.mapObject,
+        controller: _mapObjectPreviewMapController,
       ),
     );
   }
@@ -247,7 +268,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
           child: SingleChildScrollView(
             child: Column(
               children: [
-                _buildCountryInfo(context),
+                _buildMapObjectInfo(context),
                 _buildRegionsPreview(context),
                 if (_region != null) _buildRegionInfo(context),
                 const SizedBox(height: AppSizes.padding),
@@ -256,7 +277,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
                     context,
                     target: _region!,
                     onPressed: (_) {
-                      widget.country.calculateStatus();
+                      (widget.mapObject as Country).calculateStatus();
                     },
                   ),
               ],
@@ -298,11 +319,12 @@ class _CountryManagementPageState extends State<CountryManagementPage>
       height: context.width(0.7),
       child: MapBuilder().buildRegionsMapPreview(
         context,
-        country: widget.country,
-        regions: widget.country.regions,
+        country: (widget.mapObject as Country),
+        regions: (widget.mapObject as Country).regions,
         controller: _regionsPreviewMapController,
         onTap: (tapPosition, latLng) {
-          final region = widget.country.regions
+          final region = (widget.mapObject as Country)
+              .regions
               .firstWhereOrNull((region) => region.contains(latLng));
           if (_region == region) {
             return setState(() => _region = null);
@@ -311,7 +333,7 @@ class _CountryManagementPageState extends State<CountryManagementPage>
           setState(() {});
         },
         selectedRegion: _region,
-        minZoom: widget.country.bounds().zoom(Size(
+        minZoom: widget.mapObject.bounds().zoom(Size(
                   context.width(),
                   context.width(0.7),
                 )) -
@@ -390,36 +412,37 @@ class _CountryManagementPageState extends State<CountryManagementPage>
             ),
           ),
         ),
-        Expanded(
-          child: AnimatedBuilder(
-            animation: _animation,
-            builder: (context, child) {
-              return Transform.translate(
-                offset: Offset(
-                  50 * (1 - _animation.value),
-                  0,
-                ),
-                child: Opacity(opacity: _animation.value, child: child),
-              );
-            },
-            child: _buildButton(
-              context,
-              icon: FontAwesomeIcons.houseFlag,
-              onPressed: () {
-                if (target.status == MOStatus.lived) {
-                  target.status = MOStatus.none;
-                } else {
-                  target.status = MOStatus.lived;
-                }
-                onPressed?.call(target.status);
-                setState(() {});
+        if (!umi)
+          Expanded(
+            child: AnimatedBuilder(
+              animation: _animation,
+              builder: (context, child) {
+                return Transform.translate(
+                  offset: Offset(
+                    50 * (1 - _animation.value),
+                    0,
+                  ),
+                  child: Opacity(opacity: _animation.value, child: child),
+                );
               },
-              label: tr('$l10n.labels.lived'),
-              color: MOStatus.lived.color(context),
-              selected: target.status == MOStatus.lived,
+              child: _buildButton(
+                context,
+                icon: FontAwesomeIcons.houseFlag,
+                onPressed: () {
+                  if (target.status == MOStatus.lived) {
+                    target.status = MOStatus.none;
+                  } else {
+                    target.status = MOStatus.lived;
+                  }
+                  onPressed?.call(target.status);
+                  setState(() {});
+                },
+                label: tr('$l10n.labels.lived'),
+                color: MOStatus.lived.color(context),
+                selected: target.status == MOStatus.lived,
+              ),
             ),
           ),
-        ),
       ],
     );
   }
@@ -451,23 +474,20 @@ class _CountryManagementPageState extends State<CountryManagementPage>
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: AppSizes.paddingTriple),
               Icon(
                 icon,
                 color: Theme.of(context).colorScheme.primary,
                 size: 35,
               ),
               const SizedBox(height: AppSizes.padding),
-              Expanded(
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 400),
-                  opacity: _animation.value > 0.4 ? 1 : 0,
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Text(
-                      label,
-                      textAlign: TextAlign.center,
-                    ),
+              AnimatedOpacity(
+                duration: const Duration(milliseconds: 400),
+                opacity: _animation.value > 0.4 ? 1 : 0,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    label,
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -480,12 +500,19 @@ class _CountryManagementPageState extends State<CountryManagementPage>
 
   void pop(BuildContext context, {bool short = false}) {
     if (isPopping) return;
-    _mapCubit.updateCountryStatus(
-      country: widget.country,
-      status: widget.country.status,
-    );
-    if (widget.country.displayRegions) {
-      _mapCubit.saveRegionsLocally();
+    if (!umi) {
+      _mapCubit.updateCountryStatus(
+        country: widget.mapObject as Country,
+        status: widget.mapObject.status,
+      );
+      if ((widget.mapObject as Country).displayRegions) {
+        _mapCubit.saveRegionsLocally();
+      }
+    } else {
+      _mapCubit.updateMarineAreaStatus(
+        marineArea: widget.mapObject as MarineArea,
+        status: widget.mapObject.status,
+      );
     }
     isPopping = true;
     _controller.reverse();

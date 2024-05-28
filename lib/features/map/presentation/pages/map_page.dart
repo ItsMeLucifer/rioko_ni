@@ -10,7 +10,7 @@ import 'package:rioko_ni/core/presentation/widgets/rioko_menu.dart';
 import 'package:rioko_ni/core/presentation/widgets/toast.dart';
 import 'package:rioko_ni/core/utils/assets_handler.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
-import 'package:rioko_ni/features/map/presentation/pages/country_management_page.dart';
+import 'package:rioko_ni/features/map/presentation/pages/map_object_management_page.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/floating_ui.dart';
 
 class MapPage extends StatefulWidget {
@@ -131,6 +131,13 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
         onTap: (position, latLng) {
           final marineArea = _mapCubit.getMarineAreaFromPosition(latLng);
           debugPrint(marineArea?.name);
+          if (marineArea == null) return;
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  MapObjectManagementPage(mapObject: marineArea),
+            ),
+          );
         },
       );
     }
@@ -150,7 +157,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
         if (country == null) return;
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => CountryManagementPage(country: country),
+            builder: (context) => MapObjectManagementPage(mapObject: country),
           ),
         );
       },

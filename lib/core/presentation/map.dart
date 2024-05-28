@@ -51,26 +51,33 @@ class MapBuilder {
     );
   }
 
-  Widget buildCountryMapPreview(
+  Widget buildMapObjectPreview(
     BuildContext context, {
-    required Country country,
+    required MapObject mapObject,
     required MapController controller,
   }) {
+    LatLngBounds? bounds;
+    if (mapObject is Country) {
+      bounds =
+          mapObject.bounds(cutOffFarPolygons: true, distance: 200).scale(1.2);
+    }
+    if (mapObject is MarineArea) {
+      bounds = mapObject.bounds();
+    }
     final mapOptions = getMapOptions(
       interactionOptions: const InteractionOptions(
         flags: InteractiveFlag.none,
       ),
       keepAlive: false,
       initialCameraFit: CameraFit.bounds(
-        bounds:
-            country.bounds(cutOffFarPolygons: true, distance: 200).scale(1.2),
+        bounds: bounds!,
       ),
     );
 
     final layers = [
       PolygonLayer(
         polygonCulling: true,
-        polygons: country.polygons.map((points) {
+        polygons: mapObject.polygons.map((points) {
           return Polygon(
             strokeCap: StrokeCap.butt,
             strokeJoin: StrokeJoin.miter,
@@ -287,10 +294,8 @@ class MapBuilder {
                   borderColor: color,
                   borderStrokeWidth: 2,
                   isFilled: true,
-                  color: color.withOpacity(0.1),
-                  label: area.name,
-                  labelStyle: Theme.of(context).primaryTextTheme.labelSmall!,
-                  labelPlacement: PolygonLabelPlacement.polylabel,
+                  color: color
+                      .withOpacity(area.status == MOStatus.none ? 0.1 : 0.5),
                 );
               });
             }),
