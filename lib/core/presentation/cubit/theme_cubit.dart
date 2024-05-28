@@ -421,26 +421,32 @@ class ThemeCubit extends Cubit<ThemeDataType> {
               ),
             ),
           ),
-          primaryTextTheme: const TextTheme(
-            bodyMedium: TextStyle(
+          primaryTextTheme: TextTheme(
+            bodyMedium: const TextStyle(
               color: Color.fromARGB(248, 101, 178, 227),
               fontWeight: FontWeight.bold,
               fontSize: 14,
             ),
-            labelMedium: TextStyle(
+            labelMedium: const TextStyle(
               fontFamily: 'Nasalization',
               color: Colors.black,
               fontSize: 14,
             ),
-            headlineSmall: TextStyle(
+            headlineSmall: const TextStyle(
               fontFamily: 'KamikazeGradient',
               fontSize: 45,
               color: Color.fromARGB(248, 101, 178, 227),
             ),
-            headlineLarge: TextStyle(
+            headlineLarge: const TextStyle(
               fontFamily: 'KamikazeGradient',
               fontSize: 80,
               color: Color.fromARGB(248, 101, 178, 227),
+            ),
+            headlineMedium: TextStyle(
+              color: const Color.fromARGB(255, 68, 189, 255),
+              fontSize: 45,
+              fontFamily: 'Frau',
+              shadows: getShadows(),
             ),
           ),
         );

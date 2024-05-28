@@ -380,7 +380,7 @@ class MapBuilder {
                   borderStrokeWidth: 2,
                   isFilled: true,
                   color: color
-                      .withOpacity(area.status == MOStatus.none ? 0.1 : 0.5),
+                      .withOpacity(area.status == MOStatus.none ? 0.1 : 0.3),
                 );
               });
             }),
