@@ -46,7 +46,7 @@ dependencies:
   geobase: ^1.0.0
   freezed_annotation: ^2.4.1
   pretty_dio_logger: ^1.3.1
-  toastification: ^1.2.1
+  toastification: ^2.0.0
   percent_indicator: ^4.2.3
   font_awesome_flutter: ^10.7.0
   country_flags: ^2.2.0
@@ -72,7 +72,7 @@ dependencies:
   http: ^1.1.0
   json_serializable: ^6.8.0
   flutter_map_animations: ^0.6.0
-  google_fonts: 6.1.0
+  google_fonts: ^6.2.0
   google_mobile_ads: ^4.0.0
 
 dev_dependencies:
@@ -84,7 +84,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
   build_runner: ^2.4.8
   retrofit_generator: ^8.1.0
   hive_generator: ^2.0.1
