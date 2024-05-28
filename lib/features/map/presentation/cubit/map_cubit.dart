@@ -44,11 +44,16 @@ class MapCubit extends Cubit<MapState> {
 
   List<MarineArea> marineAreas = [];
 
-  RiokoMode mode = RiokoMode.umi;
+  RiokoMode _mode = RiokoMode.normal;
+  RiokoMode get mode => _mode;
+  set mode(RiokoMode mode) {
+    _mode = mode;
+    optionsBox.put("mode", mode.name);
+    emit(MapState.changeRiokoMode(mode));
+  }
 
   void toggleMode() {
     mode = (mode == RiokoMode.umi ? RiokoMode.normal : RiokoMode.umi);
-    emit(MapState.changeRiokoMode(mode));
   }
 
   String urlTemplate({ThemeDataType? otherTheme}) {
@@ -67,18 +72,30 @@ class MapCubit extends Cubit<MapState> {
 
   late Box regionsBox;
   late Box countriesBox;
+  late Box marineAreasBox;
+  late Box optionsBox;
 
   void load() async {
     emit(const MapState.loading());
     await _getDir();
     countriesBox = await Hive.openBox('countries');
     regionsBox = await Hive.openBox('regions_v2');
+    marineAreasBox = await Hive.openBox('marine_areas');
+    optionsBox = await Hive.openBox('options');
     _getCurrentPosition();
-    await _getCountryPolygons().then((_) {
+    _getCountryPolygons().then((_) {
       _getLocalCountryData();
       _getLocalRegionsData();
     });
-    _getMarineAreas();
+    _getMarineAreas().then((_) => _getLocalMarineAreasData());
+    _getLocalOptionsData();
+  }
+
+  Future _getLocalOptionsData() async {
+    String? mode = optionsBox.get('mode');
+    if (mode != null) {
+      this.mode = RiokoMode.values.byName(mode);
+    }
   }
 
   Future _getCountryPolygons() async {
@@ -182,7 +199,7 @@ class MapCubit extends Cubit<MapState> {
           .forEach((country) => country.displayRegions = true);
     }
 
-    emit(MapState.readCountriesData(
+    emit(MapState.readMapObjectsData(
       been: beenCountries,
       want: wantCountries,
       lived: livedCountries,
@@ -198,6 +215,28 @@ class MapCubit extends Cubit<MapState> {
         ..calculateStatus();
     }
     emit(MapState.readRegionsData(data: data.cast<String, List<Region>>()));
+  }
+
+  Future _getLocalMarineAreasData() async {
+    final List<String> beenCodes = marineAreasBox.get('been') ?? [];
+    final List<String> wantCodes = marineAreasBox.get('want') ?? [];
+
+    if (beenCodes.isNotEmpty) {
+      marineAreas
+          .where((c) => beenCodes.contains(c.nameCode))
+          .forEach((marineArea) => marineArea.status = MOStatus.been);
+    }
+    if (wantCodes.isNotEmpty) {
+      marineAreas
+          .where((c) => wantCodes.contains(c.nameCode))
+          .forEach((marineArea) => marineArea.status = MOStatus.want);
+    }
+
+    emit(MapState.readMapObjectsData(
+      been: marineAreas.where((m) => m.status == MOStatus.been).toList(),
+      want: marineAreas.where((m) => m.status == MOStatus.want).toList(),
+      lived: [],
+    ));
   }
 
   void updateDisplayRegionsInfo(String code, bool value) {
@@ -396,10 +435,23 @@ class MapCubit extends Cubit<MapState> {
     await box.put('been', beenCountries.map((c) => c.alpha3).toList());
     await box.put('want', wantCountries.map((c) => c.alpha3).toList());
     await box.put('lived', livedCountries.map((c) => c.alpha3).toList());
-    emit(MapState.savedCountriesData(
+    emit(MapState.savedMapObjectsData(
       been: beenCountries,
       want: wantCountries,
       lived: livedCountries,
+    ));
+  }
+
+  void saveMarineAreasLocally() async {
+    var box = Hive.box('marine_areas');
+    final been = marineAreas.where((m) => m.status == MOStatus.been).toList();
+    final want = marineAreas.where((m) => m.status == MOStatus.want).toList();
+    await box.put('been', been.map((c) => c.nameCode).toList());
+    await box.put('want', want.map((c) => c.nameCode).toList());
+    emit(MapState.savedMapObjectsData(
+      been: been,
+      want: want,
+      lived: [],
     ));
   }
 
@@ -428,7 +480,7 @@ class MapCubit extends Cubit<MapState> {
     required MOStatus status,
   }) {
     marineAreas.firstWhere((m) => m.name == marineArea.name).status = status;
-    saveCountriesLocally();
+    saveMarineAreasLocally();
     emit(
         MapState.updatedMapObjectStatus(mapObject: marineArea, status: status));
   }

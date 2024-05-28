@@ -35,6 +35,8 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
 
   late AnimatedMapController mapController;
 
+  String get l10n => 'infoPage';
+
   @override
   void initState() {
     mapController = AnimatedMapController(
@@ -225,9 +227,11 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
           padding: const EdgeInsets.only(
             top: AppSizes.paddingDouble,
           ),
-          child: Text(mapObjects.isEmpty
-              ? 'No results'
-              : '${mapObjects.length} countries'),
+          child: Text(
+            mapObjects.isEmpty
+                ? context.tr('$l10n.noResults')
+                : '${context.tr('$l10n.${umi ? 'marineAreas' : 'countries'}')}: ${mapObjects.length}',
+          ),
         ),
         if (mapObjects.isNotEmpty)
           Container(
