@@ -92,10 +92,8 @@ class MapCubit extends Cubit<MapState> {
   }
 
   Future _getLocalOptionsData() async {
-    String? mode = optionsBox.get('mode');
-    if (mode != null) {
-      this.mode = RiokoMode.values.byName(mode);
-    }
+    String name = optionsBox.get('mode', defaultValue: RiokoMode.normal.name);
+    mode = RiokoMode.values.byName(name);
   }
 
   Future _getCountryPolygons() async {
