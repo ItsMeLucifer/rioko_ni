@@ -25,10 +25,11 @@ class MarineArea extends MapObject with _$MarineArea {
   String get name => tr('marineAreas.$nameCode');
 
   bool contains(LatLng position) {
-    // First check if the position is in the bounding box
-    if (!this.bounds().contains(position)) return false;
-    // And then execute more complex method to check if position is inside the geometry
     final bounds = polygons.map((p) => fm.LatLngBounds.fromPoints(p)).toList();
+    // First check if the position is in the bounding box
+    final result = bounds.where((b) => b.contains(position));
+    if (result.isEmpty) return false;
+    // And then execute more complex method to check if position is inside the geometry
     return bounds.any(
       (b) {
         final i = bounds.indexOf(b);
