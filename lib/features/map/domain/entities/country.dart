@@ -224,6 +224,7 @@ class Country extends MapObject with _$Country {
         .toList());
   }
 
+  @override
   LatLng get center {
     return bounds().center;
   }

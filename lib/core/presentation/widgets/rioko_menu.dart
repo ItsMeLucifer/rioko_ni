@@ -35,6 +35,8 @@ class _RiokoMenuState extends State<RiokoMenu> {
   final _themeCubit = locator<ThemeCubit>();
   final _mapCubit = locator<MapCubit>();
 
+  bool get umi => _mapCubit.mode == RiokoMode.umi;
+
   bool loadingPurchase = false;
 
   Widget divider(BuildContext context) => SizedBox(
@@ -93,14 +95,16 @@ class _RiokoMenuState extends State<RiokoMenu> {
                 _buildTile(
                   context,
                   iconData: FontAwesomeIcons.shareNodes,
-                  onTap: () {
-                    showGeneralDialog(
-                      barrierColor: Colors.black.withOpacity(0.5),
-                      context: context,
-                      pageBuilder: (context, animation1, animation2) =>
-                          const ShareWorldDataDialog(),
-                    );
-                  },
+                  onTap: umi
+                      ? null
+                      : () {
+                          showGeneralDialog(
+                            barrierColor: Colors.black.withOpacity(0.5),
+                            context: context,
+                            pageBuilder: (context, animation1, animation2) =>
+                                const ShareWorldDataDialog(),
+                          );
+                        },
                   label: tr('$l10n.labels.shareStatistics'),
                 ),
                 const SizedBox(height: AppSizes.padding),
@@ -121,13 +125,10 @@ class _RiokoMenuState extends State<RiokoMenu> {
                 const SizedBox(height: AppSizes.padding),
                 _buildTile(
                   context,
-                  iconData: _mapCubit.mode == RiokoMode.umi
-                      ? FontAwesomeIcons.plane
-                      : FontAwesomeIcons.water,
+                  iconData:
+                      umi ? FontAwesomeIcons.plane : FontAwesomeIcons.water,
                   onTap: () => setState(() => _mapCubit.toggleMode()),
-                  label: _mapCubit.mode == RiokoMode.umi
-                      ? 'Rioko Classic'
-                      : 'Rioko UMI',
+                  label: umi ? 'Rioko Classic' : 'Rioko UMI',
                 ),
                 divider(context),
                 _buildTile(
@@ -180,11 +181,12 @@ class _RiokoMenuState extends State<RiokoMenu> {
 
   Widget _buildTile(
     BuildContext context, {
-    required void Function() onTap,
+    required void Function()? onTap,
     required IconData iconData,
     required String label,
     Widget? trailing,
   }) {
+    bool enabled = onTap != null;
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
@@ -193,10 +195,22 @@ class _RiokoMenuState extends State<RiokoMenu> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(iconData),
+            Icon(
+              iconData,
+              color: Theme.of(context)
+                  .iconTheme
+                  .color!
+                  .withOpacity(enabled ? 1 : 0.3),
+            ),
             Text(
               label,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    color: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .color!
+                        .withOpacity(enabled ? 1 : 0.3),
+                  ),
             ),
             trailing ?? const SizedBox.shrink(),
           ],

@@ -11,6 +11,7 @@ import 'package:rioko_ni/core/presentation/cubit/theme_cubit.dart';
 import 'package:rioko_ni/core/presentation/map.dart';
 import 'package:rioko_ni/features/map/domain/entities/country.dart';
 import 'package:rioko_ni/features/map/domain/entities/map_object.dart';
+import 'package:rioko_ni/features/map/domain/entities/marine_area.dart';
 import 'package:rioko_ni/features/map/presentation/cubit/map_cubit.dart';
 import 'package:rioko_ni/features/map/presentation/pages/map_object_management_page.dart';
 import 'package:rioko_ni/features/map/presentation/widgets/share_world_data_dialog.dart';
@@ -27,6 +28,8 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
 
   final _cubit = locator<MapCubit>();
   final _themeCubit = locator<ThemeCubit>();
+
+  bool get umi => _cubit.mode == RiokoMode.umi;
 
   Area area = Area.world;
 
@@ -70,6 +73,10 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
     }
   }
 
+  List<MarineArea> get marineAreas {
+    return _cubit.marineAreas.where((m) => m.status == status).toList();
+  }
+
   Color mapBorderColor(BuildContext context) {
     switch (_themeCubit.type) {
       case ThemeDataType.classic:
@@ -105,16 +112,21 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                if (umi) _buildAreaSelectButton(context),
                 Padding(
                   padding:
                       const EdgeInsets.only(bottom: AppSizes.paddingQuadruple),
                   child: _buildMap(context),
                 ),
-                _buildAreaSelectButton(context),
-                _buildCountryList(context,
-                    countries: countries
-                        .where((c) => area == Area.world || c.area == area)
-                        .toList()),
+                if (!umi) _buildAreaSelectButton(context),
+                _buildMapObjectsList(
+                  context,
+                  mapObjects: umi
+                      ? marineAreas
+                      : countries
+                          .where((c) => area == Area.world || c.area == area)
+                          .toList(),
+                ),
               ],
             ),
           ),
@@ -174,16 +186,19 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildCountryList(
+  Widget _buildMapObjectsList(
     BuildContext context, {
-    required List<Country> countries,
+    required List<MapObject> mapObjects,
   }) {
     return Column(
       children: [
         SizedBox(
           width: context.width(0.7),
           child: SegmentedButton<MOStatus>(
-            segments: ([...MOStatus.values]..remove(MOStatus.none))
+            segments: ([...MOStatus.values]..removeWhere((v) {
+                    final unwanted = [MOStatus.none, if (umi) MOStatus.lived];
+                    return unwanted.contains(v);
+                  }))
                 .map((s) => ButtonSegment(
                       value: s,
                       label: Text(s.name),
@@ -210,11 +225,11 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
           padding: const EdgeInsets.only(
             top: AppSizes.paddingDouble,
           ),
-          child: Text(countries.isEmpty
+          child: Text(mapObjects.isEmpty
               ? 'No results'
-              : '${countries.length} countries'),
+              : '${mapObjects.length} countries'),
         ),
-        if (countries.isNotEmpty)
+        if (mapObjects.isNotEmpty)
           Container(
             margin: EdgeInsets.only(
               left: AppSizes.paddingDouble,
@@ -232,15 +247,22 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
             child: ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: countries.length,
+              itemCount: mapObjects.length,
               padding: EdgeInsets.zero,
               itemBuilder: (context, index) {
-                final country = countries[index];
+                final mapObject = mapObjects[index];
+                String subtitle = '';
+                if (mapObject is Country) {
+                  subtitle = mapObject.area.name;
+                }
+                if (mapObject is MarineArea) {
+                  subtitle = mapObject.typeName;
+                }
                 return ListTile(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          MapObjectManagementPage(mapObject: country),
+                          MapObjectManagementPage(mapObject: mapObject),
                     ),
                   ),
                   leading: Container(
@@ -250,14 +272,14 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
                       ),
                       color: borderColor,
                     ),
-                    child: country.flag(scale: 0.5),
+                    child: mapObject.flag(scale: 0.5),
                   ),
                   title: Text(
-                    country.name,
+                    mapObject.name,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   subtitle: Text(
-                    country.area.name,
+                    subtitle,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 );
@@ -277,42 +299,64 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
             border: Border.all(color: Theme.of(context).colorScheme.outline),
             borderRadius: BorderRadius.circular(AppSizes.radius),
           ),
-          child: MapBuilder().buildWorldMapSummary(
-            context,
-            countries: _cubit.countries,
-            getCountryColor: (status) =>
-                status.color(context).withMultipliedOpacity(0.4),
-            getCountryBorderColor: (_) => Theme.of(context).colorScheme.outline,
-            getCountryBorderStrokeWidth: (status) {
-              if (area == Area.world) {
-                return status == MOStatus.none ? 0.1 : 0.3;
-              }
-              return status == MOStatus.none ? 0.3 : 0.6;
-            },
-            controller: mapController.mapController,
-          ),
+          child: umi
+              ? MapBuilder().buildWorldMapUmiSummary(
+                  context,
+                  countries: _cubit.countries,
+                  marineAreas: _cubit.marineAreas,
+                  getMarineAreaColor: (status) =>
+                      status.color(context).withMultipliedOpacity(0.4),
+                  getMarineAreaBorderColor: (_) =>
+                      Theme.of(context).colorScheme.outline,
+                  getMarineAreaBorderStrokeWidth: (status) {
+                    if (area == Area.world) {
+                      return status == MOStatus.none ? 0.1 : 0.3;
+                    }
+                    return status == MOStatus.none ? 0.3 : 0.6;
+                  },
+                  controller: mapController.mapController,
+                  countryBorderColor:
+                      Theme.of(context).colorScheme.outline.withOpacity(0.4),
+                )
+              : MapBuilder().buildWorldMapSummary(
+                  context,
+                  countries: _cubit.countries,
+                  getCountryColor: (status) =>
+                      status.color(context).withMultipliedOpacity(0.4),
+                  getCountryBorderColor: (_) =>
+                      Theme.of(context).colorScheme.outline,
+                  getCountryBorderStrokeWidth: (status) {
+                    if (area == Area.world) {
+                      return status == MOStatus.none ? 0.1 : 0.3;
+                    }
+                    return status == MOStatus.none ? 0.3 : 0.6;
+                  },
+                  controller: mapController.mapController,
+                ),
         ),
-        Align(
-          alignment: Alignment.topRight,
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).colorScheme.outline),
-              borderRadius: BorderRadius.circular(AppSizes.radius),
-              color: Theme.of(context).scaffoldBackgroundColor,
+        if (!umi)
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              decoration: BoxDecoration(
+                border:
+                    Border.all(color: Theme.of(context).colorScheme.outline),
+                borderRadius: BorderRadius.circular(AppSizes.radius),
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) =>
+                        const ShareWorldDataDialog(),
+                  );
+                },
+                icon: const Icon(FontAwesomeIcons.share),
+              ),
             ),
-            child: IconButton(
-              onPressed: () {
-                showGeneralDialog(
-                  barrierColor: Colors.black.withOpacity(0.5),
-                  context: context,
-                  pageBuilder: (context, animation1, animation2) =>
-                      const ShareWorldDataDialog(),
-                );
-              },
-              icon: const Icon(FontAwesomeIcons.share),
-            ),
-          ),
-        )
+          )
       ],
     );
   }

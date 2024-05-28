@@ -217,8 +217,87 @@ class MapBuilder {
                       getCountryBorderColor?.call(country.status) ?? color,
                   borderStrokeWidth:
                       getCountryBorderStrokeWidth(country.status),
-                  isFilled: !country.displayRegions,
+                  isFilled: true,
                   color: getCountryColor(country.status),
+                );
+              });
+            }),
+          ).reduceOrNull((value, element) => [...value, ...element]) ??
+          [],
+    );
+
+    layers.add(PolygonLayer(
+      polygonCulling: true,
+      polygons: polygons,
+      polygonLabels: false,
+    ));
+
+    return Map.noBorder(
+      mapOptions: mapOptions,
+      layers: layers,
+      controller: controller ?? MapController(),
+    );
+  }
+
+  Widget buildWorldMapUmiSummary(
+    BuildContext context, {
+    required List<Country> countries,
+    required List<MarineArea> marineAreas,
+    double? zoom,
+    bool withAntarctic = true,
+    required Color countryBorderColor,
+    required Color Function(MOStatus) getMarineAreaColor,
+    Color Function(MOStatus)? getMarineAreaBorderColor,
+    required double Function(MOStatus) getMarineAreaBorderStrokeWidth,
+    MapController? controller,
+  }) {
+    final mapOptions = getMapOptions(
+      interactionOptions: const InteractionOptions(flags: InteractiveFlag.none),
+      initialZoom: zoom ?? 0.45,
+      center: LatLng(withAntarctic ? 15.6642 : 43.6642, 0.9432),
+      minZoom: 0,
+      maxZoom: 10,
+      cameraConstraint: const CameraConstraint.unconstrained(),
+      keepAlive: false,
+    );
+    List<Widget> layers = [];
+    List<Polygon> polygons = [];
+
+    polygons.addAll(
+      Iterable2(
+            countries.map((country) {
+              final pointsList = country.polygons;
+              return pointsList.map((points) {
+                return Polygon(
+                  strokeCap: StrokeCap.butt,
+                  strokeJoin: StrokeJoin.miter,
+                  points: points,
+                  borderColor: countryBorderColor,
+                  borderStrokeWidth: 0.3,
+                  isFilled: false,
+                );
+              });
+            }),
+          ).reduceOrNull((value, element) => [...value, ...element]) ??
+          [],
+    );
+
+    polygons.addAll(
+      Iterable2(
+            marineAreas.map((marineArea) {
+              final pointsList = marineArea.polygons;
+              return pointsList.map((points) {
+                return Polygon(
+                  strokeCap: StrokeCap.butt,
+                  strokeJoin: StrokeJoin.miter,
+                  points: points,
+                  borderColor:
+                      getMarineAreaBorderColor?.call(marineArea.status) ??
+                          marineArea.status.color(context),
+                  borderStrokeWidth:
+                      getMarineAreaBorderStrokeWidth(marineArea.status),
+                  isFilled: true,
+                  color: getMarineAreaColor(marineArea.status),
                 );
               });
             }),
