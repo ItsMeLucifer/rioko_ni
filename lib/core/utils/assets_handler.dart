@@ -22,4 +22,6 @@ class AssetsHandler {
   static String get appIcon => 'assets/icon/icon.png';
   static String get appIconCartoon => 'assets/icon/icon_cartoon.png';
   static String get textLogoDark => 'assets/text_logo_dark.png';
+  static String get textLogoLight => 'assets/text_logo_light.png';
+  static String get umiLogo => 'assets/umi.png';
 }

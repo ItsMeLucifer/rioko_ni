@@ -113,6 +113,8 @@ flutter:
     - assets/icon_blank.png
     - assets/icon/icon.png
     - assets/text_logo_dark.png
+    - assets/text_logo_light.png
+    - assets/umi.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

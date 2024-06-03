@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:rioko_ni/core/config/app_sizes.dart';
@@ -242,16 +243,19 @@ class _RiokoMenuState extends State<RiokoMenu> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                _buildTextLogo(context),
+                _buildLogo(context),
                 if (_mapCubit.mode == RiokoMode.umi)
                   Align(
-                    alignment: const Alignment(0.83, 1),
-                    child: Transform.rotate(
-                      angle: -0.55,
-                      child: Text(
-                        'UMI',
-                        style:
-                            Theme.of(context).primaryTextTheme.headlineMedium,
+                    alignment: const Alignment(1.2, 1),
+                    child: Transform.scale(
+                      scale: 0.5,
+                      child: Transform.rotate(
+                        angle: -0.55,
+                        child: Image.asset(
+                          AssetsHandler.umiLogo,
+                          color: Colors.blue,
+                          colorBlendMode: BlendMode.modulate,
+                        ),
                       ),
                     ),
                   )
@@ -276,36 +280,46 @@ class _RiokoMenuState extends State<RiokoMenu> {
     );
   }
 
-  Widget _buildTextLogo(BuildContext context) {
-    if (_themeCubit.isLight) {
-      return Text(
-        'RIOKO',
-        style: Theme.of(context).primaryTextTheme.headlineLarge,
-        textAlign: TextAlign.center,
+  Widget _buildLogo(BuildContext context) {
+    Widget logo = Image.asset(AssetsHandler.textLogoLight);
+    if (!_themeCubit.isLight) {
+      logo = Image.asset(
+        AssetsHandler.textLogoDark,
+        colorBlendMode: BlendMode.modulate,
+        color: Theme.of(context).primaryTextTheme.headlineLarge!.color,
       );
     }
     return Padding(
       padding: const EdgeInsets.symmetric(
           horizontal: AppSizes.paddingQuadruple,
           vertical: AppSizes.paddingDouble),
-      child: Image.asset(
-        AssetsHandler.textLogoDark,
-        colorBlendMode: BlendMode.modulate,
-        color: Theme.of(context).primaryTextTheme.headlineLarge!.color,
-      ),
+      child: logo,
     );
   }
 
   Widget _buildAdBanner(BuildContext context) {
     final banner = _admobCubit.riokoMenuBanner;
     if (banner == null) return const SizedBox.shrink();
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: SizedBox(
-        width: banner.size.width.toDouble(),
-        height: banner.size.height.toDouble(),
-        child: AdWidget(ad: banner),
-      ),
+    return BlocBuilder<AdmobCubit, AdmobState>(
+      builder: (context, state) {
+        return state.maybeWhen(
+          loadingAds: () => const Center(
+            child: SizedBox(
+              height: 50,
+              child: CircularProgressIndicator.adaptive(),
+            ),
+          ),
+          loadedAds: (_) => Align(
+            alignment: Alignment.bottomCenter,
+            child: SizedBox(
+              width: banner.size.width.toDouble(),
+              height: banner.size.height.toDouble(),
+              child: AdWidget(ad: banner),
+            ),
+          ),
+          orElse: () => const SizedBox.shrink(),
+        );
+      },
     );
   }
 }
