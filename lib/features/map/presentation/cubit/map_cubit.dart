@@ -263,17 +263,18 @@ class MapCubit extends Cubit<MapState> {
 
   List<Country> get themePreviewCountries {
     List<Country> result = [];
-    result.add(countries.firstWhere((c) => c.alpha3 == 'POL')
-      ..status = MOStatus.lived);
-    result.add(
-        countries.firstWhere((c) => c.alpha3 == 'LVA')..status = MOStatus.want);
-    result.add(
-        countries.firstWhere((c) => c.alpha3 == 'DEU')..status = MOStatus.been);
-    result.add(
-      countries.firstWhere((c) => c.alpha3 == 'HUN')
-        ..status = MOStatus.been
-        ..displayRegions = false,
-    );
+    result.add(countries
+        .firstWhere((c) => c.alpha3 == 'POL')
+        .copyWith(status: MOStatus.lived));
+    result.add(countries
+        .firstWhere((c) => c.alpha3 == 'LVA')
+        .copyWith(status: MOStatus.want));
+    result.add(countries
+        .firstWhere((c) => c.alpha3 == 'DEU')
+        .copyWith(status: MOStatus.been));
+    result.add(countries
+        .firstWhere((c) => c.alpha3 == 'HUN')
+        .copyWith(status: MOStatus.been, displayRegions: false));
     return result;
   }
 

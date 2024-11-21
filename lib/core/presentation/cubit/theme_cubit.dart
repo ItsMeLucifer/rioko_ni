@@ -81,8 +81,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     colorScheme: ColorScheme.fromSeed(
       seedColor: const Color.fromARGB(255, 46, 196, 182),
     ).copyWith(
-      background: const Color.fromARGB(255, 240, 244, 255),
-      onBackground: const Color.fromARGB(255, 171, 211, 223),
+      surface: const Color.fromARGB(255, 240, 244, 255),
       primary: const Color.fromARGB(255, 159, 139, 232),
       onPrimary: const Color.fromARGB(255, 175, 153, 255),
       secondary: const Color.fromARGB(255, 255, 104, 107),
@@ -120,7 +119,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       buttonColor: Colors.white,
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color.fromARGB(255, 7, 76, 41),
-      ).copyWith(background: Colors.white),
+      ).copyWith(surface: Colors.white),
     ),
     textTheme: TextTheme(
       bodySmall: const TextStyle(
@@ -205,14 +204,14 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     ),
     outlinedButtonTheme: const OutlinedButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: MaterialStatePropertyAll(
+        foregroundColor: WidgetStatePropertyAll(
           Color.fromARGB(255, 125, 24, 192),
         ),
       ),
     ),
     elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: MaterialStatePropertyAll(
+        foregroundColor: WidgetStatePropertyAll(
           Color.fromARGB(255, 125, 24, 192),
         ),
       ),
@@ -226,8 +225,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     useMaterial3: true,
   ).copyWith(
     colorScheme: ColorScheme.fromSeed(seedColor: Colors.tealAccent).copyWith(
-      background: Colors.black,
-      onBackground: const Color.fromARGB(255, 33, 70, 54),
+      surface: Colors.black,
       primary: Colors.teal,
       onPrimary: Colors.tealAccent,
       secondary: Colors.purple,
@@ -343,14 +341,14 @@ class ThemeCubit extends Cubit<ThemeDataType> {
     ),
     outlinedButtonTheme: const OutlinedButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: MaterialStatePropertyAll(
+        foregroundColor: WidgetStatePropertyAll(
           Color.fromARGB(255, 9, 143, 129),
         ),
       ),
     ),
     elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: MaterialStatePropertyAll(
+        foregroundColor: WidgetStatePropertyAll(
           Color.fromARGB(255, 9, 143, 129),
         ),
       ),
@@ -366,8 +364,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
           colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 46, 196, 182),
           ).copyWith(
-            background: const Color.fromARGB(255, 240, 244, 255),
-            onBackground: const Color.fromARGB(255, 142, 204, 204),
+            surface: const Color.fromARGB(255, 240, 244, 255),
             primary: const Color.fromARGB(255, 83, 90, 185),
             onPrimary: const Color.fromARGB(255, 121, 127, 209),
             secondary: const Color.fromARGB(255, 189, 80, 144),
@@ -378,14 +375,14 @@ class ThemeCubit extends Cubit<ThemeDataType> {
           ),
           outlinedButtonTheme: const OutlinedButtonThemeData(
             style: ButtonStyle(
-              foregroundColor: MaterialStatePropertyAll(
+              foregroundColor: WidgetStatePropertyAll(
                 Color.fromARGB(255, 74, 24, 192),
               ),
             ),
           ),
           elevatedButtonTheme: const ElevatedButtonThemeData(
             style: ButtonStyle(
-              foregroundColor: MaterialStatePropertyAll(
+              foregroundColor: WidgetStatePropertyAll(
                 Color.fromARGB(255, 74, 24, 192),
               ),
             ),
@@ -396,8 +393,7 @@ class ThemeCubit extends Cubit<ThemeDataType> {
       case ThemeDataType.monochrome:
         return _defaultDark.copyWith(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey).copyWith(
-            background: Colors.black,
-            onBackground: const Color.fromARGB(255, 27, 27, 27),
+            surface: Colors.black,
             primary: const Color.fromARGB(250, 67, 116, 146),
             onPrimary: const Color.fromARGB(76, 15, 163, 255),
             secondary: const Color.fromARGB(255, 203, 109, 238),
@@ -409,14 +405,14 @@ class ThemeCubit extends Cubit<ThemeDataType> {
           primaryColor: Colors.grey,
           outlinedButtonTheme: const OutlinedButtonThemeData(
             style: ButtonStyle(
-              foregroundColor: MaterialStatePropertyAll(
+              foregroundColor: WidgetStatePropertyAll(
                 Color.fromARGB(255, 131, 145, 143),
               ),
             ),
           ),
           elevatedButtonTheme: const ElevatedButtonThemeData(
             style: ButtonStyle(
-              foregroundColor: MaterialStatePropertyAll(
+              foregroundColor: WidgetStatePropertyAll(
                 Color.fromARGB(255, 121, 130, 129),
               ),
             ),

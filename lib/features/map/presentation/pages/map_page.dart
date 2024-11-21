@@ -95,7 +95,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                 border:
                     Border.all(color: Theme.of(context).colorScheme.primary),
                 borderRadius: BorderRadius.circular(AppSizes.radiusDouble),
-                color: Theme.of(context).colorScheme.background,
+                color: Theme.of(context).colorScheme.surface,
                 image: DecorationImage(
                   image: AssetImage(AssetsHandler.appIcon),
                 ),

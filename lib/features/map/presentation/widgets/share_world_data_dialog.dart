@@ -194,7 +194,7 @@ class _ShareWorldDataDialogState extends State<ShareWorldDataDialog> {
                 AppSizes.paddingQuarter,
               ),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.background,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(AppSizes.radius),
               ),
               child: const Icon(

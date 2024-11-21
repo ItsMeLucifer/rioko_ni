@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rioko_ni/core/extensions/build_context2.dart';
@@ -24,7 +23,6 @@ void main() async {
   await Hive.openBox('theme_data');
   await EasyLocalization.ensureInitialized();
   await registerDependencies();
-  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
   Hive.registerAdapter(RegionAdapter());
   Hive.registerAdapter(MOStatusAdapter());
   runApp(

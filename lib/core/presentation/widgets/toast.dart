@@ -51,12 +51,12 @@ class ToastBuilder {
       description: Text(message),
       autoCloseDuration: Duration(seconds: seconds),
       alignment: Alignment.topCenter,
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       primaryColor: Theme.of(context).colorScheme.primary,
       foregroundColor: Theme.of(context).snackBarTheme.actionTextColor,
       progressBarTheme: ProgressIndicatorThemeData(
         color: Theme.of(context).colorScheme.primary,
-        linearTrackColor: Theme.of(context).colorScheme.onBackground,
+        linearTrackColor: Theme.of(context).colorScheme.onSurface,
       ),
       closeOnClick: true,
     );

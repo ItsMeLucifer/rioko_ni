@@ -46,7 +46,9 @@ class _MapObjectManagementPageState extends State<MapObjectManagementPage>
 
   bool get umi => _mapCubit.mode == RiokoMode.umi;
 
-  bool get regionsMode => (widget.mapObject as Country).displayRegions;
+  bool get regionsMode =>
+      (widget.mapObject as Country).displayRegions &&
+      (widget.mapObject as Country).moreDataAvailable;
 
   final _mapCubit = locator<MapCubit>();
 
@@ -125,7 +127,7 @@ class _MapObjectManagementPageState extends State<MapObjectManagementPage>
             floatingActionButton: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (!umi)
+                if (!umi && (widget.mapObject as Country).moreDataAvailable)
                   FloatingActionButton.extended(
                     backgroundColor: Colors.white,
                     onPressed: () {
@@ -433,6 +435,7 @@ class _MapObjectManagementPageState extends State<MapObjectManagementPage>
                   } else {
                     target.status = MOStatus.lived;
                   }
+
                   onPressed?.call(target.status);
                   setState(() {});
                 },
@@ -512,6 +515,12 @@ class _MapObjectManagementPageState extends State<MapObjectManagementPage>
         marineArea: widget.mapObject as MarineArea,
         status: widget.mapObject.status,
       );
+    }
+    if (widget.mapObject is Country &&
+        widget.mapObject.status == MOStatus.none) {
+      for (var region in (widget.mapObject as Country).regions) {
+        region.status = MOStatus.none;
+      }
     }
     isPopping = true;
     _controller.reverse();

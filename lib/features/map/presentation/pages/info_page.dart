@@ -208,15 +208,15 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
                 .toList(),
             selected: {status},
             style: ButtonStyle(
-              textStyle: MaterialStatePropertyAll(
+              textStyle: WidgetStatePropertyAll(
                   Theme.of(context).textTheme.titleSmall),
-              foregroundColor: MaterialStateProperty.resolveWith((states) {
-                if (states.contains(MaterialState.selected)) {
+              foregroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) {
                   return Colors.black;
                 }
                 return Theme.of(context).colorScheme.outline;
               }),
-              padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+              padding: const WidgetStatePropertyAll(EdgeInsets.zero),
               alignment: Alignment.center,
             ),
             showSelectedIcon: false,

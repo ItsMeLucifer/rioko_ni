@@ -563,7 +563,7 @@ class MapBuilder {
       ),
       onTap: onTap,
       center: center,
-      backgroundColor: Theme.of(context).colorScheme.onBackground,
+      backgroundColor: Theme.of(context).colorScheme.onSurface,
     );
     List<Widget> layers = [];
     layers.add(
@@ -702,7 +702,7 @@ class Map extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onBackground,
+        color: Theme.of(context).colorScheme.onSurface,
         border: Border.all(color: Colors.black, width: 2),
       ),
       child: _buildMap(context),
